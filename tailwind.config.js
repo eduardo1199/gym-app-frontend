@@ -12,10 +12,13 @@ module.exports = {
       colors: {
         'primary-white': '#FFFFFF',
         'primary-purple': '#5041BC',
+        'secondary-purple': '#3D29D0',
         'primary-blue': '#04103B',
         'secondary-green': '#43BE83',
         'secondary-orange': '#FF8057',
+        'primary-yellow': '#FFC629',
         'alert-danger': '#F8342E',
+        'primary-pink': '#EA8F95',
         'gradient-linear': 'linear-gradient(229.42deg, #3D29D0 26.93%, #C25FFF 98.11%)',
       }
     },
