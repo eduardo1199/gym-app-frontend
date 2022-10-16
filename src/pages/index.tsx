@@ -2,6 +2,9 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useForm  } from "react-hook-form";
 
+import Router from 'next/router';
+import Cookies from 'universal-cookie';
+
 import { useToast } from '@chakra-ui/react'
 
 import Logo from '../assets/logo.svg';
@@ -10,9 +13,9 @@ import { Spinner } from 'phosphor-react';
 import { Input } from '../components/Input';
 import { ProfileType } from '../types/profile';
 
-import { User } from '../types/user';
 import { api } from '../services/api';
 import { AxiosError } from 'axios';
+import { Admin } from '../types/admin';
 
 type IFormInput = {
   cpf: string;
@@ -23,6 +26,7 @@ export default function Home() {
   const { register, handleSubmit, control, formState: { errors } } = useForm();
 
   const toast = useToast();
+  const cookies = new Cookies();
 
   const [profile, setProfile] = useState<ProfileType>();
   const [isLoading ,setIsLoading] = useState(false);
@@ -44,15 +48,25 @@ export default function Home() {
       if(profile === ProfileType.Student) {
         const { cpf }: IFormInput = data;
   
-        const response = await api.get<User>(`/user/${cpf}`);
+        const response = await api.post<{ id: string }>('/user/authentication', { cpf });
 
         setIsLoading(false);
+
+        if(response.data.id) {
+          cookies.set('user', cpf);
+          Router.push('/user');
+        }
       } else {
         const body: IFormInput = data;
   
-        const response = await api.post('/admin/authentication', body);
+        const response = await api.post<{ id: string }>('/admin/authentication', body);
 
         setIsLoading(false);
+
+        if(response.data.id) {
+          cookies.set('admin', body.cpf);
+          Router.push('/dashboard');
+        }
       }
     } catch (error) {
       if(error instanceof AxiosError) {
