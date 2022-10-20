@@ -72,7 +72,7 @@ export default function Home() {
       if(error instanceof AxiosError) {
         setIsLoading(false);
         toast({
-          title: error.response.data.message,
+          title: error.response?.data?.message ?? '',
           status: 'error',
           isClosable: true
         });

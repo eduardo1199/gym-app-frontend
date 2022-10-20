@@ -12,6 +12,7 @@ module.exports = {
       colors: {
         'primary-white': '#FFFFFF',
         'primary-purple': '#5041BC',
+        'primary-gray': '#797D8C',
         'secondary-purple': '#3D29D0',
         'primary-blue': '#04103B',
         'secondary-green': '#43BE83',
@@ -20,6 +21,9 @@ module.exports = {
         'alert-danger': '#F8342E',
         'primary-pink': '#EA8F95',
         'gradient-linear': 'linear-gradient(229.42deg, #3D29D0 26.93%, #C25FFF 98.11%)',
+      },
+      dropShadow: {
+        'regular': '0px 4px 4px rgba(0, 0, 0, 0.25)',
       }
     },
   },
