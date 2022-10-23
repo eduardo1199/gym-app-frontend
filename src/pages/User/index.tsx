@@ -2,10 +2,10 @@ import { Avatar, WrapItem } from '@chakra-ui/react'
 
 import Cookies from 'universal-cookie';
 
-import { Barbell, Cake, Smiley } from 'phosphor-react';
+import { Barbell, Cake, Smiley, SmileySad } from 'phosphor-react';
 
 import { useGetUserQuery } from '../../feature/user/user-slice';
-import { dateFormat } from '../../utils';
+import { dateFormat, getAgeDistance } from '../../utils';
 
 export default function User() {
   const cookies = new Cookies();
@@ -28,23 +28,23 @@ export default function User() {
               />
             </WrapItem>
             <div className="mt-10 max-w-xl flex flex-col gap-8">
-              <span className="text-4xl text-primary-purple font-bold">Eduardo Soares</span>
-              <span className="text-3xl text-black font-bold">22 anos</span>
+              <span className="text-4xl text-primary-purple font-bold">{user.name}</span>
+              <span className="text-3xl text-black font-bold">{getAgeDistance(user.age)}</span>
               <div className="flex items-center gap-3">
                 <Barbell size="40px" color="#43BE83" />
-                <span className="text-2xl text-black font-bold">70kg</span>
+                <span className="text-2xl text-black font-bold">{user.weight}kg</span>
               </div>
               <div className="flex items-center gap-3">
                 <Cake size="40px" color="#43BE83" />
-                <span className="text-2xl text-black font-bold">11/11/1999</span>  
+                <span className="text-2xl text-black font-bold">{user.age}</span>  
               </div>
             </div>
           </div>
           <div className="bg-primary-purple flex flex-1 mx-5 rounded-lg p-5">
             <div className="w-96 flex flex-col gap-16">
-              <h1 className="text-5xl font-bold text-primary-white block">Seu plano irá se vencer em 
-                <span className="text-secondary-green block">
-                  {user.timeFinishPlan}
+              <h1 className="text-5xl font-bold text-primary-white block">Seu plano {user.isActive ? 'irá se vencer em': 'venceu faz'} 
+                <span className={`${user.isActive ? 'text-secondary-green': 'text-alert-danger'} block`}>
+                  {user.timeFinishPlan}.
                 </span>
               </h1>
               <p className="text-3xl text-primary-white">
@@ -53,9 +53,11 @@ export default function User() {
             </div>
             <div className="flex flex-1 flex-col justify-between items-end">
               <div className="max-w-lg">
-                <h1 className="text-6xl font-bold text-secondary-green block">Seu plano está ativo.</h1>
+                <h1 className={`text-6xl font-bold ${user.isActive ? 'text-secondary-green': 'text-alert-danger'} block`}>
+                  {user.isActive ? 'Seu plano está ativo.' :'Seu plano não está ativo.'}
+                </h1>
               </div>
-              <Smiley size="200px" color="#43BE83" />
+              {user.isActive ? <Smiley size="200px" color="#43BE83" /> : <SmileySad size="200px" color="#F8342E" /> }
             </div>
           </div>
         </div>
