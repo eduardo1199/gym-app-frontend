@@ -1,4 +1,4 @@
-import { useGetUserQuery } from '../feature/user/user-slice';
+import { useGetUserQuery } from '../../feature/user/user-slice';
 
 import Cookies from 'universal-cookie';
 

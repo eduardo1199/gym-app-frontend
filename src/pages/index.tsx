@@ -10,12 +10,11 @@ import { useToast } from '@chakra-ui/react'
 import Logo from '../assets/logo.svg';
 
 import { Spinner } from 'phosphor-react';
-import { Input } from '../components/Input';
+import { Input } from '../components/Input/Input';
 import { ProfileType } from '../types/profile';
 
 import { api } from '../services/api';
 import { AxiosError } from 'axios';
-import { Admin } from '../types/admin';
 
 type IFormInput = {
   cpf: string;

@@ -1,16 +1,12 @@
 import { Avatar, WrapItem } from '@chakra-ui/react'
 
-import Cookies from 'universal-cookie';
-
 import { Barbell, Cake, Smiley, SmileySad } from 'phosphor-react';
 
 import { useGetUserQuery } from '../../feature/user/user-slice';
 import { dateFormat, getAgeDistance } from '../../utils';
 
 export default function User() {
-  const cookies = new Cookies();
-
-  const { data: user, isLoading } = useGetUserQuery(cookies.get('user'));
+  const { data: user, isLoading } = useGetUserQuery();
 
   if(isLoading) return <h1>Loading...</h1>;
 
