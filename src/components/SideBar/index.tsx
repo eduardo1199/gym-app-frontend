@@ -5,7 +5,7 @@ import { LinkNavigator } from "./LinkNavigator";
 
 export function SideBar() {
   return (
-    <aside className="w-[320px] p-6 flex flex-col">
+    <aside className="w-[320px] p-6 flex flex-col bg-primary-purple">
       <div className="h-[200px] border-b-2 border-tertiary-pink flex justify-center">
         <GymLogo 
           height="52"

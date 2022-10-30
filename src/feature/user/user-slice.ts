@@ -18,7 +18,7 @@ export const apiSlice = createApi({
         method: 'GET',
       })
     })
-  })
+  }),
 });
 
 export const { useGetUserQuery } = apiSlice;
