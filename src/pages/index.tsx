@@ -81,16 +81,14 @@ export default function Home() {
 
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-primary-purple">
-      <div className="max-w-[1140px] flex flex-col items-center">
-        <div className="flex">
-          <Image 
-            src={Logo} 
-            alt="logo"
-            width="400px"
-            height="250px"
-          />
-        </div>
-        <div className="flex flex-col items-center mx-20 w-full">
+      <div className="w-[1100px] flex lg:flex-row flex-col justify-between items-center">
+        <Image 
+          src={Logo} 
+          alt="logo"
+          width="400px"
+          height="250px"
+        />
+        <div className="w-[300px] lg:w-[400px] flex flex-col items-center">
           <div className="flex flex-col gap-4">
             <span className="text-primary-white text-2xl font-bold">Você é aluno ou gerente?</span>
 
@@ -113,7 +111,7 @@ export default function Home() {
             </div>
           </div>
 
-          <form className="mt-8 flex flex-col gap-4 w-full" onSubmit={handleSubmit(HandleSubmitLogin)}>
+          <form className="mt-8 flex flex-col gap-2 w-full" onSubmit={handleSubmit(HandleSubmitLogin)}>
 
             <Input 
               placeholder="insira seu CPF (somente números)" 
