@@ -11,7 +11,7 @@ export default function User() {
   if(isLoading) return <h1>Loading...</h1>;
 
   return (
-    <div className="h-screen flex justify-center items-center">
+    <div className="h-screen flex justify-center items-center bg-primary-purple">
       <div className="w-[1440px] h-[530px] bg-primary-white rounded drop-shadow-regular border-3 border-secondary-purple mx-5 my-3
         px-12 py-12
       ">
