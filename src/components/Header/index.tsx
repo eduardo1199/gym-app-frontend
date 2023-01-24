@@ -31,7 +31,7 @@ export function Header() {
             src='https://avatars.githubusercontent.com/u/62710668?v=4' 
             size="md"
           />
-          <span className="text-secondary-gray font-normal text-sm">{admin.name}</span>
+          <span className="text-secondary-gray font-normal text-sm">{admin?.name}</span>
           <button type="button" className="">
             <CaretDown />
           </button>

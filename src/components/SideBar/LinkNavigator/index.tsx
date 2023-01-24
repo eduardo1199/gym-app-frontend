@@ -1,6 +1,6 @@
 import { AnchorHTMLAttributes, ReactElement } from 'react';
 
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 
 import Link from "next/link";
 
@@ -11,7 +11,9 @@ interface LinkNavigatorProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 
 export function LinkNavigator({ icon, route, href, ...props }: LinkNavigatorProps) {
-  const isActive = Router.asPath === href;
+  const router = useRouter();
+
+  const isActive = router.asPath === href;
 
   return (
     <Link href={href} passHref>

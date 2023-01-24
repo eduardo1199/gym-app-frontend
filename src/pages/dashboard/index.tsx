@@ -7,10 +7,6 @@ import { CardStatistics } from '../../components/Cards/CardStatistics';
 import { Header } from '../../components/Header';
 
 export default function Dashboard() {
-  const { isLoading } = useGetAdminQuery();
-
-  if(isLoading) return <h1>Loading...</h1>;
-
   return (
     <div className="h-screen">
       <div className="flex h-full">
