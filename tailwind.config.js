@@ -27,7 +27,7 @@ module.exports = {
         'secondary-pink': '#F5F3FF',
         'gradient-linear': 'linear-gradient(229.42deg, #3D29D0 26.93%, #C25FFF 98.11%)',
       },
-      dropShadow: {
+      boxShadow: {
         'regular': '0px 4px 4px rgba(0, 0, 0, 0.25)',
       }
     },

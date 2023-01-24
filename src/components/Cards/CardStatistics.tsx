@@ -1,13 +1,34 @@
 import { useGetUserQuery } from '../../feature/user/user-slice';
 
 import Cookies from 'universal-cookie';
+import { ReactNode } from 'react';
 
-export function CardStatistics() { 
+interface CardStatisticsProps {
+  description: string;
+  title: string;
+  amount: number;
+  icon: ReactNode;
+  variant: 'warning' | 'default';
+}
+
+export function CardStatistics(props: CardStatisticsProps) { 
   const cookies = new Cookies();
 
   const { data: userData, isLoading } = useGetUserQuery(cookies.get('user'));
 
   return (
-    <h1>{userData.registrationDate}</h1>
+    <div 
+    className={`flex flex-1 h-[250px] border-2 shadow-regular ${props.variant === 'warning' ? 'border-alert-danger': 'border-tertiary-gray'} rounded-2xl justify-between items-center p-6 transition-all duration-100 hover:border-4`}
+    >         
+      <div className="flex flex-col gap-5">
+        <span className="text-lg font-semibold text-slate-600">
+          {props.description}
+        </span>
+        <h1 className={`font-bold text-3xl ${props.variant === 'warning' ? 'text-alert-danger' : 'text-primary-blue'}`}>
+         {props.amount} {props.title}
+        </h1>
+      </div>
+      {props.icon}  
+    </div>
   )
 }
