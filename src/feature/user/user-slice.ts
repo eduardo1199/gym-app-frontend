@@ -17,8 +17,14 @@ export const apiSlice = createApi({
         url: `/user/${cookies.get('user')}`,
         method: 'GET',
       })
+    }),
+    GetUsers: builder.query<User[], void>({
+      query: () => ({
+        url: '/users',
+        method: 'GET',
+      })
     })
   }),
 });
 
-export const { useGetUserQuery } = apiSlice;
+export const { useGetUserQuery, useGetUsersQuery } = apiSlice;
