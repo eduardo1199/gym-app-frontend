@@ -33,7 +33,8 @@ export default function Dashboard() {
         <SideBar />
 
         <div className="flex flex-1 flex-col bg-primary-white p-8">
-          <Header />   
+          <Header visibleSearchBar={false} />   
+          
           <div className="h-full grid xl:grid-cols-2 gap-5 grid-cols-1 items-center">
             <CardStatistics 
               amount={summaryStudents.actives}

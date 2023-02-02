@@ -17,3 +17,7 @@ export function getAgeDistance(date: string) {
 
   return age;
 }
+
+export function capitalizeFirstLetter(title: string): string {
+  return title.charAt(0).toUpperCase() + title.slice(1);
+}
