@@ -1,4 +1,5 @@
 import { Avatar, WrapItem } from '@chakra-ui/react'
+import { useRouter } from 'next/router';
 
 import { Barbell, Cake, Smiley, SmileySad } from 'phosphor-react';
 
@@ -6,9 +7,17 @@ import { useGetUserQuery } from '../../feature/user/user-slice';
 import { dateFormat, getAgeDistance } from '../../utils';
 
 export default function User() {
-  const { data: user, isLoading } = useGetUserQuery();
+  const router = useRouter();
+
+  const id  = router.query.id;
+
+  const { data: user , isLoading } = useGetUserQuery(String(id));
+
+  console.log(router)
 
   if(isLoading) return <h1>Loading...</h1>;
+
+  if(!user?.id) return <h1>Error...</h1>;
 
   return (
     <div className="h-screen flex justify-center items-center bg-primary-purple">

@@ -52,8 +52,9 @@ export default function Home() {
         setIsLoading(false);
 
         if(response.data.id) {
-          cookies.set('user', cpf);
-          Router.push('/user');
+          const id = response.data.id;
+
+          Router.push(`/user/${id}`);
         }
       } else {
         const body: IFormInput = data;
@@ -152,8 +153,7 @@ export default function Home() {
               type="submit"
               className="bg-secondary-purple transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 font-bold text-lg text-white h-11 rounded flex justify-center items-center"
             >
-              {isLoading && <Spinner className="animate-spin h-6 w-6 mr-3" />}
-              {!isLoading && <p>Entrar</p>}
+              {isLoading ? <Spinner className="animate-spin h-6 w-6 mr-3" />: <p>Entrar</p>}
             </button>
           </form>
         </div>

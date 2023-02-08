@@ -1,22 +1,21 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import { AxiosBaseQuery } from '../../services/axiosBaseQuery';
+
 import { User } from '../../types/user';
-
-import Cookies from 'universal-cookie';
-
-const cookies = new Cookies();
 
 export const apiSlice = createApi({
   reducerPath: 'api-users',
-  baseQuery: fetchBaseQuery({
+  tagTypes: ['User'],
+  baseQuery: AxiosBaseQuery({
     baseUrl: process.env.API_URL,
   }),
   endpoints: (builder) => ({
-    GetUser: builder.query<User, void>({
-      query: () => ({
-        url: `/user/${cookies.get('user')}`,
+    GetUser: builder.query<User, string>({
+      query: (id) => ({
+        url: `user/${id}`,
         method: 'GET',
-      })
+      }),
     }),
     GetUsers: builder.query<User[], void>({
       query: () => ({
@@ -25,6 +24,7 @@ export const apiSlice = createApi({
       })
     })
   }),
+
 });
 
 export const { useGetUserQuery, useGetUsersQuery } = apiSlice;
