@@ -1,8 +1,6 @@
 import { AnchorHTMLAttributes, ReactElement } from 'react';
 
-import { useRouter } from 'next/router';
-
-import Link from "next/link";
+import { NavLink, useLocation, useParams } from 'react-router-dom'
 
 interface LinkNavigatorProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   icon: ReactElement;
@@ -11,14 +9,14 @@ interface LinkNavigatorProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 
 export function LinkNavigator({ icon, route, href, ...props }: LinkNavigatorProps) {
-  const router = useRouter();
+  const { pathname } = useLocation();
 
-  const isActive = router.asPath === href;
+  const activeLink = href === pathname
 
   return (
-    <Link href={href} passHref>
+    <NavLink to={href}>
       <a
-        className={`flex items-center gap-8 px-3 py-2 rounded-xl text-base ${isActive ? 'text-primary-purple font-extrabold bg-primary-white': 'font-semibold text-primary-white'} hover:text-primary-purple hover:font-extrabold hover:bg-primary-white transition duration-400`}
+        className={`flex items-center gap-8 px-3 py-2 rounded-xl text-base ${activeLink ? 'text-primary-purple font-extrabold bg-primary-white': 'font-semibold text-primary-white'} hover:text-primary-purple hover:font-extrabold hover:bg-primary-white transition duration-400`}
         {...props}
       >
         <>
@@ -26,6 +24,6 @@ export function LinkNavigator({ icon, route, href, ...props }: LinkNavigatorProp
           <p className="text-right">{route}</p>
         </>
       </a>
-    </Link>
+    </NavLink>
   )
 }

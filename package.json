@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.3.5",
@@ -16,25 +15,29 @@
     "axios": "^0.27.2",
     "date-fns": "^2.29.3",
     "framer-motion": "^6.5.1",
-    "next": "12.3.1",
     "phosphor-react": "^1.4.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.36.1",
     "react-input-mask": "^2.0.4",
     "react-redux": "^8.0.4",
+    "react-router-dom": "^6.8.1",
     "universal-cookie": "^4.0.4"
   },
   "devDependencies": {
     "@types/cookies": "^0.7.7",
     "@types/node": "^18.8.0",
     "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.10",
     "@types/react-input-mask": "^3.0.1",
+    "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.12",
     "eslint": "8.24.0",
-    "eslint-config-next": "12.3.1",
     "postcss": "^8.4.17",
     "tailwindcss": "^3.1.8",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "vite": "^4.1.1",
+    "vite-plugin-svgr": "^2.4.0",
+    "vite-tsconfig-paths": "^4.0.5"
   }
 }

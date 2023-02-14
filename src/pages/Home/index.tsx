@@ -1,19 +1,19 @@
 import { useState } from 'react';
-import Image from 'next/image';
-import { useForm  } from "react-hook-form";
 
-import Router from 'next/router';
+import { useForm  } from "react-hook-form";
+import { useNavigate  } from "react-router-dom";
+
 import Cookies from 'universal-cookie';
 
 import { useToast } from '@chakra-ui/react'
 
-import Logo from '../assets/logo.svg';
+import Logo from '../../assets/logo.svg';
 
 import { Spinner } from 'phosphor-react';
-import { Input } from '../components/Input/Input';
-import { ProfileType } from '../types/profile';
+import { Input } from '../../components/Input/Input';
+import { ProfileType } from '../../types/profile';
 
-import { api } from '../services/api';
+import { api } from '../../services/api';
 import { AxiosError } from 'axios';
 
 type IFormInput = {
@@ -21,16 +21,19 @@ type IFormInput = {
   password: string;
 }
 
-export default function Home() {
-  const { register, handleSubmit, control, formState: { errors } } = useForm();
+export function Home() {
+  const { register, handleSubmit, formState: { errors }, getValues } = useForm<IFormInput>();
 
   const toast = useToast();
   const cookies = new Cookies();
+  const navigate = useNavigate();
 
   const [profile, setProfile] = useState<ProfileType>();
   const [isLoading ,setIsLoading] = useState(false);
 
-  const HandleSubmitLogin = async (data) => {
+  const HandleSubmitLogin = async () => {
+    const { cpf, password } = getValues();
+
     if(!profile) {
       toast({
         title: 'Selecione o tipo do seu perfil!',
@@ -45,8 +48,6 @@ export default function Home() {
 
     try {
       if(profile === ProfileType.Student) {
-        const { cpf }: IFormInput = data;
-  
         const response = await api.post<{ id: string }>('/user/authentication', { cpf });
 
         setIsLoading(false);
@@ -54,18 +55,16 @@ export default function Home() {
         if(response.data.id) {
           const id = response.data.id;
 
-          Router.push(`/user/${id}`);
+          navigate(`/user/${id}`);
         }
       } else {
-        const body: IFormInput = data;
-  
-        const response = await api.post<{ id: string }>('/admin/authentication', body);
+        const response = await api.post<{ id: string }>('/admin/authentication', { cpf, password });
 
         setIsLoading(false);
 
         if(response.data.id) {
-          cookies.set('admin', body.cpf);
-          Router.push('/dashboard');
+          cookies.set('admin-id', response.data.id);
+          navigate('/dashboard');
         }
       }
     } catch (error) {
@@ -83,7 +82,7 @@ export default function Home() {
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-primary-purple">
       <div className="w-[1100px] flex lg:flex-row flex-col justify-between items-center">
-        <Image 
+        <img 
           src={Logo} 
           alt="logo"
           width="400px"
@@ -117,7 +116,6 @@ export default function Home() {
             <Input 
               placeholder="insira seu CPF (somente números)" 
               label="Informe seu CPF"
-              name="cpf"
               error={errors}
               {...register(
                 'cpf', 
@@ -142,7 +140,6 @@ export default function Home() {
               <Input 
                 type="password" 
                 placeholder="digite sua senha" 
-                name="password"
                 label="Informe sua senha"
                 error={errors}
                 {...register('password', { required: {  value: true, message: 'Obrigatório', } })}

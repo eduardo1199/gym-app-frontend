@@ -8,7 +8,7 @@ export const apiSlice = createApi({
   reducerPath: 'api-users',
   tagTypes: ['User'],
   baseQuery: AxiosBaseQuery({
-    baseUrl: process.env.API_URL,
+    baseUrl:  import.meta.env.VITE_API_URL,
   }),
   endpoints: (builder) => ({
     GetUser: builder.query<User, string>({
@@ -19,7 +19,7 @@ export const apiSlice = createApi({
     }),
     GetUsers: builder.query<User[], void>({
       query: () => ({
-        url: '/users',
+        url: 'users',
         method: 'GET',
       })
     })

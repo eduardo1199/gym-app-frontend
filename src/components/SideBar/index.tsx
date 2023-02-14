@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { ListDashes, Student, Gear, PersonSimpleRun } from "phosphor-react";
+
 import { GymLogo } from "../Logo";
 import { LinkNavigator } from "./LinkNavigator";
 

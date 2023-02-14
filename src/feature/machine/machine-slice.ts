@@ -5,7 +5,7 @@ import { Machine } from '../../types/machine';
 export const apiMachineSlice = createApi({
   reducerPath: 'api-machines',
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.API_URL,
+    baseUrl:  import.meta.env.VITE_API_URL,
   }),
   endpoints: (builder) => ({
     GetMachines: builder.query<Machine[], void>({

@@ -5,7 +5,7 @@ import { Plan } from '../../types/plan';
 export const apiPlanSlice = createApi({
   reducerPath: 'api-plans',
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.API_URL,
+    baseUrl:  import.meta.env.VITE_API_URL,
   }),
   endpoints: (builder) => ({
     GetPlans: builder.query<Plan[], void>({

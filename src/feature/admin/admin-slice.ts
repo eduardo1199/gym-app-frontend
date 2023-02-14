@@ -9,12 +9,12 @@ const cookies = new Cookies();
 export const apiAdminSlice = createApi({
   reducerPath: 'api-admin',
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.API_URL,
+    baseUrl: import.meta.env.VITE_API_URL,
   }),
   endpoints: (builder) => ({
     GetAdmin: builder.query<Admin, void>({
       query: () => ({
-        url: `/admin/${cookies.get('admin')}`,
+        url: `/admin/${cookies.get('admin-id')}`,
         method: 'GET',
       })
     })

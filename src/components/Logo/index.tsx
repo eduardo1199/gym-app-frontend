@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import Logo from '../../assets/logo.svg';
 
 interface GymLogoProps {
@@ -9,7 +7,7 @@ interface GymLogoProps {
 
 export function GymLogo(props: GymLogoProps) {
   return (
-    <Image 
+    <img 
       src={Logo} 
       alt="logo"
       width={`${props.width}px`}

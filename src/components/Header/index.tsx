@@ -1,5 +1,4 @@
-import { useRouter } from "next/router";
-
+import { useLocation } from "react-router-dom";
 import { useGetAdminQuery } from "../../feature/admin/admin-slice";
 import { capitalizeFirstLetter } from "../../utils";
 
@@ -11,9 +10,9 @@ interface HeaderProps {
 }
 
 export function Header({ visibleSearchBar }: HeaderProps) {
-  const router = useRouter();
+  const { pathname } = useLocation();
 
-  const title = capitalizeFirstLetter(router.asPath.split('/')[1]);
+  const title = capitalizeFirstLetter(pathname.split('/')[1]);
 
   const { data: admin } = useGetAdminQuery();
 

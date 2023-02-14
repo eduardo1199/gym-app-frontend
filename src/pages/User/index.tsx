@@ -1,19 +1,15 @@
 import { Avatar, WrapItem } from '@chakra-ui/react'
-import { useRouter } from 'next/router';
 
 import { Barbell, Cake, Smiley, SmileySad } from 'phosphor-react';
+import { useParams } from 'react-router-dom';
 
 import { useGetUserQuery } from '../../feature/user/user-slice';
-import { dateFormat, getAgeDistance } from '../../utils';
+import { dateFormat } from '../../utils';
 
-export default function User() {
-  const router = useRouter();
+export function User() {
+  const { id } = useParams();
 
-  const id  = router.query.id;
-
-  const { data: user , isLoading } = useGetUserQuery(String(id));
-
-  console.log(router)
+  const { data: user , isLoading } = useGetUserQuery(id ?? '');
 
   if(isLoading) return <h1>Loading...</h1>;
 
@@ -34,7 +30,6 @@ export default function User() {
             </WrapItem>
             <div className="mt-10 max-w-xl flex flex-col gap-8">
               <span className="text-4xl text-primary-purple font-bold">{user.name}</span>
-              <span className="text-3xl text-black font-bold">{getAgeDistance(user.age)}</span>
               <div className="flex items-center gap-3">
                 <Barbell size="40px" color="#43BE83" />
                 <span className="text-2xl text-black font-bold">{user.weight}kg</span>
