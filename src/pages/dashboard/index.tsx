@@ -27,7 +27,7 @@ export function Dashboard(): JSX.Element {
   })
 
   return (
-    <>
+    <div className="p-8">
       <Header visibleSearchBar={false} />   
    
       <div className="grid xl:grid-cols-2 gap-16 grid-cols-1 my-auto">
@@ -75,6 +75,6 @@ export function Dashboard(): JSX.Element {
         />
       </div>
   
-    </>
+    </div>
   )
 }

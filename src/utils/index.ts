@@ -9,7 +9,3 @@ export function dateFormat(date: string): string {
     useAdditionalDayOfYearTokens: true
   });
 }
-
-export function capitalizeFirstLetter(title: string): string {
-  return title.charAt(0).toUpperCase() + title.slice(1);
-}

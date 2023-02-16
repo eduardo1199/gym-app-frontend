@@ -1,9 +1,9 @@
 import { useLocation } from "react-router-dom";
 import { useGetAdminQuery } from "../../feature/admin/admin-slice";
-import { capitalizeFirstLetter } from "../../utils";
 
 import { InputSearch } from "./Input";
 import { Logout } from "./Logout";
+import { titleFromPage } from "./utils";
 
 interface HeaderProps {
   visibleSearchBar: boolean;
@@ -12,7 +12,7 @@ interface HeaderProps {
 export function Header({ visibleSearchBar }: HeaderProps) {
   const { pathname } = useLocation();
 
-  const title = capitalizeFirstLetter(pathname.split('/')[1]);
+  const title = titleFromPage(pathname);
 
   const { data: admin } = useGetAdminQuery();
 
