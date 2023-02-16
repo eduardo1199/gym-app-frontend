@@ -4,9 +4,11 @@ import { SideBar } from '../components/SideBar'
 
 export function DefaultLayout() {
   return (
-    <div className="w-full h-screen flex">
+    <div className="flex">
       <SideBar />
-      <Outlet />
+      <div className="flex flex-1 flex-col bg-primary-white p-8">
+        <Outlet />
+      </div>
     </div>
   )
 }
