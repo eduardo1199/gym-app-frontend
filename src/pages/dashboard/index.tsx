@@ -30,7 +30,7 @@ export function Dashboard(): JSX.Element {
     <div className="p-8">
       <Header visibleSearchBar={false} />   
    
-      <div className="grid xl:grid-cols-2 gap-16 grid-cols-1 my-auto">
+      <div className="grid lg:grid-cols-2 gap-16 grid-cols-1 my-auto">
         <CardStatistics 
           amount={summaryStudents.actives}
           description="Alunos com matrículas regulares"

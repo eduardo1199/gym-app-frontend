@@ -6,12 +6,15 @@ import { Provider } from 'react-redux';
 import { Router } from './Router'
 
 import { store } from './app/store';
+import { ViewPortProvider } from './context/ViewPortContext';
 
 export function App() {
   return (
     <Provider store={store}>
       <ChakraProvider>
-        <Router />
+        <ViewPortProvider>
+          <Router />
+        </ViewPortProvider>
       </ChakraProvider>
     </Provider>
   )
