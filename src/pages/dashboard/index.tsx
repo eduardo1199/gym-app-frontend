@@ -8,12 +8,12 @@ import { CardStatistics } from '../../components/Cards/CardStatistics';
 import { Header } from '../../components/Header';
 
 export function Dashboard(): JSX.Element {
-  const { data: Users } = useGetUsersQuery();
-  const { data: Machines } = useGetMachinesQuery();
-  const { data: Plans } = useGetPlansQuery();
+  const { data: users } = useGetUsersQuery();
+  const { data: machines } = useGetMachinesQuery();
+  const { data: plans } = useGetPlansQuery();
 
 
-  const summaryStudents = (Users ?? []).reduce((sum, student) => {
+  const summaryStudents = (users ?? []).reduce((sum, student) => {
     if(student.isActive) {
       sum.actives += 1
     } else {
@@ -46,28 +46,28 @@ export function Dashboard(): JSX.Element {
           variant="warning"
         />
         <CardStatistics 
-          amount={Machines?.length!}
+          amount={machines?.length!}
           description="Na sua academia existem"
           icon={<Gear size="5rem" weight="bold" />}
           title="Maquinários"
           variant="default"
         />
         <CardStatistics 
-          amount={Plans?.length!}
+          amount={plans?.length!}
           description="Na sua academia existem"
           icon={<PersonSimpleRun size="5rem" weight="bold" />}
           title="Tipos de planos"
           variant="default"
         />
          <CardStatistics 
-          amount={Plans?.length!}
+          amount={plans?.length!}
           description="Na sua academia existem"
           icon={<PersonSimpleRun size="5rem" weight="bold" />}
           title="Tipos de planos"
           variant="default"
         />
          <CardStatistics 
-          amount={Plans?.length!}
+          amount={plans?.length!}
           description="Na sua academia existem"
           icon={<PersonSimpleRun size="5rem" weight="bold" />}
           title="Tipos de planos"
