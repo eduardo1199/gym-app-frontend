@@ -1,13 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx}",
-    "./src/components/**/*.{js,ts,jsx,tsx}",
+    './src/pages/**/*.{js,ts,jsx,tsx}',
+    './src/components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Nunito', 'sans-serif']
+        sans: ['Nunito', 'sans-serif'],
       },
       colors: {
         'primary-white': '#FFFFFF',
@@ -25,11 +25,12 @@ module.exports = {
         'alert-danger': '#F8342E',
         'primary-pink': '#EA8F95',
         'secondary-pink': '#F5F3FF',
-        'gradient-linear': 'linear-gradient(229.42deg, #3D29D0 26.93%, #C25FFF 98.11%)',
+        'gradient-linear':
+          'linear-gradient(229.42deg, #3D29D0 26.93%, #C25FFF 98.11%)',
       },
       boxShadow: {
-        'regular': '0px 4px 4px rgba(0, 0, 0, 0.25)',
-      }
+        regular: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+      },
     },
   },
   plugins: [],

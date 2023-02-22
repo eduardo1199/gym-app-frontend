@@ -11,6 +11,19 @@ export function Students() {
       <Header visibleSearchBar />
       <div className="h-screen mt-10">
         <table className="w-full">
+          <thead>
+            <tr className="bg-primary-purple opacity-95">
+              <th className="py-4 text-primary-white text-left px-3">Nome</th>
+              <th className="text-primary-white text-left">Início do plano</th>
+              <th className="text-primary-white text-left">Idade</th>
+              <th className="text-primary-white text-left">Peso</th>
+              <th className="text-primary-white text-left">Status</th>
+              <th />
+            </tr>
+            <tr>
+              <td className="py-4"></td>
+            </tr>
+          </thead>
           <tbody>
             {users?.map((user) => {
               return (

@@ -14,7 +14,7 @@ interface TableRowProps {
 export function TableRow(props: TableRowProps) {
   return (
     <>
-      <tr className="bg-primary-white border border-tertiary-pink border-collapse rounded-t-2xl rounded-b-2xl">
+      <tr className="bg-primary-white border border-tertiary-pink rounded-t-2xl rounded-b-2xl hover:shadow-md transition-shadow">
         <td className="py-5 px-3">
           <span className="text-base text-primary-gray font-semibold">
             {props.name}
