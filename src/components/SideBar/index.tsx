@@ -44,12 +44,37 @@ export function SideBar() {
         </button>
         <Drawer placement={'left'} onClose={onClose} isOpen={isOpen}>
           <DrawerOverlay />
-          <DrawerContent>
-            <DrawerHeader borderBottomWidth="1px">Basic Drawer</DrawerHeader>
-            <DrawerBody>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
+          <DrawerContent background="#5041BC" p={6}>
+            <DrawerHeader borderBottomWidth="1px" borderBottomColor="#8A7DD0">
+              <GymLogo width="full" height="full" />
+            </DrawerHeader>
+            <DrawerBody
+              display="flex"
+              flexDirection="column"
+              gap={8}
+              p={0}
+              my={8}
+            >
+              <LinkNavigator
+                href="/dashboard"
+                icon={<ListDashes size="18px" weight="bold" />}
+                route="Dashboard"
+              />
+              <LinkNavigator
+                href="/students"
+                icon={<Student size="18px" weight="bold" />}
+                route="Alunos"
+              />
+              <LinkNavigator
+                href="/machines"
+                icon={<Gear size="18px" weight="bold" />}
+                route="Máquinas"
+              />
+              <LinkNavigator
+                href="/plans"
+                icon={<PersonSimpleRun size="18px" weight="bold" />}
+                route="Planos"
+              />
             </DrawerBody>
           </DrawerContent>
         </Drawer>

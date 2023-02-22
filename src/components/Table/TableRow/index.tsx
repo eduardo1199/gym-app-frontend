@@ -84,6 +84,7 @@ export function TableRow(props: TableRowProps) {
                   fontWeight="bold"
                   textColor="white"
                   _hover={{ textColor: 'purple.600', background: 'white' }}
+                  _focus={{ textColor: 'purple.600', background: 'white' }}
                   display="flex"
                   justifyContent="space-between"
                 >
@@ -94,6 +95,7 @@ export function TableRow(props: TableRowProps) {
                   fontWeight="bold"
                   textColor="white"
                   _hover={{ textColor: 'purple.600', background: 'white' }}
+                  _focus={{ textColor: 'purple.600', background: 'white' }}
                   display="flex"
                   justifyContent="space-between"
                 >
@@ -104,6 +106,7 @@ export function TableRow(props: TableRowProps) {
                   fontWeight="bold"
                   textColor="white"
                   _hover={{ textColor: 'purple.600', background: 'white' }}
+                  _focus={{ textColor: 'purple.600', background: 'white' }}
                   display="flex"
                   justifyContent="space-between"
                 >
