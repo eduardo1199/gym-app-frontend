@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from 'react'
 
 export const ViewPortContext = createContext(false)
 
@@ -9,7 +9,7 @@ interface ViewPortProviderProps {
 }
 
 export function ViewPortProvider({ children }: ViewPortProviderProps) {
-  const [match, setMatch] = useState(false);
+  const [match, setMatch] = useState(false)
 
   useEffect(() => {
     const matchMedia = window.matchMedia(`(max-width:${BREAK_POINT}px)`)

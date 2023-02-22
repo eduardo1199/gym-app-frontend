@@ -1,10 +1,10 @@
-import { Header } from "../../components/Header";
-import { TableRow } from "../../components/Table/TableRow";
-import { useGetUsersQuery } from "../../feature/user/user-slice";
-import { dateFormat } from "../../utils";
+import { Header } from '../../components/Header'
+import { TableRow } from '../../components/Table/TableRow'
+import { useGetUsersQuery } from '../../feature/user/user-slice'
+import { dateFormat } from '../../utils'
 
 export function Students() {
-  const { data: users } = useGetUsersQuery();
+  const { data: users } = useGetUsersQuery()
 
   return (
     <div className="p-8">
@@ -14,7 +14,7 @@ export function Students() {
           <tbody>
             {users?.map((user) => {
               return (
-                <TableRow 
+                <TableRow
                   key={user.id}
                   active={user.isActive}
                   ageUser={user.age}

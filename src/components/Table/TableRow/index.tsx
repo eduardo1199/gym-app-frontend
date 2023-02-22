@@ -1,9 +1,9 @@
-import { Tooltip } from "@chakra-ui/react";
+import { Tooltip } from '@chakra-ui/react'
 
-import { DotsThreeVertical } from "phosphor-react";
+import { DotsThreeVertical } from 'phosphor-react'
 
 interface TableRowProps {
-  name: string;
+  name: string
   startDatePlan: string
   ageUser: string
   weight: string
@@ -35,15 +35,27 @@ export function TableRow(props: TableRowProps) {
             {props.weight}kg
           </span>
         </td>
-        <td>             
-          <Tooltip hasArrow label='Usuário está com plano vencido' bg={`${props.active ? 'green.600' : 'red.600'}`}>
-            <button className={`w-4 h-4 ${props.active ? 'bg-green-600' : 'bg-red-600'} rounded-full`} />
+        <td>
+          <Tooltip
+            hasArrow
+            label="Usuário está com plano vencido"
+            bg={`${props.active ? 'green.600' : 'red.600'}`}
+          >
+            <button
+              className={`w-4 h-4 ${
+                props.active ? 'bg-green-600' : 'bg-red-600'
+              } rounded-full`}
+            />
           </Tooltip>
         </td>
         <td className="rounded">
-          <Tooltip hasArrow label='Ações' bg='purple.600'>
+          <Tooltip hasArrow label="Ações" bg="purple.600">
             <button type="button" className="hover:brightness-75">
-              <DotsThreeVertical size={32} weight="bold" className="fill-primary-purple" />
+              <DotsThreeVertical
+                size={32}
+                weight="bold"
+                className="fill-primary-purple"
+              />
             </button>
           </Tooltip>
         </td>

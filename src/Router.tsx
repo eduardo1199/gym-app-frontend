@@ -2,10 +2,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Home } from './pages/Home'
 import { Dashboard } from './pages/Dashboard'
-import { Machines } from './pages/Machines';
-import { Plans } from './pages/Plans';
-import { Students } from './pages/Students';
-import { User } from './pages/User';
+import { Machines } from './pages/Machines'
+import { Plans } from './pages/Plans'
+import { Students } from './pages/Students'
+import { User } from './pages/User'
 
 import { DefaultLayout } from './layouts'
 
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-  
+
   {
     path: '/',
     element: <DefaultLayout />,

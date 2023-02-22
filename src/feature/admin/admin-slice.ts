@@ -1,10 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { Admin } from '../../types/admin';
+import { Admin } from '../../types/admin'
 
-import Cookies from 'universal-cookie';
+import Cookies from 'universal-cookie'
 
-const cookies = new Cookies();
+const cookies = new Cookies()
 
 export const apiAdminSlice = createApi({
   reducerPath: 'api-admin',
@@ -16,9 +16,9 @@ export const apiAdminSlice = createApi({
       query: () => ({
         url: `/admin/${cookies.get('admin-id')}`,
         method: 'GET',
-      })
-    })
-  })
-});
+      }),
+    }),
+  }),
+})
 
-export const { useGetAdminQuery } = apiAdminSlice;
+export const { useGetAdminQuery } = apiAdminSlice

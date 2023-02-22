@@ -1,4 +1,4 @@
 export enum ProfileType {
   Manager = 'Gerente',
-  Student = 'Aluno'
+  Student = 'Aluno',
 }
