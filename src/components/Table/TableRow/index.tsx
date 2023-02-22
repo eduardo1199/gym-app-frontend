@@ -1,10 +1,19 @@
+import { useRef } from 'react'
 import {
   IconButton,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Tooltip,
+  useDisclosure,
 } from '@chakra-ui/react'
 
 import { DotsThreeVertical, Trash, Pencil, Files } from 'phosphor-react'
@@ -19,6 +28,14 @@ interface TableRowProps {
 }
 
 export function TableRow(props: TableRowProps) {
+  const {
+    isOpen: isOpenModalEditStudent,
+    onOpen: onOpenModalEditStudent,
+    onClose: onCloseModalEditStudent,
+  } = useDisclosure()
+
+  const btnRef = useRef(null)
+
   return (
     <>
       <tr className="bg-primary-white border border-tertiary-pink rounded-t-2xl rounded-b-2xl hover:shadow-md transition-shadow">
@@ -45,7 +62,11 @@ export function TableRow(props: TableRowProps) {
         <td>
           <Tooltip
             hasArrow
-            label="Usuário está com plano vencido"
+            label={`${
+              props.active
+                ? 'Usuário está com plano em dia'
+                : 'Usuário está com plano vencido'
+            }`}
             bg={`${props.active ? 'green.600' : 'red.600'}`}
           >
             <button
@@ -87,6 +108,8 @@ export function TableRow(props: TableRowProps) {
                   _focus={{ textColor: 'purple.600', background: 'white' }}
                   display="flex"
                   justifyContent="space-between"
+                  ref={btnRef}
+                  onClick={onOpenModalEditStudent}
                 >
                   Visualizar
                   <Files size={20} />
@@ -121,6 +144,24 @@ export function TableRow(props: TableRowProps) {
       <tr>
         <td className="py-4"></td>
       </tr>
+
+      <Modal
+        onClose={onCloseModalEditStudent}
+        finalFocusRef={btnRef}
+        isOpen={isOpenModalEditStudent}
+      >
+        <ModalOverlay />
+        <ModalContent bg={'purple.600'}>
+          <ModalHeader>
+            <p className="text-primary-white">VISUALIZAÇÃO DO ESTUDANTE</p>
+          </ModalHeader>
+          <ModalCloseButton textColor={'white'} fontSize={16} />
+          <ModalBody></ModalBody>
+          <ModalFooter>
+            <button onClick={onCloseModalEditStudent}>Close</button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   )
 }
