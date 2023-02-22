@@ -1,6 +1,13 @@
-import { Tooltip } from '@chakra-ui/react'
+import {
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Tooltip,
+} from '@chakra-ui/react'
 
-import { DotsThreeVertical } from 'phosphor-react'
+import { DotsThreeVertical, Trash, Pencil, Files } from 'phosphor-react'
 
 interface TableRowProps {
   name: string
@@ -50,13 +57,61 @@ export function TableRow(props: TableRowProps) {
         </td>
         <td className="rounded">
           <Tooltip hasArrow label="Ações" bg="purple.600">
-            <button type="button" className="hover:brightness-75">
-              <DotsThreeVertical
-                size={32}
-                weight="bold"
-                className="fill-primary-purple"
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                aria-label="Options"
+                variant="outline"
+                border="none"
+                display="flex"
+                _hover={{ background: 'transparent' }}
+                icon={
+                  <DotsThreeVertical
+                    size={32}
+                    weight="bold"
+                    className="fill-primary-purple"
+                  />
+                }
               />
-            </button>
+              <MenuList
+                p="2"
+                display="flex"
+                flexDirection="column"
+                gap="2"
+                bg="purple.600"
+              >
+                <MenuItem
+                  fontWeight="bold"
+                  textColor="white"
+                  _hover={{ textColor: 'purple.600', background: 'white' }}
+                  display="flex"
+                  justifyContent="space-between"
+                >
+                  Visualizar
+                  <Files size={20} />
+                </MenuItem>
+                <MenuItem
+                  fontWeight="bold"
+                  textColor="white"
+                  _hover={{ textColor: 'purple.600', background: 'white' }}
+                  display="flex"
+                  justifyContent="space-between"
+                >
+                  Editar
+                  <Pencil size={20} />
+                </MenuItem>
+                <MenuItem
+                  fontWeight="bold"
+                  textColor="white"
+                  _hover={{ textColor: 'purple.600', background: 'white' }}
+                  display="flex"
+                  justifyContent="space-between"
+                >
+                  Excluir
+                  <Trash size={20} />
+                </MenuItem>
+              </MenuList>
+            </Menu>
           </Tooltip>
         </td>
       </tr>
