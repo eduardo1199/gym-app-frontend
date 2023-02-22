@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { forwardRef, useRef } from 'react'
 import {
   IconButton,
   Menu,
@@ -25,16 +25,15 @@ interface TableRowProps {
   weight: string
   id: string
   active: boolean
+  openModalDeleteStudent: () => void
 }
 
-export function TableRow(props: TableRowProps) {
-  const {
+const TableRowComponent = (props: TableRowProps, ref: any) => {
+  /* const {
     isOpen: isOpenModalEditStudent,
     onOpen: onOpenModalEditStudent,
     onClose: onCloseModalEditStudent,
-  } = useDisclosure()
-
-  const btnRef = useRef(null)
+  } = useDisclosure() */
 
   return (
     <>
@@ -108,8 +107,7 @@ export function TableRow(props: TableRowProps) {
                   _focus={{ textColor: 'purple.600', background: 'white' }}
                   display="flex"
                   justifyContent="space-between"
-                  ref={btnRef}
-                  onClick={onOpenModalEditStudent}
+                  ref={ref}
                 >
                   Visualizar
                   <Files size={20} />
@@ -121,6 +119,7 @@ export function TableRow(props: TableRowProps) {
                   _focus={{ textColor: 'purple.600', background: 'white' }}
                   display="flex"
                   justifyContent="space-between"
+                  ref={ref}
                 >
                   Editar
                   <Pencil size={20} />
@@ -132,6 +131,8 @@ export function TableRow(props: TableRowProps) {
                   _focus={{ textColor: 'purple.600', background: 'white' }}
                   display="flex"
                   justifyContent="space-between"
+                  onClick={props.openModalDeleteStudent}
+                  ref={ref}
                 >
                   Excluir
                   <Trash size={20} />
@@ -145,11 +146,7 @@ export function TableRow(props: TableRowProps) {
         <td className="py-4"></td>
       </tr>
 
-      <Modal
-        onClose={onCloseModalEditStudent}
-        finalFocusRef={btnRef}
-        isOpen={isOpenModalEditStudent}
-      >
+      {/* <Modal onClose={onCloseModalEditStudent} isOpen={isOpenModalEditStudent}>
         <ModalOverlay />
         <ModalContent bg={'purple.600'}>
           <ModalHeader>
@@ -161,7 +158,9 @@ export function TableRow(props: TableRowProps) {
             <button onClick={onCloseModalEditStudent}>Close</button>
           </ModalFooter>
         </ModalContent>
-      </Modal>
+      </Modal> */}
     </>
   )
 }
+
+export const TableRow = forwardRef(TableRowComponent)
