@@ -33,7 +33,7 @@ export function SideBar() {
       <>
         <button
           onClick={toggleOpenOrCloseDrawer}
-          className="w-[70px] flex bg-primary-purple relative hover:bg-secondary-purple transition-colors"
+          className="w-[70px] min-w-[70px] flex bg-primary-purple relative hover:bg-secondary-purple transition-colors"
         >
           <CaretRight
             size={20}

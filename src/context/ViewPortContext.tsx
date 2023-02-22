@@ -14,6 +14,8 @@ export function ViewPortProvider({ children }: ViewPortProviderProps) {
   useEffect(() => {
     const matchMedia = window.matchMedia(`(max-width:${BREAK_POINT}px)`)
 
+    setMatch(matchMedia.matches)
+
     window.addEventListener('resize', () => {
       setMatch(matchMedia.matches)
     })
