@@ -26,20 +26,31 @@ const AlertConfirmComponent = (
       onClose={onCloseAlert}
     >
       <AlertDialogOverlay>
-        <AlertDialogContent>
-          <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Delete Customer
+        <AlertDialogContent bg="#5041BC">
+          <AlertDialogHeader fontSize="lg" fontWeight="bold" color="white">
+            Confirmação de exclusão
           </AlertDialogHeader>
 
           <AlertDialogBody>
-            Are you sure? You undo this action afterwards.
+            <span className="text-alert-danger font-semibold">
+              Tem certeza que deseja excluir esse alunos?
+            </span>
           </AlertDialogBody>
 
-          <AlertDialogFooter>
-            <button ref={ref} onClick={onCloseAlert}>
+          <AlertDialogFooter display="flex" justifyContent="space-between">
+            <button
+              ref={ref}
+              onClick={onCloseAlert}
+              className="bg-primary-yellow px-3 py-2 text-base text-white font-bold rounded-lg focus:outline-none focus:ring focus:ring-secondary-yellow"
+            >
               Cancel
             </button>
-            <button onClick={onCloseAlert}>Delete</button>
+            <button
+              onClick={onCloseAlert}
+              className="bg-alert-danger px-3 py-2 text-base text-white font-bold rounded-lg focus:outline-none focus:ring focus:ring-secondary-alert-danger"
+            >
+              Delete
+            </button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialogOverlay>

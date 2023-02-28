@@ -22,7 +22,9 @@ module.exports = {
         'secondary-green': '#43BE83',
         'secondary-orange': '#FF8057',
         'primary-yellow': '#FFC629',
+        'secondary-yellow': '#ffe760',
         'alert-danger': '#F8342E',
+        'secondary-alert-danger': '#ff5238',
         'primary-pink': '#EA8F95',
         'secondary-pink': '#F5F3FF',
         'gradient-linear':
