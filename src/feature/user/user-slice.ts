@@ -21,7 +21,15 @@ export const apiSlice = createApi({
         method: 'GET',
       }),
     }),
+    DeleteUser: builder.mutation<{ id: string }, string>({
+      query: (id) => ({
+        url: `user/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (result, error, id) => [{ type: 'User', id }],
+    }),
   }),
 })
 
-export const { useGetUserQuery, useGetUsersQuery } = apiSlice
+export const { useGetUserQuery, useGetUsersQuery, useDeleteUserMutation } =
+  apiSlice

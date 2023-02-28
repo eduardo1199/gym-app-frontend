@@ -13,10 +13,11 @@ import {
 interface AlertConfirmProps {
   isOpen: boolean
   onCloseAlert: () => void
+  onSubmit: () => Promise<void>
 }
 
 const AlertConfirmComponent = (
-  { isOpen, onCloseAlert }: AlertConfirmProps,
+  { isOpen, onCloseAlert, onSubmit }: AlertConfirmProps,
   ref: any,
 ) => {
   return (
@@ -46,7 +47,7 @@ const AlertConfirmComponent = (
               Cancel
             </button>
             <button
-              onClick={onCloseAlert}
+              onClick={onSubmit}
               className="bg-alert-danger px-3 py-2 text-base text-white font-bold rounded-lg focus:outline-none focus:ring focus:ring-secondary-alert-danger"
             >
               Delete

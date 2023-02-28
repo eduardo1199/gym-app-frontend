@@ -1,22 +1,55 @@
-import { useDisclosure } from '@chakra-ui/react'
+import { useDisclosure, useToast } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
 import { AlertConfirm } from '../../components/AlertConfirm'
 import { Header } from '../../components/Header'
 import { TableRow } from '../../components/Table/TableRow'
-import { useGetUsersQuery } from '../../feature/user/user-slice'
+import {
+  useGetUsersQuery,
+  useDeleteUserMutation,
+} from '../../feature/user/user-slice'
 import { dateFormat } from '../../utils'
 
 export function Students() {
+  const [userId, setUserId] = useState('')
+
+  const toast = useToast()
+
   const { data: users } = useGetUsersQuery()
+  const [handleDeleteUserMutation, { isLoading, isSuccess, isError }] =
+    useDeleteUserMutation()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  function handleOpenModalDeleteStudent() {
+  function handleOpenAlertConfirm(id: string) {
+    setUserId(id)
     onOpen()
+  }
+
+  async function handleDeleteStudent() {
+    try {
+      await handleDeleteUserMutation(userId)
+
+      toast({
+        title: 'Usuário deletado com sucesso!',
+        status: 'success',
+        isClosable: true,
+      })
+
+      setUserId('')
+    } catch {
+      toast({
+        title: 'Erro ao deletar usuário!',
+        status: 'error',
+        isClosable: true,
+      })
+    } finally {
+      onClose()
+    }
   }
 
   function handleOnCloseModalDeleteStudent() {
     onClose()
+    setUserId('')
   }
 
   const ref = useRef(null)
@@ -54,7 +87,7 @@ export function Students() {
                     startDatePlan={dateFormat(user.startDateForPlan)}
                     weight={user.weight}
                     ref={ref}
-                    openModalDeleteStudent={handleOpenModalDeleteStudent}
+                    onOpenAlertDelete={handleOpenAlertConfirm}
                   />
                 )
               })}
@@ -67,6 +100,7 @@ export function Students() {
         ref={ref}
         isOpen={isOpen}
         onCloseAlert={handleOnCloseModalDeleteStudent}
+        onSubmit={handleDeleteStudent}
       />
     </>
   )

@@ -25,7 +25,7 @@ interface TableRowProps {
   weight: string
   id: string
   active: boolean
-  openModalDeleteStudent: () => void
+  onOpenAlertDelete: (id: string) => void
 }
 
 const TableRowComponent = (props: TableRowProps, ref: any) => {
@@ -131,7 +131,7 @@ const TableRowComponent = (props: TableRowProps, ref: any) => {
                   _focus={{ textColor: 'purple.600', background: 'white' }}
                   display="flex"
                   justifyContent="space-between"
-                  onClick={props.openModalDeleteStudent}
+                  onClick={() => props.onOpenAlertDelete(props.id)}
                   ref={ref}
                 >
                   Excluir
