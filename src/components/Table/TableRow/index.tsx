@@ -37,26 +37,18 @@ const TableRowComponent = (props: TableRowProps, ref: any) => {
 
   return (
     <>
-      <tr className="bg-primary-white border border-tertiary-pink rounded-t-2xl rounded-b-2xl hover:shadow-md transition-shadow">
-        <td className="py-5 px-3">
-          <span className="text-base text-primary-gray font-semibold">
-            {props.name}
-          </span>
+      <tr className="bg-primary-white border border-tertiary-pink rounded-t-2xl rounded-b-2xl hover:shadow-md transition-shadow rounded-tl-md rounded-bl-md">
+        <td className="py-5 px-3 text-base text-primary-gray font-semibold">
+          {props.name}
         </td>
-        <td>
-          <span className="font-extrabold text-base text-primary-blue">
-            {props.startDatePlan}
-          </span>
+        <td className="font-extrabold text-base text-primary-blue">
+          {props.startDatePlan}
         </td>
-        <td>
-          <span className="text-base text-primary-gray font-semibold">
-            {props.ageUser} anos
-          </span>
+        <td className="text-base text-primary-gray font-semibold">
+          {props.ageUser} anos
         </td>
-        <td>
-          <span className="text-base text-primary-gray font-semibold">
-            {props.weight}kg
-          </span>
+        <td className="text-base text-primary-gray font-semibold">
+          {props.weight}kg
         </td>
         <td>
           <Tooltip
@@ -75,7 +67,7 @@ const TableRowComponent = (props: TableRowProps, ref: any) => {
             />
           </Tooltip>
         </td>
-        <td className="rounded">
+        <td>
           <Tooltip hasArrow label="Ações" bg="purple.600">
             <Menu>
               <MenuButton
@@ -143,7 +135,7 @@ const TableRowComponent = (props: TableRowProps, ref: any) => {
         </td>
       </tr>
       <tr>
-        <td className="py-4"></td>
+        <td className="py-2"></td>
       </tr>
 
       {/* <Modal onClose={onCloseModalEditStudent} isOpen={isOpenModalEditStudent}>

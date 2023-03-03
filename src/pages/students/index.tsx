@@ -62,17 +62,19 @@ export function Students() {
           <table className="w-full">
             <thead>
               <tr className="bg-primary-purple opacity-95">
-                <th className="py-4 text-primary-white text-left px-3">Nome</th>
+                <th className="py-4 text-primary-white text-left px-3 rounded-tl-md rounded-bl-md">
+                  Nome
+                </th>
                 <th className="text-primary-white text-left">
                   Início do plano
                 </th>
                 <th className="text-primary-white text-left">Idade</th>
                 <th className="text-primary-white text-left">Peso</th>
                 <th className="text-primary-white text-left">Status</th>
-                <th />
+                <th className="rounded-tr-md rounded-br-md" />
               </tr>
               <tr>
-                <td className="py-4"></td>
+                <td className="py-2"></td>
               </tr>
             </thead>
             <tbody>
