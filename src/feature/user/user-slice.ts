@@ -4,7 +4,7 @@ import { User } from '../../types/user'
 
 export const apiSlice = createApi({
   reducerPath: 'api-users',
-  tagTypes: ['User'],
+  tagTypes: ['Users', 'User'],
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
   }),
@@ -14,19 +14,21 @@ export const apiSlice = createApi({
         url: `user/${id}`,
         method: 'GET',
       }),
+      providesTags: ['User'],
     }),
     GetUsers: builder.query<User[], void>({
       query: () => ({
         url: 'users',
         method: 'GET',
       }),
+      providesTags: ['Users'],
     }),
     DeleteUser: builder.mutation<{ id: string }, string>({
       query: (id) => ({
         url: `user/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, id) => [{ type: 'User', id }],
+      invalidatesTags: ['Users'],
     }),
   }),
 })
