@@ -1,14 +1,12 @@
 import { useState } from 'react'
 
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
-
-import Cookies from 'universal-cookie'
+/* import { useNavigate } from 'react-router-dom' */
 
 import { useToast } from '@chakra-ui/react'
 
-import Logo from '../../assets/logo.svg'
-
+/* import Logo from '../../assets/logo.svg'
+ */
 import { Spinner } from 'phosphor-react'
 import { Input } from '../../components/Input/Input'
 import { ProfileType } from '../../types/profile'
@@ -30,8 +28,7 @@ export function Home() {
   } = useForm<IFormInput>()
 
   const toast = useToast()
-  const cookies = new Cookies()
-  const navigate = useNavigate()
+  /* const navigate = useNavigate() */
 
   const [profile, setProfile] = useState<ProfileType>()
   const [isLoading, setIsLoading] = useState(false)
@@ -63,7 +60,7 @@ export function Home() {
         if (response.data.id) {
           const id = response.data.id
 
-          navigate(`/user/${id}`)
+          /* navigate(`/user/${id}`) */
         }
       } else {
         const response = await api.post<{ id: string }>(
@@ -74,8 +71,7 @@ export function Home() {
         setIsLoading(false)
 
         if (response.data.id) {
-          cookies.set('admin-id', response.data.id)
-          navigate('/dashboard')
+          /*  navigate('/dashboard') */
         }
       }
     } catch (error) {
@@ -93,10 +89,13 @@ export function Home() {
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-primary-purple">
       <div className="w-[1100px] flex lg:flex-row flex-col justify-between items-center">
-        <img src={Logo} alt="logo" width="400px" height="250px" />
+        {/* <img src={Logo} alt="logo" width="400px" height="250px" /> */}
         <div className="w-[300px] lg:w-[400px] flex flex-col items-center">
           <div className="flex flex-col gap-4">
-            <span className="text-primary-white text-2xl font-bold">
+            <span
+              className="text-primary-white text-2xl font-bold"
+              data-testid="home-form-title"
+            >
               Você é aluno ou gerente?
             </span>
 
