@@ -16,10 +16,16 @@ interface ModalComponentProps {
   onCloseModalEdit: () => void
   isOpenModalEdit: boolean
   children: ReactNode
+  handleSubmit: () => void
 }
 
 function ModalComponent(
-  { isOpenModalEdit, onCloseModalEdit, children }: ModalComponentProps,
+  {
+    isOpenModalEdit,
+    onCloseModalEdit,
+    children,
+    handleSubmit,
+  }: ModalComponentProps,
   ref: any,
 ) {
   return (
@@ -31,8 +37,11 @@ function ModalComponent(
         </ModalHeader>
         <ModalCloseButton textColor={'white'} fontSize={14} />
         <ModalBody>{children}</ModalBody>
-        <ModalFooter>
-          <button onClick={onCloseModalEdit}>Close</button>
+        <ModalFooter display="flex" justifyContent="space-between">
+          <button onClick={onCloseModalEdit}>Fechar</button>
+          <button type="submit" onClick={handleSubmit}>
+            Salvar
+          </button>
         </ModalFooter>
       </ModalContent>
     </ModalContainer>
