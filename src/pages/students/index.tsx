@@ -2,6 +2,7 @@ import { useDisclosure, useToast } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
 import { AlertConfirm } from '../../components/AlertConfirm'
 import { Header } from '../../components/Header'
+import { Modal } from '../../components/Modal'
 import { TableRow } from '../../components/Table/TableRow'
 import {
   useGetUsersQuery,
@@ -19,10 +20,20 @@ export function Students() {
     useDeleteUserMutation()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const {
+    isOpen: isOpenModalEdit,
+    onOpen: onOpenModalEdit,
+    onClose: onCloseModalEdit,
+  } = useDisclosure()
 
   function handleOpenAlertConfirm(id: string) {
     setUserId(id)
     onOpen()
+  }
+
+  function handleOpenModalEdit(id: string) {
+    setUserId(id)
+    onOpenModalEdit()
   }
 
   async function handleDeleteStudent() {
@@ -47,7 +58,7 @@ export function Students() {
     }
   }
 
-  function handleOnCloseModalDeleteStudent() {
+  function handleOnCloseAlertDeleteStudent() {
     onClose()
     setUserId('')
   }
@@ -90,6 +101,7 @@ export function Students() {
                     weight={user.weight}
                     ref={ref}
                     onOpenAlertDelete={handleOpenAlertConfirm}
+                    onOpenModalEdit={handleOpenModalEdit}
                   />
                 )
               })}
@@ -101,9 +113,36 @@ export function Students() {
       <AlertConfirm
         ref={ref}
         isOpen={isOpen}
-        onCloseAlert={handleOnCloseModalDeleteStudent}
+        onCloseAlert={handleOnCloseAlertDeleteStudent}
         onSubmit={handleDeleteStudent}
       />
+
+      <Modal
+        isOpenModalEdit={isOpenModalEdit}
+        onCloseModalEdit={onCloseModalEdit}
+        ref={ref}
+        handleSubmit={() => {}}
+      >
+        <form action="" className="flex flex-col gap-2" onSubmit={() => {}}>
+          <label htmlFor="name">Nome do alunos</label>
+          <input type="text" id="name" placeholder="Nome do aluno" />
+
+          <label htmlFor="age">Idade</label>
+          <input type="number" id="age" placeholder="Idade do aluno" />
+
+          <label htmlFor="weight">Peso</label>
+          <input type="text" id="weight" placeholder="Peso do aluno" />
+
+          <label htmlFor="cpf">CPF</label>
+          <input type="text" id="cpf" placeholder="CPF do aluno" />
+
+          <label htmlFor="plan">Plano</label>
+          <input type="text" id="plan" placeholder="Plano do aluno" />
+
+          <label htmlFor="startDateForPlan">Data de início do plano</label>
+          <input type="date" id="startDateForPlan" />
+        </form>
+      </Modal>
     </>
   )
 }

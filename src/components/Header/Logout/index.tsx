@@ -1,4 +1,11 @@
-import { Avatar } from '@chakra-ui/react'
+import {
+  Avatar,
+  Button,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+} from '@chakra-ui/react'
 import { CaretDown } from 'phosphor-react'
 
 interface LogoutProps {
@@ -15,9 +22,12 @@ export function Logout({ userName }: LogoutProps) {
       <span className="text-secondary-gray font-normal text-sm hidden xl:flex">
         {userName}
       </span>
-      <button type="button" className=" hidden xl:flex">
-        <CaretDown />
-      </button>
+      <Menu>
+        <MenuButton as={Button} rightIcon={<CaretDown />} />
+        <MenuList>
+          <MenuItem>Sair</MenuItem>
+        </MenuList>
+      </Menu>
     </div>
   )
 }
