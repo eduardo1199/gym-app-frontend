@@ -26,15 +26,10 @@ interface TableRowProps {
   id: string
   active: boolean
   onOpenAlertDelete: (id: string) => void
+  onOpenModalEdit: (id: string) => void
 }
 
 const TableRowComponent = (props: TableRowProps, ref: any) => {
-  /* const {
-    isOpen: isOpenModalEditStudent,
-    onOpen: onOpenModalEditStudent,
-    onClose: onCloseModalEditStudent,
-  } = useDisclosure() */
-
   return (
     <>
       <tr className="bg-primary-white border border-tertiary-pink rounded-t-2xl rounded-b-2xl hover:shadow-md transition-shadow rounded-tl-md rounded-bl-md">
@@ -112,6 +107,7 @@ const TableRowComponent = (props: TableRowProps, ref: any) => {
                   display="flex"
                   justifyContent="space-between"
                   ref={ref}
+                  onClick={() => props.onOpenModalEdit(props.id)}
                 >
                   Editar
                   <Pencil size={20} />
@@ -137,20 +133,6 @@ const TableRowComponent = (props: TableRowProps, ref: any) => {
       <tr>
         <td className="py-2"></td>
       </tr>
-
-      {/* <Modal onClose={onCloseModalEditStudent} isOpen={isOpenModalEditStudent}>
-        <ModalOverlay />
-        <ModalContent bg={'purple.600'}>
-          <ModalHeader>
-            <p className="text-primary-white">VISUALIZAÇÃO DO ESTUDANTE</p>
-          </ModalHeader>
-          <ModalCloseButton textColor={'white'} fontSize={16} />
-          <ModalBody></ModalBody>
-          <ModalFooter>
-            <button onClick={onCloseModalEditStudent}>Close</button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal> */}
     </>
   )
 }
