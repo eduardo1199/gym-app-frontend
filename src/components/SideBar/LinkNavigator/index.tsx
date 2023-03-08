@@ -19,20 +19,17 @@ export function LinkNavigator({
   const activeLink = href === pathname
 
   return (
-    <NavLink to={href}>
-      <a
-        className={`flex items-center gap-8 px-3 py-2 rounded-xl text-base ${
-          activeLink
-            ? 'text-primary-purple font-extrabold bg-primary-white'
-            : 'font-semibold text-primary-white'
-        } hover:text-primary-purple hover:font-extrabold hover:bg-primary-white transition duration-400`}
-        {...props}
-      >
-        <>
-          {icon}
-          <p className="text-right">{route}</p>
-        </>
-      </a>
+    <NavLink
+      to={href}
+      className={`flex items-center gap-8 px-3 py-2 rounded-xl text-base ${
+        activeLink
+          ? 'text-primary-purple font-extrabold bg-primary-white focus:outline-none focus:ring focus:rounded-xl focus:ring-secondary-purple'
+          : 'font-semibold text-primary-white focus:outline-none focus:ring focus:rounded-xl focus:ring-white'
+      } hover:text-primary-purple hover:font-extrabold hover:bg-primary-white transition duration-400`}
+      {...props}
+    >
+      {icon}
+      <p className="text-right">{route}</p>
     </NavLink>
   )
 }

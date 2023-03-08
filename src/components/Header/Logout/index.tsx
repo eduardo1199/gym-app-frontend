@@ -35,13 +35,13 @@ export function Logout({ userName }: LogoutProps) {
       <Menu offset={[0, 28]}>
         <MenuButton
           as={Button}
-          rightIcon={
-            <CaretDown className="group-data-[state=active]:rotate-180 transition-transform" />
-          }
+          rightIcon={<CaretDown className="mr-2" />}
           display="flex"
           bg="transparent"
           p="0"
-          height="0"
+          height="15px"
+          width="15px"
+          padding="15px"
           minWidth="0"
           border="none"
           _hover={{ bg: 'transparent' }}
