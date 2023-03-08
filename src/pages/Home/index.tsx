@@ -74,7 +74,7 @@ export function Home() {
         setIsLoading(false)
 
         if (response.data.id) {
-          cookies.set('admin-id', response.data.id)
+          cookies.set('@gymapp-admin', response.data.id)
           navigate('/dashboard')
         }
       }
