@@ -32,7 +32,7 @@ export function Logout({ userName }: LogoutProps) {
       <span className="text-secondary-gray font-normal text-sm hidden xl:flex">
         {userName}
       </span>
-      <Menu>
+      <Menu offset={[0, 28]}>
         <MenuButton
           as={Button}
           rightIcon={
