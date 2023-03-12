@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom'
 import { useGetAdminQuery } from '../../feature/admin/admin-slice'
 
-import { InputSearch } from './Input'
+import { InputSearch } from './InputSearch'
 import { Logout } from './Logout'
 import { titleFromPage } from './utils'
 

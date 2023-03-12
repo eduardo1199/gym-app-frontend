@@ -14,7 +14,7 @@ export const apiAdminSlice = createApi({
   endpoints: (builder) => ({
     GetAdmin: builder.query<Admin, void>({
       query: () => ({
-        url: `/admin/${cookies.get('admin-id')}`,
+        url: `/admin/${cookies.get('@gymapp-admin')}`,
         method: 'GET',
       }),
     }),

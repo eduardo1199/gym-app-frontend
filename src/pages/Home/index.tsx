@@ -72,6 +72,8 @@ export function Home() {
 
         if (response.data.id) {
           /*  navigate('/dashboard') */
+          /*  cookies.set('@gymapp-admin', response.data.id)
+          navigate('/dashboard') */
         }
       }
     } catch (error) {

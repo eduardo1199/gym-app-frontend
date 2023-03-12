@@ -2,27 +2,38 @@ import { useDisclosure, useToast } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
 import { AlertConfirm } from '../../components/AlertConfirm'
 import { Header } from '../../components/Header'
-import { TableRow } from '../../components/Table/TableRow'
+import { Modal } from '../../components/Modal'
+import { TableRow } from './components/Table/TableRow'
 import {
   useGetUsersQuery,
   useDeleteUserMutation,
 } from '../../feature/user/user-slice'
 import { dateFormat } from '../../utils'
+import { StudentForm } from './components/StudentForm'
 
 export function Students() {
   const [userId, setUserId] = useState('')
 
-  const toast = useToast()
-
   const { data: users } = useGetUsersQuery()
-  const [handleDeleteUserMutation, { isLoading, isSuccess, isError }] =
-    useDeleteUserMutation()
+  const [handleDeleteUserMutation] = useDeleteUserMutation()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const {
+    isOpen: isOpenModalEdit,
+    onOpen: onOpenModalEdit,
+    onClose: onCloseModalEdit,
+  } = useDisclosure()
+
+  const toast = useToast()
 
   function handleOpenAlertConfirm(id: string) {
     setUserId(id)
     onOpen()
+  }
+
+  function handleOpenModalEdit(id: string) {
+    setUserId(id)
+    onOpenModalEdit()
   }
 
   async function handleDeleteStudent() {
@@ -47,7 +58,7 @@ export function Students() {
     }
   }
 
-  function handleOnCloseModalDeleteStudent() {
+  function handleOnCloseAlertDeleteStudent() {
     onClose()
     setUserId('')
   }
@@ -90,6 +101,7 @@ export function Students() {
                     weight={user.weight}
                     ref={ref}
                     onOpenAlertDelete={handleOpenAlertConfirm}
+                    onOpenModalEdit={handleOpenModalEdit}
                   />
                 )
               })}
@@ -101,9 +113,19 @@ export function Students() {
       <AlertConfirm
         ref={ref}
         isOpen={isOpen}
-        onCloseAlert={handleOnCloseModalDeleteStudent}
+        onCloseAlert={handleOnCloseAlertDeleteStudent}
         onSubmit={handleDeleteStudent}
       />
+
+      <Modal
+        isOpenModalEdit={isOpenModalEdit}
+        onCloseModalEdit={onCloseModalEdit}
+        ref={ref}
+        handleSubmit={() => {}}
+        visibleButtonsFooter={false}
+      >
+        <StudentForm onCloseModalEdit={onCloseModalEdit} />
+      </Modal>
     </>
   )
 }

@@ -33,7 +33,7 @@ const AlertConfirmComponent = (
           </AlertDialogHeader>
 
           <AlertDialogBody>
-            <span className="text-alert-danger font-semibold">
+            <span className="text-white font-semibold">
               Tem certeza que deseja excluir esse alunos?
             </span>
           </AlertDialogBody>
