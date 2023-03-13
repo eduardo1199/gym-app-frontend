@@ -91,7 +91,6 @@ export function Home() {
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-primary-purple">
       <div className="w-[1100px] flex lg:flex-row flex-col justify-between items-center">
-        {/* <img src={Logo} alt="logo" width="400px" height="250px" /> */}
         <div className="w-[300px] lg:w-[400px] flex flex-col items-center">
           <div className="flex flex-col gap-4">
             <span
@@ -170,6 +169,7 @@ export function Home() {
 
             <button
               type="submit"
+              data-testid="button-submit"
               className="bg-secondary-purple transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 font-bold text-lg text-white h-11 rounded flex justify-center items-center"
             >
               {isLoading ? (
