@@ -2,6 +2,14 @@ import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Home } from '../../../pages/Home'
 
+jest.mock('react-router-dom', () => {
+  return {
+    useNavigate() {
+      return {}
+    },
+  }
+})
+
 describe('Test Component Home Page Form', () => {
   it('should be render title form and select profile buttons and Inputs', () => {
     const { getByTestId, getByTitle, getByLabelText, queryByLabelText } =

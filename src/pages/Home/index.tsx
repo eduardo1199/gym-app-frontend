@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { useForm } from 'react-hook-form'
-/* import { useNavigate } from 'react-router-dom' */
+import { useNavigate } from 'react-router-dom'
 
 import { useToast } from '@chakra-ui/react'
 
@@ -28,7 +28,7 @@ export function Home() {
   } = useForm<IFormInput>()
 
   const toast = useToast()
-  /* const navigate = useNavigate() */
+  const navigate = useNavigate()
 
   const [profile, setProfile] = useState<ProfileType>()
   const [isLoading, setIsLoading] = useState(false)
@@ -60,7 +60,7 @@ export function Home() {
         if (response.data.id) {
           const id = response.data.id
 
-          /* navigate(`/user/${id}`) */
+          navigate(`/user/${id}`)
         }
       } else {
         const response = await api.post<{ id: string }>(
@@ -71,9 +71,8 @@ export function Home() {
         setIsLoading(false)
 
         if (response.data.id) {
-          /*  navigate('/dashboard') */
-          /*  cookies.set('@gymapp-admin', response.data.id)
-          navigate('/dashboard') */
+          /*  cookies.set('@gymapp-admin', response.data.id) */
+          navigate('/dashboard')
         }
       }
     } catch (error) {
