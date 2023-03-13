@@ -7,7 +7,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint src --ext .ts,.tsx --fix",
-    "test": "jest"
+    "test": "jest --watchAll"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.3.5",
