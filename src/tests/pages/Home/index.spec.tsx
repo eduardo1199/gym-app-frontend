@@ -64,9 +64,7 @@ describe('Test Component Home Page Form', () => {
   })
 
   it('should be login is required cpf with student profile', async () => {
-    const { findByTestId, getByText, getByTitle, getByLabelText } = render(
-      <Home />,
-    )
+    const { findByTestId, getByText, getByTitle } = render(<Home />)
 
     const buttonSelectProfileStudent = getByTitle('aluno')
 
