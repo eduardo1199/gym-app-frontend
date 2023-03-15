@@ -1,11 +1,13 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
+
+import { AxiosBaseQuery } from '../../services/axiosBaseQuery'
 
 import { User } from '../../types/user'
 
 export const apiSlice = createApi({
   reducerPath: 'api-users',
   tagTypes: ['Users', 'User'],
-  baseQuery: fetchBaseQuery({
+  baseQuery: AxiosBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
   }),
   endpoints: (builder) => ({
