@@ -1,16 +1,18 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
+
+import { AxiosBaseQuery } from '../../services/axiosBaseQuery'
 
 import { Plan } from '../../types/plan'
 
 export const apiPlanSlice = createApi({
   reducerPath: 'api-plans',
-  baseQuery: fetchBaseQuery({
+  baseQuery: AxiosBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
   }),
   endpoints: (builder) => ({
     GetPlans: builder.query<Plan[], void>({
       query: () => ({
-        url: '/plans',
+        url: 'plans',
         method: 'GET',
       }),
     }),

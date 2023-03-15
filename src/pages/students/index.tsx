@@ -70,6 +70,14 @@ export function Students() {
       <div className="p-8">
         <Header visibleSearchBar />
         <div className="h-screen mt-10">
+          <div className="mb-5 flex w-full justify-end">
+            <button
+              type="button"
+              className="bg-primary-purple p-3 rounded opacity-95 text-base font-bold text-white hover:bg-secondary-purple transition-colors focus:outline-none focus:ring focus:ring-primary-purple"
+            >
+              Cadastrar Aluno
+            </button>
+          </div>
           <table className="w-full">
             <thead>
               <tr className="bg-primary-purple opacity-95">

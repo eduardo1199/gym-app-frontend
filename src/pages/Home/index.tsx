@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import Cookies from 'universal-cookie'
+import { useAppDispatch } from '../../app/hooks'
 
 import { useToast } from '@chakra-ui/react'
 
@@ -15,6 +15,8 @@ import { ProfileType } from '../../types/profile'
 
 import { api } from '../../services/api'
 import { AxiosError } from 'axios'
+import { setToken } from '../../feature/auth'
+import Cookies from 'universal-cookie'
 
 type IFormInput = {
   cpf: string
@@ -29,9 +31,10 @@ export function Home() {
     getValues,
   } = useForm<IFormInput>()
 
+  const dispatch = useAppDispatch()
   const toast = useToast()
-  const cookies = new Cookies()
   const navigate = useNavigate()
+  const cookies = new Cookies()
 
   const [profile, setProfile] = useState<ProfileType>()
   const [isLoading, setIsLoading] = useState(false)
@@ -75,6 +78,7 @@ export function Home() {
 
         if (response.data.id) {
           cookies.set('@gymapp-admin', response.data.id)
+          dispatch(setToken(response.data.id))
           navigate('/dashboard')
         }
       }
@@ -93,10 +97,13 @@ export function Home() {
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-primary-purple">
       <div className="w-[1100px] flex lg:flex-row flex-col justify-between items-center">
-        <img src={Logo} alt="logo" width="400px" height="250px" />
+        <img src={Logo} alt="" className="w-[50%]" />
         <div className="w-[300px] lg:w-[400px] flex flex-col items-center">
           <div className="flex flex-col gap-4">
-            <span className="text-primary-white text-2xl font-bold">
+            <span
+              className="text-primary-white text-2xl font-bold"
+              data-testid="home-form-title"
+            >
               Você é aluno ou gerente?
             </span>
 
@@ -169,6 +176,7 @@ export function Home() {
 
             <button
               type="submit"
+              data-testid="button-submit"
               className="bg-secondary-purple transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 font-bold text-lg text-white h-11 rounded flex justify-center items-center"
             >
               {isLoading ? (

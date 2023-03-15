@@ -10,6 +10,9 @@ import { CaretDown } from 'phosphor-react'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'universal-cookie'
 
+import { resetToken } from '../../../feature/auth'
+import { useAppDispatch } from '../../../app/hooks'
+
 interface LogoutProps {
   userName: string
 }
@@ -18,8 +21,11 @@ export function Logout({ userName }: LogoutProps) {
   const navigation = useNavigate()
   const cookies = new Cookies()
 
+  const dispatch = useAppDispatch()
+
   function handleLogout() {
     cookies.remove('@gymapp-admin')
+    dispatch(resetToken())
     navigation('/')
   }
 
@@ -45,7 +51,6 @@ export function Logout({ userName }: LogoutProps) {
           minWidth="0"
           border="none"
           _hover={{ bg: 'transparent' }}
-          _group
         />
         <MenuList
           p="2"

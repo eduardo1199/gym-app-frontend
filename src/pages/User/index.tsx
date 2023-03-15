@@ -51,7 +51,7 @@ export function User() {
           <div className="bg-primary-purple flex flex-1 mx-5 rounded-lg p-5">
             <div className="w-96 flex flex-col gap-16">
               <h1 className="text-5xl font-bold text-primary-white block">
-                Seu plano {user.isActive ? 'irá se vencer em' : 'venceu faz'}
+                Seu plano {user.isActive ? 'irá vencer em' : 'venceu faz'}
                 <span
                   className={`${
                     user.isActive ? 'text-secondary-green' : 'text-alert-danger'

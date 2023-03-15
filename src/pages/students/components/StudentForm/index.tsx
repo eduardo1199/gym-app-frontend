@@ -1,3 +1,5 @@
+import { Select } from '@chakra-ui/select'
+
 interface StudentFormProps {
   onCloseModalEdit: () => void
 }
@@ -35,7 +37,7 @@ export function StudentForm({ onCloseModalEdit }: StudentFormProps) {
         Peso
       </label>
       <input
-        type="text"
+        type="number"
         id="weight"
         placeholder="Peso do aluno"
         className="p-2 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
@@ -54,12 +56,37 @@ export function StudentForm({ onCloseModalEdit }: StudentFormProps) {
       <label htmlFor="plan" className="text-white font-semibold">
         Plano
       </label>
-      <input
-        type="text"
+      <Select
         id="plan"
-        placeholder="Plano do aluno"
-        className="p-2 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
-      />
+        color="white"
+        fontSize={'14px'}
+        focusBorderColor={'purple.700'}
+        background="#5041BC"
+        filter="auto"
+        brightness="125%"
+        border="none"
+        _focus={{ ringColor: 'purple.700' }}
+        _placeholder={{ opacity: '0.7' }}
+      >
+        <option
+          value="option1"
+          className="placeholder:text-white placeholder:text-sm !bg-primary-purple font-semibold text-sm"
+        >
+          Option 1
+        </option>
+        <option
+          value="option2"
+          className="placeholder:text-white placeholder:text-sm !bg-primary-purple font-semibold text-sm"
+        >
+          Option 2
+        </option>
+        <option
+          value="option3"
+          className="placeholder:text-white placeholder:text-sm !bg-primary-purple font-semibold text-sm"
+        >
+          Option 3
+        </option>
+      </Select>
 
       <label htmlFor="startDateForPlan" className="text-white font-semibold">
         Data de início do plano
