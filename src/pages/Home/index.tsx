@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
+import { useAppDispatch } from '../../app/hooks'
+
 import { useToast } from '@chakra-ui/react'
 
 import Logo from '../../assets/logo.svg'
@@ -13,6 +15,8 @@ import { ProfileType } from '../../types/profile'
 
 import { api } from '../../services/api'
 import { AxiosError } from 'axios'
+import { setToken } from '../../feature/auth'
+import Cookies from 'universal-cookie'
 
 type IFormInput = {
   cpf: string
@@ -27,8 +31,10 @@ export function Home() {
     getValues,
   } = useForm<IFormInput>()
 
+  const dispatch = useAppDispatch()
   const toast = useToast()
   const navigate = useNavigate()
+  const cookies = new Cookies()
 
   const [profile, setProfile] = useState<ProfileType>()
   const [isLoading, setIsLoading] = useState(false)
@@ -71,7 +77,8 @@ export function Home() {
         setIsLoading(false)
 
         if (response.data.id) {
-          /*  cookies.set('@gymapp-admin', response.data.id) */
+          cookies.set('@gymapp-admin', response.data.id)
+          dispatch(setToken(response.data.id))
           navigate('/dashboard')
         }
       }

@@ -8,110 +8,126 @@ import { Students } from './pages/Students'
 import { User } from './pages/User'
 
 import { DefaultLayout } from './layouts'
-import { tokenSlice } from './feature/auth'
+import { useAppSelect, useAppDispatch } from './app/hooks'
+import { setToken } from './feature/auth'
+import { useEffect } from 'react'
+import Cookies from 'universal-cookie'
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    children: [
-      {
-        path: '/',
-        element: <Home />,
-      },
-    ],
-  },
-  {
-    path: '/',
-    loader: () => {
-      const { token } = tokenSlice.getInitialState()
+function ParseRoutes() {
+  const dispatch = useAppDispatch()
 
-      if (!token) {
-        return redirect('/')
-      }
+  const token = useAppSelect((state) => state.token.token)
 
-      return null
+  useEffect(() => {
+    const cookies = new Cookies()
+
+    const token = cookies.get('@gymapp-admin')
+
+    if (token) {
+      dispatch(setToken(token))
+    }
+  }, [dispatch])
+
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      children: [
+        {
+          path: '/',
+          element: <Home />,
+          loader: () => {
+            if (token) {
+              return redirect('/dashboard')
+            }
+
+            return null
+          },
+        },
+      ],
     },
-    element: <DefaultLayout />,
-    children: [
-      {
-        path: '/dashboard',
-        element: <Dashboard />,
-      },
-    ],
-  },
-  {
-    path: '/',
-    loader: () => {
-      const { token } = tokenSlice.getInitialState()
+    {
+      path: '/',
+      element: <DefaultLayout />,
+      children: [
+        {
+          path: '/dashboard',
+          element: <Dashboard />,
+          loader: () => {
+            if (!token) {
+              return redirect('/')
+            }
 
-      if (!token) {
-        return redirect('/')
-      }
-
-      return null
+            return null
+          },
+        },
+      ],
     },
-    element: <DefaultLayout />,
-    children: [
-      {
-        path: '/machines',
-        element: <Machines />,
-      },
-    ],
-  },
+    {
+      path: '/',
+      element: <DefaultLayout />,
+      children: [
+        {
+          path: '/machines',
+          element: <Machines />,
+          loader: () => {
+            if (!token) {
+              return redirect('/')
+            }
 
-  {
-    path: '/',
-    loader: () => {
-      const { token } = tokenSlice.getInitialState()
-
-      if (!token) {
-        return redirect('/')
-      }
-
-      return null
+            return null
+          },
+        },
+      ],
     },
-    element: <DefaultLayout />,
-    children: [
-      {
-        path: '/plans',
-        element: <Plans />,
-      },
-    ],
-  },
-  {
-    path: '/',
-    loader: () => {
-      const { token } = tokenSlice.getInitialState()
 
-      if (!token) {
-        return redirect('/')
-      }
+    {
+      path: '/',
+      element: <DefaultLayout />,
+      children: [
+        {
+          path: '/plans',
+          element: <Plans />,
+          loader: () => {
+            if (!token) {
+              return redirect('/')
+            }
 
-      return null
+            return null
+          },
+        },
+      ],
     },
-    element: <DefaultLayout />,
-    children: [
-      {
-        path: '/students',
-        element: <Students />,
-      },
-    ],
-  },
-  {
-    path: '/',
-    children: [
-      {
-        path: '/user/:id',
-        element: <User />,
-      },
-    ],
-  },
-])
+    {
+      path: '/',
+      element: <DefaultLayout />,
+      children: [
+        {
+          path: '/students',
+          element: <Students />,
+          loader: () => {
+            if (!token) {
+              return redirect('/')
+            }
+
+            return null
+          },
+        },
+      ],
+    },
+    {
+      path: '/',
+      children: [
+        {
+          path: '/user/:id',
+          element: <User />,
+        },
+      ],
+    },
+  ])
+
+  return router
+}
 
 export function Router() {
-  const { token } = tokenSlice.getInitialState()
-
-  console.log(token)
-
-  return <RouterProvider router={router} />
+  return <RouterProvider router={ParseRoutes()} />
 }
