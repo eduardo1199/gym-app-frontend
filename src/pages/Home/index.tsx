@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom'
 
 import { useToast } from '@chakra-ui/react'
 
-/* import Logo from '../../assets/logo.svg'
- */
+import Logo from '../../assets/logo.svg'
+
 import { Spinner } from 'phosphor-react'
 import { Input } from '../../components/Input/Input'
 import { ProfileType } from '../../types/profile'
@@ -90,6 +90,7 @@ export function Home() {
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-primary-purple">
       <div className="w-[1100px] flex lg:flex-row flex-col justify-between items-center">
+        <img src={Logo} alt="" className="w-[50%]" />
         <div className="w-[300px] lg:w-[400px] flex flex-col items-center">
           <div className="flex flex-col gap-4">
             <span

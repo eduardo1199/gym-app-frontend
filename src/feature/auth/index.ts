@@ -5,7 +5,7 @@ interface TokenUser {
 }
 
 const initialState: TokenUser = {
-  token: null,
+  token: 'null',
 }
 
 export const tokenSlice = createSlice({

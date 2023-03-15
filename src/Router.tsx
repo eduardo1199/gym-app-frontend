@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, redirect, RouterProvider } from 'react-router-dom'
 
 import { Home } from './pages/Home'
 import { Dashboard } from './pages/Dashboard'
@@ -8,6 +8,7 @@ import { Students } from './pages/Students'
 import { User } from './pages/User'
 
 import { DefaultLayout } from './layouts'
+import { tokenSlice } from './feature/auth'
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,15 @@ const router = createBrowserRouter([
   },
   {
     path: '/',
+    loader: () => {
+      const { token } = tokenSlice.getInitialState()
+
+      if (!token) {
+        return redirect('/')
+      }
+
+      return null
+    },
     element: <DefaultLayout />,
     children: [
       {
@@ -31,6 +41,15 @@ const router = createBrowserRouter([
   },
   {
     path: '/',
+    loader: () => {
+      const { token } = tokenSlice.getInitialState()
+
+      if (!token) {
+        return redirect('/')
+      }
+
+      return null
+    },
     element: <DefaultLayout />,
     children: [
       {
@@ -42,6 +61,15 @@ const router = createBrowserRouter([
 
   {
     path: '/',
+    loader: () => {
+      const { token } = tokenSlice.getInitialState()
+
+      if (!token) {
+        return redirect('/')
+      }
+
+      return null
+    },
     element: <DefaultLayout />,
     children: [
       {
@@ -52,6 +80,15 @@ const router = createBrowserRouter([
   },
   {
     path: '/',
+    loader: () => {
+      const { token } = tokenSlice.getInitialState()
+
+      if (!token) {
+        return redirect('/')
+      }
+
+      return null
+    },
     element: <DefaultLayout />,
     children: [
       {
@@ -72,5 +109,9 @@ const router = createBrowserRouter([
 ])
 
 export function Router() {
+  const { token } = tokenSlice.getInitialState()
+
+  console.log(token)
+
   return <RouterProvider router={router} />
 }
