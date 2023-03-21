@@ -1,61 +1,93 @@
 import { Select } from '@chakra-ui/select'
+import { useState } from 'react'
+
+import { useForm } from 'react-hook-form'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+
+import { z } from 'zod'
+import { useGetPlansQuery } from '../../../../feature/plan/plan-slice'
+import { useGetUserQuery } from '../../../../feature/user/user-slice'
 
 interface StudentFormProps {
   onCloseModalEdit: () => void
+  userId: string
 }
 
-export function StudentForm({ onCloseModalEdit }: StudentFormProps) {
-  function handleEditStudentForm() {}
+const UserDataSchema = z.object({
+  name: z.string().min(1),
+  weight: z.number(),
+  cpf: z
+    .string()
+    .max(14, 'Quantidade máxima é 14!')
+    .regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, 'CPF inválido!'),
+  age: z.number(),
+  planId: z.string().uuid(),
+  startDateForPlan: z.date().nullable(),
+})
+
+type UserDataForm = z.infer<typeof UserDataSchema>
+
+export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
+  const { data: plans } = useGetPlansQuery()
+  const { data: user, isLoading } = useGetUserQuery(userId)
+
+  console.log(isLoading)
+
+  const {
+    register,
+    reset,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<UserDataForm>({
+    resolver: zodResolver(UserDataSchema),
+    defaultValues: {
+      age: user?.age,
+      cpf: user?.cpf,
+      name: user?.name,
+      planId: user?.planId,
+      startDateForPlan: new Date(user?.startDateForPlan!),
+      weight: user?.weight,
+    },
+  })
+
+  function handleEditStudentForm(data: UserDataForm) {}
 
   return (
     <form
       action=""
-      className="flex flex-col gap-2"
-      onSubmit={handleEditStudentForm}
+      className="flex flex-col gap-8"
+      onSubmit={handleSubmit(handleEditStudentForm)}
     >
-      <label htmlFor="name" className="text-white font-semibold">
-        Nome
-      </label>
       <input
-        type="text"
-        id="name"
         placeholder="Nome do aluno"
-        className="p-2 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
+        className="px-2 py-3 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
+        {...register('name')}
+        required
       />
 
-      <label htmlFor="age" className="text-white font-semibold">
-        Idade
-      </label>
       <input
-        type="number"
-        id="age"
         placeholder="Idade do aluno"
-        className="p-2 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
+        className="px-2 py-3 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
+        {...register('age', { valueAsNumber: true })}
+        required
       />
 
-      <label htmlFor="weight" className="text-white font-semibold">
-        Peso
-      </label>
       <input
-        type="number"
-        id="weight"
         placeholder="Peso do aluno"
-        className="p-2 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
+        className="px-2 py-3 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
+        {...register('weight', { valueAsNumber: true })}
+        required
       />
 
-      <label htmlFor="cpf" className="text-white font-semibold">
-        CPF
-      </label>
       <input
         type="text"
-        id="cpf"
         placeholder="CPF do aluno"
-        className="p-2 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
+        className="px-2 py-3 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
+        {...register('cpf')}
+        required
       />
 
-      <label htmlFor="plan" className="text-white font-semibold">
-        Plano
-      </label>
       <Select
         id="plan"
         color="white"
@@ -64,37 +96,31 @@ export function StudentForm({ onCloseModalEdit }: StudentFormProps) {
         background="#5041BC"
         filter="auto"
         brightness="125%"
+        size="lg"
         border="none"
         _focus={{ ringColor: 'purple.700' }}
         _placeholder={{ opacity: '0.7' }}
+        {...register('planId')}
+        isRequired
       >
-        <option
-          value="option1"
-          className="placeholder:text-white placeholder:text-sm !bg-primary-purple font-semibold text-sm"
-        >
-          Option 1
-        </option>
-        <option
-          value="option2"
-          className="placeholder:text-white placeholder:text-sm !bg-primary-purple font-semibold text-sm"
-        >
-          Option 2
-        </option>
-        <option
-          value="option3"
-          className="placeholder:text-white placeholder:text-sm !bg-primary-purple font-semibold text-sm"
-        >
-          Option 3
-        </option>
+        {plans?.map((plan) => {
+          return (
+            <option
+              key={plan.id}
+              value={plan.id}
+              className="placeholder:text-white placeholder:text-sm !bg-primary-purple font-semibold text-sm"
+            >
+              {plan.name}
+            </option>
+          )
+        })}
       </Select>
 
-      <label htmlFor="startDateForPlan" className="text-white font-semibold">
-        Data de início do plano
-      </label>
       <input
         type="date"
         id="startDateForPlan"
-        className="p-2 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
+        className="px-2 py-3 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
+        {...register('startDateForPlan', { valueAsDate: true })}
       />
 
       <div className="flex justify-between my-4">
