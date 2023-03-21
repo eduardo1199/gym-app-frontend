@@ -74,6 +74,7 @@ export function Students() {
             <button
               type="button"
               className="bg-primary-purple p-3 rounded opacity-95 text-base font-bold text-white hover:bg-secondary-purple transition-colors focus:outline-none focus:ring focus:ring-primary-purple"
+              onClick={() => handleOpenModalEdit('')}
             >
               Cadastrar Aluno
             </button>
@@ -132,7 +133,7 @@ export function Students() {
         handleSubmit={() => {}}
         visibleButtonsFooter={false}
       >
-        <StudentForm onCloseModalEdit={onCloseModalEdit} />
+        <StudentForm onCloseModalEdit={onCloseModalEdit} userId={userId} />
       </Modal>
     </>
   )

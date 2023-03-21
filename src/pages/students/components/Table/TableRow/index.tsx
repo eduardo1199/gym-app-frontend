@@ -21,8 +21,8 @@ import { DotsThreeVertical, Trash, Pencil, Files } from 'phosphor-react'
 interface TableRowProps {
   name: string
   startDatePlan: string
-  ageUser: string
-  weight: string
+  ageUser: number
+  weight: number
   id: string
   active: boolean
   onOpenAlertDelete: (id: string) => void

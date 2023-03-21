@@ -13,6 +13,7 @@
     "@chakra-ui/react": "^2.3.5",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@hookform/resolvers": "^3.0.0",
     "@reduxjs/toolkit": "^1.8.6",
     "axios": "^0.27.2",
     "date-fns": "^2.29.3",
@@ -24,7 +25,8 @@
     "react-input-mask": "^2.0.4",
     "react-redux": "^8.0.4",
     "react-router-dom": "^6.8.1",
-    "universal-cookie": "^4.0.4"
+    "universal-cookie": "^4.0.4",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^1.2.0",
