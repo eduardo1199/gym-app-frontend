@@ -11,6 +11,7 @@ import { useGetPlansQuery } from '../../../../feature/plan/plan-slice'
 import {
   useGetUserQuery,
   useCreateUserMutation,
+  useUpdateUserMutation,
 } from '../../../../feature/user/user-slice'
 import { Skeleton, Stack, useToast } from '@chakra-ui/react'
 
@@ -39,6 +40,7 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
   const { data: user, isLoading } = useGetUserQuery(userId)
   const toast = useToast()
   const [handleCreateUser] = useCreateUserMutation()
+  const [handleUpdateUser] = useUpdateUserMutation()
 
   const {
     register,
@@ -69,6 +71,27 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
   async function handleEditStudentForm(data: UserDataForm) {
     console.log(data)
     try {
+      if (!user?.id) {
+        const userData = {
+          ...data,
+          startDateForPlan: data.startDateForPlan
+            ? new Date(data.startDateForPlan).toISOString()
+            : undefined,
+        }
+
+        await handleCreateUser(userData)
+
+        toast({
+          colorScheme: 'green',
+          title: 'Usuário cadastrado com sucesso!',
+          isClosable: true,
+        })
+
+        reset()
+        onCloseModalEdit()
+
+        return
+      }
       const userData = {
         ...data,
         startDateForPlan: data.startDateForPlan
@@ -76,20 +99,21 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
           : undefined,
       }
 
-      if (!user?.id) {
-        await handleCreateUser(userData)
-
-        reset()
-        onCloseModalEdit()
-
-        toast({
-          colorScheme: 'danger',
-          title: 'Usuário cadastrado com sucesso!',
-          isClosable: true,
-        })
-
-        return
+      const params = {
+        id: user.id,
+        data: userData,
       }
+
+      await handleUpdateUser(params)
+
+      toast({
+        colorScheme: 'green',
+        title: 'Usuário editado com sucesso!',
+        isClosable: true,
+      })
+
+      reset()
+      onCloseModalEdit()
     } catch (error) {
       toast({
         colorScheme: 'danger',

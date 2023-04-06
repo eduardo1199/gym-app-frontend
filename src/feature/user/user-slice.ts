@@ -14,6 +14,11 @@ interface UserDataMutation {
   id: string | null
 }
 
+interface UserDataMutationUpdate {
+  id: string | null
+  data: Omit<UserDataMutation, 'id'>
+}
+
 export const apiSlice = createApi({
   reducerPath: 'api-users',
   tagTypes: ['Users', 'User'],
@@ -53,6 +58,14 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Users'],
     }),
+    UpdateUser: builder.mutation<{ message: string }, UserDataMutationUpdate>({
+      query: (params) => ({
+        method: 'PUT',
+        url: `user/${params.id}`,
+        data: params.data,
+      }),
+      invalidatesTags: ['Users', 'User'],
+    }),
   }),
 })
 
@@ -61,4 +74,5 @@ export const {
   useGetUsersQuery,
   useDeleteUserMutation,
   useCreateUserMutation,
+  useUpdateUserMutation,
 } = apiSlice
