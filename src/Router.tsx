@@ -1,9 +1,4 @@
-import {
-  createBrowserRouter,
-  Navigate,
-  redirect,
-  RouterProvider,
-} from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
 import { Home } from './pages/Home'
 import { Dashboard } from './pages/Dashboard'
@@ -38,7 +33,7 @@ function CheckToken(props: CheckTokenProps) {
   }, [dispatch])
 
   if (token) {
-    return <Navigate to="/dashboard" replace state={{ from: location }} />
+    return <Navigate to="/dashboard" />
   } else {
     return props.children
   }
@@ -69,16 +64,11 @@ function RedirectToHome(props: CheckTokenProps) {
 const router = createBrowserRouter([
   {
     path: '/',
-    children: [
-      {
-        path: '/',
-        element: (
-          <CheckToken>
-            <Home />
-          </CheckToken>
-        ),
-      },
-    ],
+    element: (
+      <CheckToken>
+        <Home />
+      </CheckToken>
+    ),
   },
   {
     path: '/',
