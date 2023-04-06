@@ -69,16 +69,16 @@ export function Home() {
           navigate(`/user/${id}`)
         }
       } else {
-        const response = await api.post<{ id: string }>(
-          '/admin/authentication',
-          { cpf, password },
-        )
+        const response = await api.post<string>('/admin/authentication', {
+          cpf,
+          password,
+        })
 
         setIsLoading(false)
 
-        if (response.data.id) {
-          cookies.set('@gymapp-admin', response.data.id)
-          dispatch(setToken(response.data.id))
+        if (response.data) {
+          cookies.set('@gymapp-admin', response.data)
+          dispatch(setToken(response.data))
           navigate('/dashboard')
         }
       }

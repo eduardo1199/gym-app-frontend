@@ -10,11 +10,12 @@ import {
 } from '../../feature/user/user-slice'
 import { dateFormat } from '../../utils'
 import { StudentForm } from './components/StudentForm'
+import { LoadingSkeleton } from './components/Skeleton'
 
 export function Students() {
   const [userId, setUserId] = useState('')
 
-  const { data: users } = useGetUsersQuery()
+  const { data: users, isLoading } = useGetUsersQuery()
   const [handleDeleteUserMutation] = useDeleteUserMutation()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -114,6 +115,11 @@ export function Students() {
                   />
                 )
               })}
+
+              {isLoading &&
+                Array.from([1, 2, 3, 5, 6]).map((value) => {
+                  return <LoadingSkeleton key={value} />
+                })}
             </tbody>
           </table>
         </div>

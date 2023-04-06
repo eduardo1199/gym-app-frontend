@@ -1,19 +1,11 @@
-import { forwardRef, useRef } from 'react'
+import { forwardRef } from 'react'
 import {
   IconButton,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Tooltip,
-  useDisclosure,
 } from '@chakra-ui/react'
 
 import { DotsThreeVertical, Trash, Pencil, Files } from 'phosphor-react'
