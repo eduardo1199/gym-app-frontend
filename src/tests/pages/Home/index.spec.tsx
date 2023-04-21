@@ -2,7 +2,12 @@ import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Home } from '../../../pages/Home'
 
-jest.mock('react-router-dom', () => {
+import { describe, expect, it, vi } from 'vitest'
+import { Provider } from 'react-redux'
+
+import { store } from '../../../app/store'
+
+vi.mock('react-router-dom', () => {
   return {
     useNavigate() {
       return {}
@@ -13,7 +18,11 @@ jest.mock('react-router-dom', () => {
 describe('Test Component Home Page Form', () => {
   it('should be render title form and select profile buttons and Inputs', () => {
     const { getByTestId, getByTitle, getByLabelText, queryByLabelText } =
-      render(<Home />)
+      render(
+        <Provider store={store}>
+          <Home />
+        </Provider>,
+      )
 
     expect(getByTestId('home-form-title')).toBeInTheDocument()
     expect(getByTitle('aluno')).toBeInTheDocument()
@@ -23,7 +32,11 @@ describe('Test Component Home Page Form', () => {
   })
 
   it('should be render input password after select profile admin', async () => {
-    const { getByTitle, getByLabelText, queryByLabelText } = render(<Home />)
+    const { getByTitle, getByLabelText, queryByLabelText } = render(
+      <Provider store={store}>
+        <Home />
+      </Provider>,
+    )
 
     expect(getByTitle('gerente')).toBeInTheDocument()
 
@@ -36,7 +49,11 @@ describe('Test Component Home Page Form', () => {
   })
 
   it('should be not render input password after select profile student', async () => {
-    const { getByTitle, getByLabelText, queryByLabelText } = render(<Home />)
+    const { getByTitle, getByLabelText, queryByLabelText } = render(
+      <Provider store={store}>
+        <Home />
+      </Provider>,
+    )
 
     expect(getByTitle('gerente')).toBeInTheDocument()
     expect(getByTitle('aluno')).toBeInTheDocument()
@@ -52,7 +69,11 @@ describe('Test Component Home Page Form', () => {
   })
 
   it('should be login is required values cpf and password', async () => {
-    const { findByTestId, getByText } = render(<Home />)
+    const { findByTestId, getByText } = render(
+      <Provider store={store}>
+        <Home />
+      </Provider>,
+    )
 
     expect(await findByTestId('button-submit')).toBeInTheDocument()
 
@@ -64,7 +85,11 @@ describe('Test Component Home Page Form', () => {
   })
 
   it('should be login is required cpf with student profile', async () => {
-    const { findByTestId, getByText, getByTitle } = render(<Home />)
+    const { findByTestId, getByText, getByTitle } = render(
+      <Provider store={store}>
+        <Home />
+      </Provider>,
+    )
 
     const buttonSelectProfileStudent = getByTitle('aluno')
 
@@ -80,7 +105,11 @@ describe('Test Component Home Page Form', () => {
   })
 
   it('should be login student profile', async () => {
-    const { findByTestId, getByTitle, getByPlaceholderText } = render(<Home />)
+    const { findByTestId, getByTitle, getByPlaceholderText } = render(
+      <Provider store={store}>
+        <Home />
+      </Provider>,
+    )
 
     const buttonSelectProfileStudent = getByTitle('aluno')
 
@@ -98,7 +127,11 @@ describe('Test Component Home Page Form', () => {
 
   it('should be value input cpf is invalid', async () => {
     const { findByTestId, getByTitle, getByPlaceholderText, getByText } =
-      render(<Home />)
+      render(
+        <Provider store={store}>
+          <Home />
+        </Provider>,
+      )
 
     const buttonSelectProfileStudent = getByTitle('aluno')
 
@@ -117,7 +150,11 @@ describe('Test Component Home Page Form', () => {
   })
 
   it('should be login admin profile', async () => {
-    const { findByTestId, getByTitle, getByPlaceholderText } = render(<Home />)
+    const { findByTestId, getByTitle, getByPlaceholderText } = render(
+      <Provider store={store}>
+        <Home />
+      </Provider>,
+    )
 
     const buttonSelectProfileAdmin = getByTitle('gerente')
     await userEvent.click(buttonSelectProfileAdmin)
