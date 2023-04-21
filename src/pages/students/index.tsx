@@ -10,11 +10,12 @@ import {
 } from '../../feature/user/user-slice'
 import { dateFormat } from '../../utils'
 import { StudentForm } from './components/StudentForm'
+import { LoadingSkeleton } from './components/Skeleton'
 
 export function Students() {
   const [userId, setUserId] = useState('')
 
-  const { data: users } = useGetUsersQuery()
+  const { data: users, isLoading } = useGetUsersQuery()
   const [handleDeleteUserMutation] = useDeleteUserMutation()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -74,6 +75,7 @@ export function Students() {
             <button
               type="button"
               className="bg-primary-purple p-3 rounded opacity-95 text-base font-bold text-white hover:bg-secondary-purple transition-colors focus:outline-none focus:ring focus:ring-primary-purple"
+              onClick={() => handleOpenModalEdit('')}
             >
               Cadastrar Aluno
             </button>
@@ -113,6 +115,11 @@ export function Students() {
                   />
                 )
               })}
+
+              {isLoading &&
+                Array.from([1, 2, 3, 5, 6]).map((value) => {
+                  return <LoadingSkeleton key={value} />
+                })}
             </tbody>
           </table>
         </div>
@@ -132,7 +139,7 @@ export function Students() {
         handleSubmit={() => {}}
         visibleButtonsFooter={false}
       >
-        <StudentForm onCloseModalEdit={onCloseModalEdit} />
+        <StudentForm onCloseModalEdit={onCloseModalEdit} userId={userId} />
       </Modal>
     </>
   )

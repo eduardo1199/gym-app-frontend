@@ -1,8 +1,8 @@
 export type User = {
   id: string
   name: string
-  age: string
-  weight: string
+  age: number
+  weight: number
   cpf: string
   registrationDate: string
   startDateForPlan: string

@@ -1,19 +1,11 @@
-import { forwardRef, useRef } from 'react'
+import { forwardRef } from 'react'
 import {
   IconButton,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Tooltip,
-  useDisclosure,
 } from '@chakra-ui/react'
 
 import { DotsThreeVertical, Trash, Pencil, Files } from 'phosphor-react'
@@ -21,8 +13,8 @@ import { DotsThreeVertical, Trash, Pencil, Files } from 'phosphor-react'
 interface TableRowProps {
   name: string
   startDatePlan: string
-  ageUser: string
-  weight: string
+  ageUser: number
+  weight: number
   id: string
   active: boolean
   onOpenAlertDelete: (id: string) => void

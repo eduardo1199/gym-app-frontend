@@ -2,7 +2,8 @@
   "extends": "@rocketseat/eslint-config/react",
   "rules": {
     "no-unused-vars": "off",
-    "no-useless-escape": "off"
+    "no-useless-escape": "off",
+    "no-undef": "off"
   }
   // "extends": "@rocketseat/eslint-config/node"
 }
