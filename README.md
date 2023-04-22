@@ -1,25 +1,25 @@
-##Nome do Projeto
+# Nome do Projeto
 
 Inserir uma breve descrição do projeto aqui.
 
-##Como Executar
+# Como Executar
 
 Clonar este repositório em sua máquina local.
 Instalar as dependências do projeto utilizando o comando npm install.
 Iniciar o servidor local com o comando npm start.
 
-##Tecnologias Envolvidas
+# Tecnologias Envolvidas
 
 [Inserir uma lista das principais tecnologias utilizadas no projeto aqui]
 
-##Imagens
+# Imagens
 
 [Inserir imagens do projeto aqui, com uma breve legenda para cada uma]
 
 Exemplo de imagem do projeto
 Legenda: Inserir uma breve descrição da imagem aqui.
 
-##Mais Informações
+# Mais Informações
 
 [Inserir informações adicionais sobre o projeto aqui, se necessário]
 
