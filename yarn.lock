@@ -1988,10 +1988,10 @@
   resolved "https://registry.npmjs.org/@types/mime/-/mime-3.0.1.tgz"
   integrity sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==
 
-"@types/node@*", "@types/node@^18.15.1":
-  version "18.15.12"
-  resolved "https://registry.npmjs.org/@types/node/-/node-18.15.12.tgz"
-  integrity sha512-Wha1UwsB3CYdqUm2PPzh/1gujGCNtWVUYF0mB00fJFoR4gTyWTDPjSm+zBF787Ahw8vSGgBja90MkgFwvB86Dg==
+"@types/node@*", "@types/node@^18.16.14":
+  version "18.16.14"
+  resolved "https://registry.npmjs.org/@types/node/-/node-18.16.14.tgz"
+  integrity sha512-+ImzUB3mw2c5ISJUq0punjDilUQ5GnUim0ZRvchHIWJmOC0G+p0kzhXBqj6cDjK0QdPFwzrHWgrJp3RPvCG5qg==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
