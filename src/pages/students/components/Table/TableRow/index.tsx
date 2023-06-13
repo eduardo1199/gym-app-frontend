@@ -19,6 +19,7 @@ interface TableRowProps {
   active: boolean
   onOpenAlertDelete: (id: string) => void
   onOpenModalEdit: (id: string) => void
+  onOpenSlide: (id: string) => void
 }
 
 const TableRowComponent = (props: TableRowProps, ref: any) => {
@@ -87,6 +88,7 @@ const TableRowComponent = (props: TableRowProps, ref: any) => {
                   display="flex"
                   justifyContent="space-between"
                   ref={ref}
+                  onClick={() => props.onOpenSlide(props.id)}
                 >
                   Visualizar
                   <Files size={20} />

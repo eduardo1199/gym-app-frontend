@@ -1,4 +1,4 @@
-import { useDisclosure, useToast } from '@chakra-ui/react'
+import { Slide, useDisclosure, useToast } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
 import { AlertConfirm } from '../../components/AlertConfirm'
 import { Header } from '../../components/Header'
@@ -11,6 +11,8 @@ import {
 import { dateFormat } from '../../utils'
 import { StudentForm } from './components/StudentForm'
 import { LoadingSkeleton } from './components/Skeleton'
+import { InputSearch } from '../../components/Header/InputSearch'
+import { SlideViewStudent } from './components/SlideViewStudent'
 
 export function Students() {
   const [userId, setUserId] = useState('')
@@ -24,6 +26,11 @@ export function Students() {
     onOpen: onOpenModalEdit,
     onClose: onCloseModalEdit,
   } = useDisclosure()
+  const {
+    isOpen: isOpenSlide,
+    onOpen: onOpenSlide,
+    onClose: onCloseSlide,
+  } = useDisclosure()
 
   const toast = useToast()
 
@@ -35,6 +42,11 @@ export function Students() {
   function handleOpenModalEdit(id: string) {
     setUserId(id)
     onOpenModalEdit()
+  }
+
+  function handleOpenSlide(id: string) {
+    setUserId(id)
+    onOpenSlide()
   }
 
   async function handleDeleteStudent() {
@@ -71,7 +83,8 @@ export function Students() {
       <div className="p-8">
         <Header visibleSearchBar />
         <div className="h-screen mt-10">
-          <div className="mb-5 flex w-full justify-end">
+          <div className="mb-5 flex w-full justify-between">
+            <InputSearch />
             <button
               type="button"
               className="bg-primary-purple p-3 rounded opacity-95 text-base font-bold text-white hover:bg-secondary-purple transition-colors focus:outline-none focus:ring focus:ring-primary-purple"
@@ -112,6 +125,7 @@ export function Students() {
                     ref={ref}
                     onOpenAlertDelete={handleOpenAlertConfirm}
                     onOpenModalEdit={handleOpenModalEdit}
+                    onOpenSlide={handleOpenSlide}
                   />
                 )
               })}
@@ -141,6 +155,8 @@ export function Students() {
       >
         <StudentForm onCloseModalEdit={onCloseModalEdit} userId={userId} />
       </Modal>
+
+      <SlideViewStudent isOpen={isOpenSlide} onClose={onCloseSlide} />
     </>
   )
 }
