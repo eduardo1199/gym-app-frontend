@@ -10,7 +10,7 @@ A plataforma indica quais usuários estão com planos atrasados e em dia, além 
 
 Página de login:
 
-![Captura de tela 2023-08-29 201720.png](Gym%20App%20Front%20e374e4ce40e0476e9a6bf079bcd6d850/Captura_de_tela_2023-08-29_201720.png)
+![página de login](images/minha_imagem.png)
 
 ## Como Executar
 
