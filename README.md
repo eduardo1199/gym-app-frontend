@@ -18,7 +18,6 @@ Clonar este repositório em sua máquina local.
 
 ```
 Para clonar o repositório utilize git clone [URL_repository]
-
 ```
 
 Instalar as dependências do projeto utilizando o comando npm install.
@@ -45,34 +44,6 @@ Página de login apresenta uma animação caso você seja gerente ou aluno, send
 💡 Abaixo é o botão de seleção genérico. Responsável pela interação de seleção caso seja aluno ou gerente.
 
 </aside>
-
-```
-interface SelectButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode
-  handleSelected: () => void
-  active: boolean
-}
-
-export function SelectButton({
-  children,
-  handleSelected,
-  active,
-  ...props
-}: SelectButtonProps) {
-  return (
-    <button
-      {...props}
-      onClick={() => handleSelected()}
-      className={classNames(
-        { 'bg-primary-blue hover:bg-primary-blue': active },
-        'transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 hover:bg-secondary-orange duration-300 text-primary-white font-bold px-5 py-2 rounded text-lg',
-      )}
-    >
-      {children}
-    </button>
-  )
-}
-```
 
 ## Tecnologias Envolvidas
 
@@ -128,3 +99,4 @@ export function SelectButton({
 [Inserir informações adicionais sobre o projeto aqui, se necessário]
 
 OBS: PROJETO EM DESENVOLVIMENTO
+
