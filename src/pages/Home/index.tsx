@@ -6,10 +6,6 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../app/hooks'
 
 import { useToast } from '@chakra-ui/react'
-
-import Logo from '../../assets/logo.svg'
-
-import { Spinner } from 'phosphor-react'
 import { Input } from '../../components/Input/Input'
 import { ProfileType } from '../../types/profile'
 
@@ -17,6 +13,9 @@ import { api } from '../../services/api'
 import { AxiosError } from 'axios'
 import { setToken } from '../../feature/auth'
 import Cookies from 'universal-cookie'
+import { GymLogo } from '../../components/Logo'
+import { SelectButton } from './components/SelectButton'
+import { ButtonLoading } from '../../components/ButtonLoading'
 
 type IFormInput = {
   cpf: string
@@ -95,10 +94,12 @@ export function Home() {
   }
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center bg-primary-purple">
-      <div className="w-[1100px] flex lg:flex-row flex-col justify-between items-center">
-        <img src={Logo} alt="" className="w-[50%]" />
-        <div className="w-[300px] lg:w-[400px] flex flex-col items-center">
+    <div className="w-screen h-screen flex items-center">
+      <div className="max-w-lg bg-primary-purple flex h-full p-10">
+        <GymLogo height="100%" />
+      </div>
+      <div className="flex flex-1 justify-center">
+        <div className="flex flex-col items-center bg-primary-yellow p-10 rounded shadow-2xl">
           <div className="flex flex-col gap-4">
             <span
               className="text-primary-white text-2xl font-bold"
@@ -108,30 +109,22 @@ export function Home() {
             </span>
 
             <div className="flex gap-20">
-              <button
+              <SelectButton
+                handleSelected={() => setProfile(ProfileType.Student)}
+                active={profile === ProfileType.Student}
                 type="button"
                 title="aluno"
-                onClick={() => setProfile(ProfileType.Student)}
-                className={`transition ease-in-out delay-50 ${
-                  profile === ProfileType.Student
-                    ? 'bg-primary-blue hover:bg-primary-blue'
-                    : 'bg-secondary-orange'
-                } hover:-translate-y-1 hover:scale-110 hover:bg-primary-yellow duration-300 text-primary-white font-bold px-5 py-2 rounded text-lg`}
               >
                 Aluno
-              </button>
-              <button
+              </SelectButton>
+              <SelectButton
+                handleSelected={() => setProfile(ProfileType.Manager)}
+                active={profile === ProfileType.Manager}
                 type="button"
                 title="gerente"
-                onClick={() => setProfile(ProfileType.Manager)}
-                className={`transition ease-in-out delay-50  ${
-                  profile === ProfileType.Manager
-                    ? 'bg-primary-blue hover:bg-primary-blue'
-                    : 'bg-primary-yellow'
-                } hover:-translate-y-1 hover:scale-110 hover:bg-secondary-orange duration-300 text-primary-white font-bold px-5 py-2 rounded text-lg`}
               >
                 Gerente
-              </button>
+              </SelectButton>
             </div>
           </div>
 
@@ -174,17 +167,9 @@ export function Home() {
               />
             )}
 
-            <button
-              type="submit"
-              data-testid="button-submit"
-              className="bg-secondary-purple transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 font-bold text-lg text-white h-11 rounded flex justify-center items-center"
-            >
-              {isLoading ? (
-                <Spinner className="animate-spin h-6 w-6 mr-3" />
-              ) : (
-                <p>Entrar</p>
-              )}
-            </button>
+            <ButtonLoading type="submit" isLoading={isLoading}>
+              Entrar
+            </ButtonLoading>
           </form>
         </div>
       </div>

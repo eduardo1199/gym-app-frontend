@@ -1,8 +1,8 @@
 import Logo from '../../assets/logo.svg'
 
 interface GymLogoProps {
-  width: string
-  height: string
+  width?: string
+  height?: string
 }
 
 export function GymLogo(props: GymLogoProps) {
