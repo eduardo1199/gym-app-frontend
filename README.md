@@ -1,16 +1,22 @@
-# GYM APP
+# Gym App Front
 
-![Texto Alternativo](images/login.png)
+## GYM APP
 
 Gym app é um projeto de gerenciamento de uma academia para administrar alunos, máquinas, planos da academia e muito mais. A plataforma é destinada para utilização do administrador da academia ou gerente. O gerente é capaz de criar planos no sistema, tais como inscrição de alunos e maquinários.
 
 A plataforma indica quais usuários estão com planos atrasados e em dia, além disso, mostra quais maquinários precisam de reparos, possibilidade de cadastro de planos diferentes para cada aluno.
 
-# Como Executar
+## Layouts
+
+Página de login:
+
+![Captura de tela 2023-08-29 201720.png](Gym%20App%20Front%20e374e4ce40e0476e9a6bf079bcd6d850/Captura_de_tela_2023-08-29_201720.png)
+
+## Como Executar
 
 Clonar este repositório em sua máquina local.
 
-```git
+```
 Para clonar o repositório utilize git clone [URL_repository]
 ```
 
@@ -20,17 +26,28 @@ Instalar as dependências do projeto utilizando o comando npm install.
 Utilizando nodejs e um gerenciador de pacotes yarn.
 
 execute yarn install ou yarn
+
 ```
 
 Iniciar o servidor local com o comando npm start.
 
 ```
 Para executar o projeto, utilize yarn dev.
+
 ```
 
-# Tecnologias Envolvidas
+## Documentação técnica
 
-```JSON
+Página de login apresenta uma animação caso você seja gerente ou aluno, sendo necessário as informações dos campos obrigatório.
+
+<aside>
+💡 Abaixo é o botão de seleção genérico. Responsável pela interação de seleção caso seja aluno ou gerente.
+
+</aside>
+
+## Tecnologias Envolvidas
+
+```
 "dependencies": {
     "@chakra-ui/react": "^2.3.5",
     "@emotion/react": "^11.10.4",
@@ -74,17 +91,12 @@ Para executar o projeto, utilize yarn dev.
     "vite-tsconfig-paths": "^4.0.5",
     "vitest": "^0.30.1"
   }
+
 ```
-
-# Imagens
-
-[Inserir imagens do projeto aqui, com uma breve legenda para cada uma]
-
-Exemplo de imagem do projeto
-Legenda: Inserir uma breve descrição da imagem aqui.
 
 # Mais Informações
 
 [Inserir informações adicionais sobre o projeto aqui, se necessário]
 
 OBS: PROJETO EM DESENVOLVIMENTO
+
