@@ -27,12 +27,14 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
         name={name}
         className={`px-3 py-2 rounded font-bold h-11 ${
           error![name]?.message && 'border-2 border-alert-danger'
-        }`}
+        } placeholder:text-sm`}
         ref={ref}
         {...props}
       />
       {!!error && (
-        <p className="text-alert-danger">{error[name]?.message?.toString()}</p>
+        <p className="text-alert-danger text-xs">
+          {error[name]?.message?.toString()}
+        </p>
       )}
     </>
   )
