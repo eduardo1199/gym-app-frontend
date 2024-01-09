@@ -13,6 +13,7 @@ import { StudentForm } from './components/StudentForm'
 import { LoadingSkeleton } from './components/Skeleton'
 import { InputSearch } from '../../components/Header/InputSearch'
 import { SlideViewStudent } from './components/SlideViewStudent'
+import { Table } from '../../components/Table'
 
 export function Students() {
   const [userId, setUserId] = useState('')
@@ -20,7 +21,11 @@ export function Students() {
   const { data: users, isLoading } = useGetUsersQuery()
   const [handleDeleteUserMutation] = useDeleteUserMutation()
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const {
+    isOpen: isOpenAlert,
+    onOpen: onOpenAlert,
+    onClose: onCloseAlert,
+  } = useDisclosure()
   const {
     isOpen: isOpenModalEdit,
     onOpen: onOpenModalEdit,
@@ -36,7 +41,7 @@ export function Students() {
 
   function handleOpenAlertConfirm(id: string) {
     setUserId(id)
-    onOpen()
+    onOpenAlert()
   }
 
   function handleOpenModalEdit(id: string) {
@@ -67,16 +72,17 @@ export function Students() {
         isClosable: true,
       })
     } finally {
-      onClose()
+      onCloseAlert()
     }
   }
 
   function handleOnCloseAlertDeleteStudent() {
-    onClose()
+    onCloseAlert()
     setUserId('')
   }
 
   const ref = useRef(null)
+  const emptyListUsers = (users ?? []).length === 0 && !isLoading
 
   return (
     <>
@@ -93,25 +99,21 @@ export function Students() {
               Cadastrar Aluno
             </button>
           </div>
-          <table className="w-full">
-            <thead>
-              <tr className="bg-primary-purple opacity-95">
-                <th className="py-4 text-primary-white text-left px-3 rounded-tl-md rounded-bl-md">
-                  Nome
-                </th>
-                <th className="text-primary-white text-left">
-                  Início do plano
-                </th>
-                <th className="text-primary-white text-left">Idade</th>
-                <th className="text-primary-white text-left">Peso</th>
-                <th className="text-primary-white text-left">Status</th>
-                <th className="rounded-tr-md rounded-br-md" />
-              </tr>
+          <Table.Root>
+            <Table.THeader>
+              <Table.Tr>
+                <Table.FirstCell>Nome</Table.FirstCell>
+                <Table.Cell>Início do plano</Table.Cell>
+                <Table.Cell>Idade</Table.Cell>
+                <Table.Cell>Peso</Table.Cell>
+                <Table.Cell>Status</Table.Cell>
+                <Table.LastCell />
+              </Table.Tr>
               <tr>
                 <td className="py-2"></td>
               </tr>
-            </thead>
-            <tbody>
+            </Table.THeader>
+            <Table.TBody>
               {users?.map((user) => {
                 return (
                   <TableRow
@@ -134,14 +136,21 @@ export function Students() {
                 Array.from([1, 2, 3, 5, 6]).map((value) => {
                   return <LoadingSkeleton key={value} />
                 })}
-            </tbody>
-          </table>
+            </Table.TBody>
+          </Table.Root>
+          {emptyListUsers && (
+            <div className="flex justify-center mt-6">
+              <span className="text-lg font-bold text-primary-purple">
+                Não existe usuários cadastrados
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
       <AlertConfirm
         ref={ref}
-        isOpen={isOpen}
+        isOpen={isOpenAlert}
         onCloseAlert={handleOnCloseAlertDeleteStudent}
         onSubmit={handleDeleteStudent}
       />

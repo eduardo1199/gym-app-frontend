@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react'
 
 import { DotsThreeVertical, Trash, Pencil, Files } from 'phosphor-react'
+import { Table } from '../../../../../components/Table'
 
 interface TableRowProps {
   name: string
@@ -25,19 +26,11 @@ interface TableRowProps {
 const TableRowComponent = (props: TableRowProps, ref: any) => {
   return (
     <>
-      <tr className="bg-primary-white border border-tertiary-pink rounded-t-2xl rounded-b-2xl hover:shadow-md transition-shadow rounded-tl-md rounded-bl-md">
-        <td className="py-5 px-3 text-base text-primary-gray font-semibold">
-          {props.name}
-        </td>
-        <td className="font-extrabold text-base text-primary-blue">
-          {props.startDatePlan}
-        </td>
-        <td className="text-base text-primary-gray font-semibold">
-          {props.ageUser} anos
-        </td>
-        <td className="text-base text-primary-gray font-semibold">
-          {props.weight}kg
-        </td>
+      <Table.TrBody>
+        <Table.FirstCellBody>{props.name}</Table.FirstCellBody>
+        <Table.CellBody>{props.startDatePlan}</Table.CellBody>
+        <Table.CellBody>{props.ageUser} anos</Table.CellBody>
+        <Table.CellBody>{props.weight}kg</Table.CellBody>
         <td>
           <Tooltip
             hasArrow
@@ -123,7 +116,7 @@ const TableRowComponent = (props: TableRowProps, ref: any) => {
             </Menu>
           </Tooltip>
         </td>
-      </tr>
+      </Table.TrBody>
       <tr>
         <td className="py-2"></td>
       </tr>
