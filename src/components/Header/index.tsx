@@ -17,7 +17,7 @@ export function Header({ visibleSearchBar }: HeaderProps) {
   const { data: admin } = useGetAdminQuery()
 
   return (
-    <header className="flex h-[50px] justify-between mb-4">
+    <header className="flex h-[50px] justify-between mb-4 p-8">
       <h1 className="font-bold text-3xl text-secondary-blue">{title}</h1>
 
       <Logout userName={admin?.name ?? ''} />
