@@ -19,6 +19,7 @@ import { ButtonLoading } from '../../components/ButtonLoading'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import InputMask from 'react-input-mask'
+import { UserSearch } from './components/UserSearch'
 
 const FormLoginSchema = z.object({
   cpf: z
@@ -58,34 +59,22 @@ export function Home() {
     setIsLoading(true)
 
     try {
-      /*  const response = await api.post<{ id: string }>(
-          '/user/authentication',
-          { cpf },
-        )
-
-        setIsLoading(false)
-
-        if (response.data.id) {
-          const id = response.data.id
-
-          navigate(`/user/${id}`)
-        } */
-
-      /*  const response = await api.post<string>('/admin/authentication', {
-        cpf,
-        password,
-      }) */
+      // TODO: use mutation redux toolkit request
+      const response = await api.post<{ token: string }>(
+        '/admin/authentication',
+        {
+          cpf,
+          password,
+        },
+      )
 
       setIsLoading(false)
 
-      cookies.set('@gymapp-admin', '65a1d65aw1d65a')
-      dispatch(setToken('65a1d65aw1d65a'))
-
-      /*   if (response.data) {
-        cookies.set('@gymapp-admin', response.data)
-        dispatch(setToken(response.data))
+      if (response.data.token) {
+        cookies.set('@gymapp-admin', response.data.token)
+        dispatch(setToken(response.data.token))
         navigate('/dashboard')
-      } */
+      }
     } catch (error) {
       if (error instanceof AxiosError) {
         setIsLoading(false)
@@ -103,7 +92,7 @@ export function Home() {
       <div className="max-w-lg bg-primary-purple flex h-full p-10">
         <GymLogo height="100%" />
       </div>
-      <div className="flex flex-1 justify-center">
+      <div className="flex flex-1 justify-center flex-col p-10">
         <div className="flex flex-col items-center bg-primary-yellow p-10 rounded shadow-2xl">
           <form
             className="flex flex-col gap-2 w-full"
@@ -153,6 +142,8 @@ export function Home() {
             </ButtonLoading>
           </form>
         </div>
+
+        <UserSearch />
       </div>
     </div>
   )

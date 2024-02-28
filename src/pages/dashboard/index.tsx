@@ -29,10 +29,10 @@ export function Dashboard() {
   )
 
   return (
-    <div className="p-8">
+    <div>
       <Header visibleSearchBar={false} />
 
-      <div className="grid lg:grid-cols-2 gap-16 grid-cols-1 my-auto">
+      <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 p-8">
         <CardStatistics
           amount={summaryStudents.actives}
           description="Alunos com matrículas regulares"
@@ -52,20 +52,6 @@ export function Dashboard() {
           description="Na sua academia existem"
           icon={<Gear size="5rem" weight="bold" />}
           title="Maquinários"
-          variant="default"
-        />
-        <CardStatistics
-          amount={plans?.length!}
-          description="Na sua academia existem"
-          icon={<PersonSimpleRun size="5rem" weight="bold" />}
-          title="Tipos de planos"
-          variant="default"
-        />
-        <CardStatistics
-          amount={plans?.length!}
-          description="Na sua academia existem"
-          icon={<PersonSimpleRun size="5rem" weight="bold" />}
-          title="Tipos de planos"
           variant="default"
         />
         <CardStatistics

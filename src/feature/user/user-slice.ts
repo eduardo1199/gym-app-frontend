@@ -19,6 +19,8 @@ interface UserDataMutationUpdate {
   data: Omit<UserDataMutation, 'id'>
 }
 
+interface AuthenticationUser extends Pick<UserDataMutation, 'cpf'> {}
+
 export const apiSlice = createApi({
   reducerPath: 'api-users',
   tagTypes: ['Users', 'User'],
@@ -66,6 +68,13 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Users', 'User'],
     }),
+    AuthenticationUser: builder.mutation<UserDataMutation, AuthenticationUser>({
+      query: (body) => ({
+        method: 'POST',
+        url: 'user/authentication',
+        data: body,
+      }),
+    }),
   }),
 })
 
@@ -75,4 +84,5 @@ export const {
   useDeleteUserMutation,
   useCreateUserMutation,
   useUpdateUserMutation,
+  useAuthenticationUserMutation,
 } = apiSlice

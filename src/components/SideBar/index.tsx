@@ -33,7 +33,7 @@ export function SideBar() {
       <>
         <button
           onClick={toggleOpenOrCloseDrawer}
-          className="w-[70px] min-w-[70px] flex bg-primary-purple relative hover:bg-secondary-purple transition-colors"
+          className="min-w-[70px] flex bg-primary-purple relative hover:bg-secondary-purple transition-colors"
         >
           <CaretRight
             size={20}
@@ -83,7 +83,7 @@ export function SideBar() {
   }
 
   return (
-    <aside className="w-[320px] p-6 flex flex-col bg-primary-purple">
+    <aside className="w-[320px] p-6 flex flex-col bg-primary-purple h-full">
       <div className="h-[200px] border-b-2 border-tertiary-pink flex justify-center">
         <GymLogo height="52" width="164" />
       </div>
