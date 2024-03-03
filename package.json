@@ -31,7 +31,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@rocketseat/eslint-config": "^1.2.0",
+    "@rocketseat/eslint-config": "^2.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
