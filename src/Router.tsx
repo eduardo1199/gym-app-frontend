@@ -1,11 +1,11 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
 import { Home } from './pages/Home'
-import { Dashboard } from './pages/Dashboard/index'
-import { Machines } from './pages/Machines/index'
-import { Plans } from './pages/Plans/index'
-import { Students } from './pages/Students/index'
-import { User } from './pages/User/index'
+import { Dashboard } from './pages/Dashboard'
+import { Machines } from './pages/Machines'
+import { Plans } from './pages/Plans'
+import { Students } from './pages/Students'
+import { User } from './pages/User'
 
 import { DefaultLayout } from './layouts'
 import { useAppSelect, useAppDispatch } from './app/hooks'
