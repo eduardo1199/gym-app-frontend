@@ -1,8 +1,6 @@
-import { forwardRef, ReactNode } from 'react'
+import { ReactNode } from 'react'
 
 import {
-  useDisclosure,
-  useToast,
   Modal as ModalContainer,
   ModalBody,
   ModalCloseButton,
@@ -20,22 +18,15 @@ interface ModalComponentProps {
   visibleButtonsFooter: boolean
 }
 
-function ModalComponent(
-  {
-    isOpenModalEdit,
-    onCloseModalEdit,
-    children,
-    handleSubmit,
-    visibleButtonsFooter,
-  }: ModalComponentProps,
-  ref: any,
-) {
+export function ModalComponent({
+  isOpenModalEdit,
+  onCloseModalEdit,
+  children,
+  handleSubmit,
+  visibleButtonsFooter,
+}: ModalComponentProps) {
   return (
-    <ModalContainer
-      onClose={onCloseModalEdit}
-      isOpen={isOpenModalEdit}
-      finalFocusRef={ref}
-    >
+    <ModalContainer onClose={onCloseModalEdit} isOpen={isOpenModalEdit}>
       <ModalOverlay />
       <ModalContent bg={'#5041BC'}>
         <ModalHeader>
@@ -57,5 +48,3 @@ function ModalComponent(
     </ModalContainer>
   )
 }
-
-export const Modal = forwardRef(ModalComponent)

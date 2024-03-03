@@ -11,7 +11,7 @@ export function InputSearch() {
           type="text"
           id="search"
           className="bg-secondary-pink w-full focus:outline-none focus:ring-1 focus:ring-offset-secondary-purple"
-          onChange={() => {}}
+          onChange={() => console.log()}
           placeholder="Pesquisar"
         />
         <MagnifyingGlass size="18px" />

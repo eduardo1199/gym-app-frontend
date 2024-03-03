@@ -1,6 +1,5 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react'
 import classNames from 'classnames'
-import { ProfileType } from '../../../../types/profile'
 
 interface SelectButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode

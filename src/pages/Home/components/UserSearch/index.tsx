@@ -8,8 +8,7 @@ import { useNavigate } from 'react-router-dom'
 export function UserSearch() {
   const [cpf, setCpf] = useState('')
 
-  const [handleCreateUser, { isLoading, data }] =
-    useAuthenticationUserMutation()
+  const [handleCreateUser, { isLoading }] = useAuthenticationUserMutation()
 
   const toast = useToast()
   const navigate = useNavigate()
