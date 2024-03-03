@@ -10,7 +10,7 @@ import { User } from './pages/User'
 import { DefaultLayout } from './layouts'
 import { useAppSelect, useAppDispatch } from './app/hooks'
 import { setToken } from './feature/auth'
-import { ReactNode, useEffect } from 'react'
+import { useEffect } from 'react'
 import Cookies from 'universal-cookie'
 
 interface CheckTokenProps {
