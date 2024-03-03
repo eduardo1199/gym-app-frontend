@@ -21,12 +21,9 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "types": ["node", "vite/client"],
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    }
+
+    "composite": true,
+    "allowSyntheticDefaultImports": true,
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src", "vite.config.ts"],
 }
