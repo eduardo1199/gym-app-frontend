@@ -124,7 +124,6 @@ export function Students() {
                     name={user.name}
                     startDatePlan={dateFormat(user.startDateForPlan)}
                     weight={user.weight}
-                    ref={ref}
                     onOpenAlertDelete={handleOpenAlertConfirm}
                     onOpenModalEdit={handleOpenModalEdit}
                     onOpenSlide={handleOpenSlide}
