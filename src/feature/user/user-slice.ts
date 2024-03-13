@@ -4,14 +4,14 @@ import { AxiosBaseQuery } from '../../services/axiosBaseQuery'
 
 import { User } from '../../types/user'
 
-interface UserDataMutation {
-  name: string | null
-  weight: number | null
-  cpf: string | null
-  age: number | null
-  planId: string | null
-  startDateForPlan: string | null | undefined
-  id: string | null
+export interface UserDataMutation {
+  name: string
+  weight: number
+  cpf: string
+  age: number
+  planId: string
+  startDateForPlan: string | undefined
+  id: string
 }
 
 interface UserDataMutationUpdate {
@@ -19,7 +19,9 @@ interface UserDataMutationUpdate {
   data: Omit<UserDataMutation, 'id'>
 }
 
-interface AuthenticationUser extends Pick<UserDataMutation, 'cpf'> {}
+interface AuthenticationUser {
+  cpf: string
+}
 
 export const apiSlice = createApi({
   reducerPath: 'api-users',
@@ -68,7 +70,10 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Users', 'User'],
     }),
-    AuthenticationUser: builder.mutation<UserDataMutation, AuthenticationUser>({
+    AuthenticationUser: builder.mutation<
+      { user: UserDataMutation },
+      AuthenticationUser
+    >({
       query: (body) => ({
         method: 'POST',
         url: 'user/authentication',
