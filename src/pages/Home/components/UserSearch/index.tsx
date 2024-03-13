@@ -1,14 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import InputMask from 'react-input-mask'
 import { useAuthenticationUserMutation } from '../../../../feature/user/user-slice'
 import { ButtonLoading } from '../../../../components/ButtonLoading'
 import { useToast } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 
+export interface UserDataMutation {
+  name: string
+  weight: number
+  cpf: string
+  age: number
+  planId: string
+  startDateForPlan: string | undefined
+  id: string
+}
+
 export function UserSearch() {
   const [cpf, setCpf] = useState('')
 
-  const [handleCreateUser, { isLoading, data }] =
+  const [handleViewProfileUser, { isLoading, data: userResponse }] =
     useAuthenticationUserMutation()
 
   const toast = useToast()
@@ -26,12 +36,23 @@ export function UserSearch() {
     }
 
     try {
-      // TODO: verify return response or use mutation to set navigate from page user
-      await handleCreateUser({ cpf })
-
-      navigate(`/user/`)
-    } catch (err) {}
+      await handleViewProfileUser({ cpf })
+    } catch (error) {
+      toast({
+        title: 'Error ao buscar usuário, tente novamente!',
+        status: 'error',
+        isClosable: true,
+      })
+    }
   }
+
+  useEffect(() => {
+    if (userResponse) {
+      const { user } = userResponse
+
+      navigate(`/user/${user.id}`)
+    }
+  }, [userResponse, navigate])
 
   return (
     <div className="flex flex-col items-center bg-primary-yellow p-10 rounded shadow-2xl mt-7">
