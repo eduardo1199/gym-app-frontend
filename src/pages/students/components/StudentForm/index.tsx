@@ -42,12 +42,7 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
   const [handleCreateUser] = useCreateUserMutation()
   const [handleUpdateUser] = useUpdateUserMutation()
 
-  const {
-    register,
-    reset,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<UserDataForm>({
+  const { register, reset, handleSubmit } = useForm<UserDataForm>({
     resolver: zodResolver(UserDataSchema),
     values: {
       planId: user?.planId ?? null,

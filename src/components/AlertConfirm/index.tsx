@@ -1,8 +1,8 @@
-import { useRef, forwardRef, RefObject } from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { forwardRef } from 'react'
 
 import {
   AlertDialogOverlay,
-  useDisclosure,
   AlertDialog,
   AlertDialogContent,
   AlertDialogHeader,
@@ -59,4 +59,6 @@ const AlertConfirmComponent = (
   )
 }
 
-export const AlertConfirm = forwardRef(AlertConfirmComponent)
+export const AlertConfirm = forwardRef<any, AlertConfirmProps>(
+  AlertConfirmComponent,
+)

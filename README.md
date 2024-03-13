@@ -10,7 +10,7 @@ A plataforma indica quais usuários estão com planos atrasados e em dia, além 
 
 Página de login:
 
-![página de login](images/minha_imagem.png)
+![página de login](images/login.png)
 
 ## Como Executar
 

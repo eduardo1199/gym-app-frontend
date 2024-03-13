@@ -1,8 +1,8 @@
-import { Slide, useDisclosure, useToast } from '@chakra-ui/react'
+import { useDisclosure, useToast } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
 import { AlertConfirm } from '../../components/AlertConfirm'
 import { Header } from '../../components/Header'
-import { Modal } from '../../components/Modal'
+import { ModalComponent } from '../../components/Modal'
 import { TableRow } from './components/Table/TableRow'
 import {
   useGetUsersQuery,
@@ -124,7 +124,6 @@ export function Students() {
                     name={user.name}
                     startDatePlan={dateFormat(user.startDateForPlan)}
                     weight={user.weight}
-                    ref={ref}
                     onOpenAlertDelete={handleOpenAlertConfirm}
                     onOpenModalEdit={handleOpenModalEdit}
                     onOpenSlide={handleOpenSlide}
@@ -155,15 +154,14 @@ export function Students() {
         onSubmit={handleDeleteStudent}
       />
 
-      <Modal
+      <ModalComponent
         isOpenModalEdit={isOpenModalEdit}
         onCloseModalEdit={onCloseModalEdit}
-        ref={ref}
-        handleSubmit={() => {}}
+        handleSubmit={() => console.log()}
         visibleButtonsFooter={false}
       >
         <StudentForm onCloseModalEdit={onCloseModalEdit} userId={userId} />
-      </Modal>
+      </ModalComponent>
 
       <SlideViewStudent isOpen={isOpenSlide} onClose={onCloseSlide} />
     </>

@@ -1,4 +1,3 @@
-import { forwardRef } from 'react'
 import {
   IconButton,
   Menu,
@@ -23,7 +22,7 @@ interface TableRowProps {
   onOpenSlide: (id: string) => void
 }
 
-const TableRowComponent = (props: TableRowProps, ref: any) => {
+export const TableRow = (props: TableRowProps) => {
   return (
     <>
       <Table.TrBody>
@@ -80,7 +79,6 @@ const TableRowComponent = (props: TableRowProps, ref: any) => {
                   _focus={{ textColor: 'purple.600', background: 'white' }}
                   display="flex"
                   justifyContent="space-between"
-                  ref={ref}
                   onClick={() => props.onOpenSlide(props.id)}
                 >
                   Visualizar
@@ -93,7 +91,6 @@ const TableRowComponent = (props: TableRowProps, ref: any) => {
                   _focus={{ textColor: 'purple.600', background: 'white' }}
                   display="flex"
                   justifyContent="space-between"
-                  ref={ref}
                   onClick={() => props.onOpenModalEdit(props.id)}
                 >
                   Editar
@@ -107,7 +104,6 @@ const TableRowComponent = (props: TableRowProps, ref: any) => {
                   display="flex"
                   justifyContent="space-between"
                   onClick={() => props.onOpenAlertDelete(props.id)}
-                  ref={ref}
                 >
                   Excluir
                   <Trash size={20} />
@@ -123,5 +119,3 @@ const TableRowComponent = (props: TableRowProps, ref: any) => {
     </>
   )
 }
-
-export const TableRow = forwardRef(TableRowComponent)

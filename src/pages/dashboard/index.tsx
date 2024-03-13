@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 import { Gear, PersonSimpleRun, Student } from 'phosphor-react'
 
 import { useGetUsersQuery } from '../../feature/user/user-slice'
