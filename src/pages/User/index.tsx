@@ -9,6 +9,7 @@ import { dateFormat } from '../../utils'
 export function User() {
   const { id } = useParams()
 
+  // TODO: Error request because jwt token is required
   const { data: user, isLoading } = useGetUserQuery(id ?? '')
 
   if (isLoading) return <h1>Loading...</h1>
