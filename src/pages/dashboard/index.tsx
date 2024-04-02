@@ -10,11 +10,11 @@ import { CardStatistics } from '../../components/Cards/CardStatistics'
 import { Header } from '../../components/Header'
 
 export function Dashboard() {
-  const { data: users } = useGetUsersQuery()
+  const { data } = useGetUsersQuery()
   const { data: machines } = useGetMachinesQuery()
   const { data: plans } = useGetPlansQuery()
 
-  const summaryStudents = (users ?? []).reduce(
+  const summaryStudents = (data?.users ?? []).reduce(
     (sum, student) => {
       if (student.isActive) {
         sum.actives += 1

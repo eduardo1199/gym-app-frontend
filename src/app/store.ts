@@ -5,6 +5,7 @@ import { apiAdminSlice } from '../feature/admin/admin-slice'
 import { apiMachineSlice } from '../feature/machine/machine-slice'
 import { apiPlanSlice } from '../feature/plan/plan-slice'
 import { tokenSlice } from '../feature/auth'
+import { setupListeners } from '@reduxjs/toolkit/query'
 
 export const store = configureStore({
   reducer: {
@@ -23,6 +24,8 @@ export const store = configureStore({
     )
   },
 })
+
+setupListeners(store.dispatch)
 
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>

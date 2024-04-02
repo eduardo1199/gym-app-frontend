@@ -8,10 +8,12 @@ import { Students } from './pages/Students'
 import { User } from './pages/User'
 
 import { DefaultLayout } from './layouts'
-import { useAppSelect, useAppDispatch } from './app/hooks'
+import { useAppDispatch } from './app/hooks'
 import { setToken } from './feature/auth'
 import { useEffect } from 'react'
 import Cookies from 'universal-cookie'
+import { RootState } from './app/store'
+import { useSelector } from 'react-redux'
 
 interface CheckTokenProps {
   children: JSX.Element
@@ -20,7 +22,7 @@ interface CheckTokenProps {
 function CheckToken(props: CheckTokenProps) {
   const dispatch = useAppDispatch()
 
-  const token = useAppSelect((state) => state.token.token)
+  const token = useSelector((state: RootState) => state.token.token)
 
   useEffect(() => {
     const cookies = new Cookies()
@@ -33,29 +35,17 @@ function CheckToken(props: CheckTokenProps) {
   }, [dispatch])
 
   if (token) {
-    return <Navigate to="/dashboard" />
+    return <Navigate to="/dashboard" replace={true} />
   } else {
     return props.children
   }
 }
 
 function RedirectToHome(props: CheckTokenProps) {
-  const dispatch = useAppDispatch()
-
-  const token = useAppSelect((state) => state.token.token)
-
-  useEffect(() => {
-    const cookies = new Cookies()
-
-    const token = cookies.get('@gymapp-admin')
-
-    if (token) {
-      dispatch(setToken(token))
-    }
-  }, [dispatch])
+  const token = useSelector((state: RootState) => state.token.token)
 
   if (!token) {
-    return <Navigate to="/" state={{ from: location }} />
+    return <Navigate to="/" />
   } else {
     return props.children
   }

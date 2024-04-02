@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 
-import { AxiosBaseQuery } from '../../services/axiosBaseQuery'
+import { axiosBaseQuery } from '../../services/axiosBaseQuery'
 
 import { User } from '../../types/user'
 
@@ -23,21 +23,29 @@ interface AuthenticationUser {
   cpf: string
 }
 
+interface GetUserResponse {
+  user: User
+}
+
+interface UseGetUsersQueryResponse {
+  users: User[]
+}
+
 export const apiSlice = createApi({
   reducerPath: 'api-users',
   tagTypes: ['Users', 'User'],
-  baseQuery: AxiosBaseQuery({
+  baseQuery: axiosBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
   }),
   endpoints: (builder) => ({
-    GetUser: builder.query<User, string>({
+    GetUser: builder.query<GetUserResponse, string>({
       query: (id) => ({
-        url: `user/${id}`,
+        url: `users/${id}`,
         method: 'GET',
       }),
       providesTags: ['User'],
     }),
-    GetUsers: builder.query<User[], void>({
+    GetUsers: builder.query<UseGetUsersQueryResponse, void>({
       query: () => ({
         url: 'users',
         method: 'GET',
@@ -46,7 +54,7 @@ export const apiSlice = createApi({
     }),
     DeleteUser: builder.mutation<{ id: string }, string>({
       query: (id) => ({
-        url: `user/${id}`,
+        url: `users/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Users'],
@@ -57,7 +65,7 @@ export const apiSlice = createApi({
     >({
       query: (body) => ({
         method: 'POST',
-        url: 'user',
+        url: 'users',
         data: body,
       }),
       invalidatesTags: ['Users'],
@@ -65,7 +73,7 @@ export const apiSlice = createApi({
     UpdateUser: builder.mutation<{ message: string }, UserDataMutationUpdate>({
       query: (params) => ({
         method: 'PUT',
-        url: `user/${params.id}`,
+        url: `users/${params.id}`,
         data: params.data,
       }),
       invalidatesTags: ['Users', 'User'],
@@ -76,7 +84,7 @@ export const apiSlice = createApi({
     >({
       query: (body) => ({
         method: 'POST',
-        url: 'user/authentication',
+        url: 'users/authentication',
         data: body,
       }),
     }),

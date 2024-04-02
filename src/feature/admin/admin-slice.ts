@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { Admin } from '../../types/admin'
 
-import { AxiosBaseQuery } from '../../services/axiosBaseQuery'
+import { axiosBaseQuery } from '../../services/axiosBaseQuery'
 
 import Cookies from 'universal-cookie'
 
@@ -10,7 +10,7 @@ const cookies = new Cookies()
 
 export const apiAdminSlice = createApi({
   reducerPath: 'api-admin',
-  baseQuery: AxiosBaseQuery({
+  baseQuery: axiosBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
   }),
   endpoints: (builder) => ({

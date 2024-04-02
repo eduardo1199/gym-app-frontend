@@ -64,7 +64,6 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
   })
 
   async function handleEditStudentForm(data: UserDataForm) {
-    console.log(data)
     try {
       if (!user?.id) {
         const userData = {
