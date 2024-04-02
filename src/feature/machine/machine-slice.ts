@@ -1,12 +1,12 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 
-import { AxiosBaseQuery } from '../../services/axiosBaseQuery'
+import { axiosBaseQuery } from '../../services/axiosBaseQuery'
 
 import { Machine } from '../../types/machine'
 
 export const apiMachineSlice = createApi({
   reducerPath: 'api-machines',
-  baseQuery: AxiosBaseQuery({
+  baseQuery: axiosBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
   }),
   endpoints: (builder) => ({

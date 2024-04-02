@@ -9,13 +9,13 @@ import { dateFormat } from '../../utils'
 export function User() {
   const { id } = useParams()
 
-  // TODO: Error request because jwt token is required
-  const { data: user, isLoading } = useGetUserQuery(id ?? '')
+  const { data, isLoading } = useGetUserQuery(id ?? '')
 
   if (isLoading) return <h1>Loading...</h1>
 
-  if (!user?.id) return <h1>Error...</h1>
+  if (!data) return <h1>Error...</h1>
 
+  // TODO: refazer designer da página
   return (
     <div className="h-screen flex justify-center items-center bg-primary-purple">
       <div
@@ -33,18 +33,18 @@ export function User() {
             </WrapItem>
             <div className="mt-10 max-w-xl flex flex-col gap-8">
               <span className="text-4xl text-primary-purple font-bold">
-                {user.name}
+                {data.user.name}
               </span>
               <div className="flex items-center gap-3">
                 <Barbell size="40px" color="#43BE83" />
                 <span className="text-2xl text-black font-bold">
-                  {user.weight}kg
+                  {data.user.weight}kg
                 </span>
               </div>
               <div className="flex items-center gap-3">
                 <Cake size="40px" color="#43BE83" />
                 <span className="text-2xl text-black font-bold">
-                  {user.age}
+                  {data.user.age}
                 </span>
               </div>
             </div>
@@ -52,32 +52,37 @@ export function User() {
           <div className="bg-primary-purple flex flex-1 mx-5 rounded-lg p-5">
             <div className="w-96 flex flex-col gap-16">
               <h1 className="text-5xl font-bold text-primary-white block">
-                Seu plano {user.isActive ? 'irá vencer em' : 'venceu faz'}
+                Seu plano {data.user.isActive ? 'irá vencer em' : 'venceu faz'}
                 <span
                   className={`${
-                    user.isActive ? 'text-secondary-green' : 'text-alert-danger'
+                    data.user.isActive
+                      ? 'text-secondary-green'
+                      : 'text-alert-danger'
                   } block`}
                 >
-                  {user.timeFinishPlan}.
+                  {data.user.timeFinishPlan}.
                 </span>
               </h1>
               <p className="text-3xl text-primary-white">
-                Seu plano iniciou no dia {dateFormat(user.startDateForPlan)}.
+                Seu plano iniciou no dia{' '}
+                {dateFormat(data.user.startDateForPlan)}.
               </p>
             </div>
             <div className="flex flex-1 flex-col justify-between items-end">
               <div className="max-w-lg">
                 <h1
                   className={`text-6xl font-bold ${
-                    user.isActive ? 'text-secondary-green' : 'text-alert-danger'
+                    data.user.isActive
+                      ? 'text-secondary-green'
+                      : 'text-alert-danger'
                   } block`}
                 >
-                  {user.isActive
+                  {data.user.isActive
                     ? 'Seu plano está ativo.'
                     : 'Seu plano não está ativo.'}
                 </h1>
               </div>
-              {user.isActive ? (
+              {data.user.isActive ? (
                 <Smiley size="200px" color="#43BE83" />
               ) : (
                 <SmileySad size="200px" color="#F8342E" />

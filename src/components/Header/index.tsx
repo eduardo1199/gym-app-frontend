@@ -15,8 +15,6 @@ export function Header({ visibleSearchBar = false }: HeaderProps) {
 
   const { data: admin } = useGetAdminQuery()
 
-  console.log(visibleSearchBar)
-
   return (
     <header className="flex h-[50px] justify-between mb-4 p-8">
       <h1 className="font-bold text-3xl text-secondary-blue">{title}</h1>
