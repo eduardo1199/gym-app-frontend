@@ -1,28 +1,52 @@
 import { BaseQueryFn } from '@reduxjs/toolkit/dist/query'
 import axios, { AxiosError, AxiosRequestConfig } from 'axios'
-
-interface BaseQueryAxios {
-  url: string
-  method: AxiosRequestConfig['method']
-  data?: AxiosRequestConfig['data']
+import Cookies from 'universal-cookie'
+interface AxiosBaseQueryParams {
+  baseUrl: string
 }
 
-interface AxiosBaseQueryProps {
-  baseUrl?: string
-}
+const cookies = new Cookies()
 
-export const AxiosBaseQuery =
+export const axiosBaseQuery =
   ({
-    baseUrl = '',
-  }: AxiosBaseQueryProps): BaseQueryFn<BaseQueryAxios, unknown, unknown> =>
-  async ({ method, url, data }) => {
+    baseUrl,
+  }: AxiosBaseQueryParams): BaseQueryFn<
+    {
+      url: string
+      method?: AxiosRequestConfig['method']
+      data?: AxiosRequestConfig['data']
+      params?: AxiosRequestConfig['params']
+      headers?: AxiosRequestConfig['headers']
+    },
+    unknown,
+    unknown
+  > =>
+  async ({ url, method, data, params, headers }) => {
     try {
-      const result = await axios({ url: baseUrl + url, method, data })
+      const token = cookies.get('@gymapp-admin')
+
+      const authorizationToken = token ? `Bearer ${token}` : undefined
+
+      const result = await axios({
+        url: baseUrl + url,
+        method,
+        data,
+        params,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept-Language': 'pt-br',
+          Authorization: authorizationToken,
+          ...headers,
+        },
+      })
       return { data: result.data }
-    } catch (axios) {
-      const error = axios as AxiosError
+    } catch (axiosError) {
+      const err = axiosError as AxiosError
       return {
-        error: { status: error.response?.status, data: error.response?.data },
+        error: {
+          status: err.response?.status,
+          data: err.response?.data || err.message,
+        },
       }
     }
   }
