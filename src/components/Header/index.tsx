@@ -1,8 +1,9 @@
 import { useLocation } from 'react-router-dom'
-import { useGetAdminQuery } from '../../feature/admin/admin-slice'
 
 import { Logout } from './Logout'
 import { titleFromPage } from './utils'
+import { useSelector } from 'react-redux'
+import { RootState } from 'src/app/store'
 
 interface HeaderProps {
   visibleSearchBar: boolean
@@ -11,9 +12,11 @@ interface HeaderProps {
 export function Header({ visibleSearchBar = false }: HeaderProps) {
   const { pathname } = useLocation()
 
-  const title = titleFromPage(pathname)
+  const admin = useSelector((state: RootState) => state.admin)
 
-  const { data: admin } = useGetAdminQuery()
+  console.log(visibleSearchBar)
+
+  const title = titleFromPage(pathname)
 
   return (
     <header className="flex h-[50px] justify-between mb-4 p-8">

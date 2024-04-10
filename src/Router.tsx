@@ -14,6 +14,7 @@ import { useEffect } from 'react'
 import Cookies from 'universal-cookie'
 import { RootState } from './app/store'
 import { useSelector } from 'react-redux'
+import { setAdmin } from './feature/admin-authentication'
 
 interface CheckTokenProps {
   children: JSX.Element
@@ -43,11 +44,14 @@ function CheckToken(props: CheckTokenProps) {
 
 function RedirectToHome(props: CheckTokenProps) {
   const token = useSelector((state: RootState) => state.token.token)
+  const dispatch = useAppDispatch()
 
-  if (!token) {
-    return <Navigate to="/" />
-  } else {
+  if (token) {
+    dispatch(setAdmin(token))
+
     return props.children
+  } else {
+    return <Navigate to="/" />
   }
 }
 

@@ -12,6 +12,7 @@ import Cookies from 'universal-cookie'
 
 import { resetToken } from '../../../feature/auth'
 import { useAppDispatch } from '../../../app/hooks'
+import { resetAdmin } from 'src/feature/admin-authentication'
 
 interface LogoutProps {
   userName: string
@@ -26,6 +27,7 @@ export function Logout({ userName }: LogoutProps) {
   function handleLogout() {
     cookies.remove('@gymapp-admin')
     dispatch(resetToken())
+    dispatch(resetAdmin())
     navigation('/')
   }
 
