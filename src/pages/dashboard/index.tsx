@@ -10,11 +10,11 @@ import { CardStatistics } from '../../components/Cards/CardStatistics'
 import { Header } from '../../components/Header'
 
 export function Dashboard() {
-  const { data } = useGetUsersQuery()
-  const { data: machines } = useGetMachinesQuery()
-  const { data: plans } = useGetPlansQuery()
+  const { data: usersData } = useGetUsersQuery()
+  const { data: machinesData } = useGetMachinesQuery()
+  const { data: PlansData } = useGetPlansQuery()
 
-  const summaryStudents = (data?.users ?? []).reduce(
+  const summaryStudents = (usersData?.users ?? []).reduce(
     (sum, student) => {
       if (student.isActive) {
         sum.actives += 1
@@ -50,14 +50,14 @@ export function Dashboard() {
           variant="warning"
         />
         <CardStatistics
-          amount={machines?.length!}
+          amount={machinesData?.length!}
           description="Na sua academia existem"
           icon={<Gear size="5rem" weight="bold" />}
           title="Maquinários"
           variant="default"
         />
         <CardStatistics
-          amount={plans?.length!}
+          amount={PlansData?.plans.length!}
           description="Na sua academia existem"
           icon={<PersonSimpleRun size="5rem" weight="bold" />}
           title="Tipos de planos"
