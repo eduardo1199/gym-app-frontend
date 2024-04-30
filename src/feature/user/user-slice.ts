@@ -59,10 +59,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Users'],
     }),
-    CreateUser: builder.mutation<
-      UserDataMutation,
-      Omit<UserDataMutation, 'id'>
-    >({
+    CreateUser: builder.mutation<void, Omit<UserDataMutation, 'id'>>({
       query: (body) => ({
         method: 'POST',
         url: 'users',

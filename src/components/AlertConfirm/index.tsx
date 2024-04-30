@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { forwardRef } from 'react'
+import { useRef } from 'react'
 
 import {
   AlertDialogOverlay,
@@ -16,14 +15,17 @@ interface AlertConfirmProps {
   onSubmit: () => Promise<void>
 }
 
-const AlertConfirmComponent = (
-  { isOpen, onCloseAlert, onSubmit }: AlertConfirmProps,
-  ref: any,
-) => {
+export const AlertConfirm = ({
+  isOpen,
+  onCloseAlert,
+  onSubmit,
+}: AlertConfirmProps) => {
+  const cancelRef = useRef(null)
+
   return (
     <AlertDialog
       isOpen={isOpen}
-      leastDestructiveRef={ref}
+      leastDestructiveRef={cancelRef}
       onClose={onCloseAlert}
     >
       <AlertDialogOverlay>
@@ -40,7 +42,7 @@ const AlertConfirmComponent = (
 
           <AlertDialogFooter display="flex" justifyContent="space-between">
             <button
-              ref={ref}
+              ref={cancelRef}
               onClick={onCloseAlert}
               className="bg-primary-yellow px-3 py-2 text-base text-white font-bold rounded-lg focus:outline-none focus:ring focus:ring-secondary-yellow"
             >
@@ -58,7 +60,3 @@ const AlertConfirmComponent = (
     </AlertDialog>
   )
 }
-
-export const AlertConfirm = forwardRef<any, AlertConfirmProps>(
-  AlertConfirmComponent,
-)

@@ -23,6 +23,7 @@ export const axiosBaseQuery =
   > =>
   async ({ url, method, data, params, headers }) => {
     try {
+      // TODO: verify token expired
       const token = cookies.get('@gymapp-admin')
 
       const authorizationToken = token ? `Bearer ${token}` : undefined
