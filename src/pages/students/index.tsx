@@ -1,5 +1,5 @@
 import { useDisclosure, useToast } from '@chakra-ui/react'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { AlertConfirm } from '../../components/AlertConfirm'
 import { Header } from '../../components/Header'
 import { ModalComponent } from '../../components/Modal'
@@ -14,11 +14,12 @@ import { LoadingSkeleton } from './components/Skeleton'
 import { InputSearch } from '../../components/Header/InputSearch'
 import { SlideViewStudent } from './components/SlideViewStudent'
 import { Table } from '../../components/Table'
+import { fakeArrayLoadingTable } from './utils'
 
 export function Students() {
   const [userId, setUserId] = useState('')
 
-  const { data: users, isLoading } = useGetUsersQuery()
+  const { data, isLoading } = useGetUsersQuery()
   const [handleDeleteUserMutation] = useDeleteUserMutation()
 
   const {
@@ -81,13 +82,12 @@ export function Students() {
     setUserId('')
   }
 
-  const ref = useRef(null)
-  const emptyListUsers = (users ?? []).length === 0 && !isLoading
+  const isEmptyListUsers = data?.users.length === 0 && !isLoading
 
   return (
     <>
-      <div className="p-8">
-        <Header visibleSearchBar />
+      <div className="p-4">
+        <Header />
         <div className="h-screen mt-10">
           <div className="mb-5 flex w-full justify-between">
             <InputSearch />
@@ -114,7 +114,7 @@ export function Students() {
               </tr>
             </Table.THeader>
             <Table.TBody>
-              {users?.map((user) => {
+              {data?.users?.map((user) => {
                 return (
                   <TableRow
                     key={user.id}
@@ -132,12 +132,13 @@ export function Students() {
               })}
 
               {isLoading &&
-                Array.from([1, 2, 3, 5, 6]).map((value) => {
+                fakeArrayLoadingTable.map((value) => {
                   return <LoadingSkeleton key={value} />
                 })}
             </Table.TBody>
           </Table.Root>
-          {emptyListUsers && (
+
+          {isEmptyListUsers && (
             <div className="flex justify-center mt-6">
               <span className="text-lg font-bold text-primary-purple">
                 Não existe usuários cadastrados
@@ -148,17 +149,14 @@ export function Students() {
       </div>
 
       <AlertConfirm
-        ref={ref}
         isOpen={isOpenAlert}
         onCloseAlert={handleOnCloseAlertDeleteStudent}
         onSubmit={handleDeleteStudent}
       />
 
       <ModalComponent
-        isOpenModalEdit={isOpenModalEdit}
-        onCloseModalEdit={onCloseModalEdit}
-        handleSubmit={() => console.log()}
-        visibleButtonsFooter={false}
+        isOpenModal={isOpenModalEdit}
+        onCloseModal={onCloseModalEdit}
       >
         <StudentForm onCloseModalEdit={onCloseModalEdit} userId={userId} />
       </ModalComponent>

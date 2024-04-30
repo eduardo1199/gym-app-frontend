@@ -48,69 +48,70 @@ export const TableRow = (props: TableRowProps) => {
           </Tooltip>
         </td>
         <td>
-          <Tooltip hasArrow label="Ações" bg="purple.600">
-            <Menu>
-              <MenuButton
-                as={IconButton}
-                aria-label="Options"
-                variant="outline"
-                border="none"
+          <Menu>
+            <MenuButton
+              as={IconButton}
+              aria-label="Options"
+              variant="outline"
+              border="none"
+              display="flex"
+              _hover={{ background: 'transparent' }}
+              icon={
+                <DotsThreeVertical
+                  size={32}
+                  weight="bold"
+                  className="fill-primary-purple"
+                />
+              }
+            />
+            <MenuList
+              p="2"
+              display="flex"
+              flexDirection="column"
+              gap="2"
+              bg="purple.600"
+            >
+              <MenuItem
+                fontWeight="bold"
+                textColor="white"
+                background="purple.600"
+                _hover={{ textColor: 'purple.600', background: 'white' }}
+                _focus={{ textColor: 'purple.600', background: 'white' }}
                 display="flex"
-                _hover={{ background: 'transparent' }}
-                icon={
-                  <DotsThreeVertical
-                    size={32}
-                    weight="bold"
-                    className="fill-primary-purple"
-                  />
-                }
-              />
-              <MenuList
-                p="2"
-                display="flex"
-                flexDirection="column"
-                gap="2"
-                bg="purple.600"
+                justifyContent="space-between"
+                onClick={() => props.onOpenSlide(props.id)}
               >
-                <MenuItem
-                  fontWeight="bold"
-                  textColor="white"
-                  _hover={{ textColor: 'purple.600', background: 'white' }}
-                  _focus={{ textColor: 'purple.600', background: 'white' }}
-                  display="flex"
-                  justifyContent="space-between"
-                  onClick={() => props.onOpenSlide(props.id)}
-                >
-                  Visualizar
-                  <Files size={20} />
-                </MenuItem>
-                <MenuItem
-                  fontWeight="bold"
-                  textColor="white"
-                  _hover={{ textColor: 'purple.600', background: 'white' }}
-                  _focus={{ textColor: 'purple.600', background: 'white' }}
-                  display="flex"
-                  justifyContent="space-between"
-                  onClick={() => props.onOpenModalEdit(props.id)}
-                >
-                  Editar
-                  <Pencil size={20} />
-                </MenuItem>
-                <MenuItem
-                  fontWeight="bold"
-                  textColor="white"
-                  _hover={{ textColor: 'purple.600', background: 'white' }}
-                  _focus={{ textColor: 'purple.600', background: 'white' }}
-                  display="flex"
-                  justifyContent="space-between"
-                  onClick={() => props.onOpenAlertDelete(props.id)}
-                >
-                  Excluir
-                  <Trash size={20} />
-                </MenuItem>
-              </MenuList>
-            </Menu>
-          </Tooltip>
+                Visualizar
+                <Files size={20} />
+              </MenuItem>
+              <MenuItem
+                fontWeight="bold"
+                textColor="white"
+                background="purple.600"
+                _hover={{ textColor: 'purple.600', background: 'white' }}
+                _focus={{ textColor: 'purple.600', background: 'white' }}
+                display="flex"
+                justifyContent="space-between"
+                onClick={() => props.onOpenModalEdit(props.id)}
+              >
+                Editar
+                <Pencil size={20} />
+              </MenuItem>
+              <MenuItem
+                fontWeight="bold"
+                textColor="white"
+                background="purple.600"
+                _hover={{ textColor: 'purple.600', background: 'white' }}
+                _focus={{ textColor: 'purple.600', background: 'white' }}
+                display="flex"
+                justifyContent="space-between"
+                onClick={() => props.onOpenAlertDelete(props.id)}
+              >
+                Excluir
+                <Trash size={20} />
+              </MenuItem>
+            </MenuList>
+          </Menu>
         </td>
       </Table.TrBody>
       <tr>

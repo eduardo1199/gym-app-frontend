@@ -36,8 +36,9 @@ const UserDataSchema = z.object({
 type UserDataForm = z.infer<typeof UserDataSchema>
 
 export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
-  const { data: plans } = useGetPlansQuery()
-  const { data: user, isLoading } = useGetUserQuery(userId)
+  const { data: dataPlans } = useGetPlansQuery()
+  const { data: userProfileResponse, isLoading } = useGetUserQuery(userId)
+
   const toast = useToast()
   const [handleCreateUser] = useCreateUserMutation()
   const [handleUpdateUser] = useUpdateUserMutation()
@@ -45,14 +46,17 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
   const { register, reset, handleSubmit } = useForm<UserDataForm>({
     resolver: zodResolver(UserDataSchema),
     values: {
-      planId: user?.planId ?? null,
-      cpf: user?.cpf ?? null,
-      age: user?.age ?? null,
-      name: user?.name ?? null,
-      weight: user?.weight ?? null,
+      planId: userProfileResponse?.user.planId ?? null,
+      cpf: userProfileResponse?.user?.cpf ?? null,
+      age: userProfileResponse?.user?.age ?? null,
+      name: userProfileResponse?.user?.name ?? null,
+      weight: userProfileResponse?.user?.weight ?? null,
       startDateForPlan: format(
         addHours(
-          new Date(user?.startDateForPlan ?? new Date().toISOString()),
+          new Date(
+            userProfileResponse?.user?.startDateForPlan ??
+              new Date().toISOString(),
+          ),
           3,
         ),
         'yyyy-MM-dd',
@@ -65,7 +69,7 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
 
   async function handleEditStudentForm(data: UserDataForm) {
     try {
-      if (!user?.id) {
+      if (!userProfileResponse?.user?.id) {
         const userData = {
           ...data,
           startDateForPlan: data.startDateForPlan
@@ -205,7 +209,7 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
           {...register('planId')}
           isRequired
         >
-          {plans?.map((plan) => {
+          {dataPlans?.plans?.map((plan) => {
             return (
               <option
                 key={plan.id}

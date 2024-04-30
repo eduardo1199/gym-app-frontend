@@ -53,11 +53,9 @@ export function AdminForm() {
         password,
       })
 
-      if (token.data.token) {
-        cookies.set('@gymapp-admin', token.data.token)
-        dispatch(setToken(token.data.token))
-        navigate('/dashboard')
-      }
+      cookies.set('@gymapp-admin', token.data.token)
+      dispatch(setToken(token.data.token))
+      navigate('/dashboard')
     } catch (error) {
       if (error instanceof AxiosError) {
         toast({

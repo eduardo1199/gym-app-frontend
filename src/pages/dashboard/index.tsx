@@ -8,26 +8,31 @@ import { useGetPlansQuery } from '../../feature/plan/plan-slice'
 
 import { CardStatistics } from '../../components/Cards/CardStatistics'
 import { Header } from '../../components/Header'
+import { useMemo } from 'react'
 
 export function Dashboard() {
   const { data: usersData } = useGetUsersQuery()
   const { data: machinesData } = useGetMachinesQuery()
   const { data: PlansData } = useGetPlansQuery()
 
-  const summaryStudents = (usersData?.users ?? []).reduce(
-    (sum, student) => {
-      if (student.isActive) {
-        sum.actives += 1
-      } else {
-        sum.noActive += 1
-      }
+  const summaryStudents = useMemo(
+    () =>
+      (usersData?.users ?? []).reduce(
+        (sum, student) => {
+          if (student.isActive) {
+            sum.actives += 1
+          } else {
+            sum.noActive += 1
+          }
 
-      return sum
-    },
-    {
-      actives: 0,
-      noActive: 0,
-    },
+          return sum
+        },
+        {
+          actives: 0,
+          noActive: 0,
+        },
+      ),
+    [usersData],
   )
 
   return (
@@ -50,7 +55,7 @@ export function Dashboard() {
           variant="warning"
         />
         <CardStatistics
-          amount={machinesData?.length!}
+          amount={machinesData?.machines.length!}
           description="Na sua academia existem"
           icon={<Gear size="5rem" weight="bold" />}
           title="Maquinários"
