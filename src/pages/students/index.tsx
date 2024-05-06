@@ -15,6 +15,7 @@ import { InputSearch } from '../../components/Header/InputSearch'
 import { SlideViewStudent } from './components/SlideViewStudent'
 import { Table } from '../../components/Table'
 import { fakeArrayLoadingTable } from './utils'
+import { RegisterFormStudent } from './components/RegisterFormStudent'
 
 export function Students() {
   const [userId, setUserId] = useState('')
@@ -31,6 +32,11 @@ export function Students() {
     isOpen: isOpenModalEdit,
     onOpen: onOpenModalEdit,
     onClose: onCloseModalEdit,
+  } = useDisclosure()
+  const {
+    isOpen: isOpenModalRegister,
+    onOpen: onOpenModalRegister,
+    onClose: onCloseModalRegister,
   } = useDisclosure()
   const {
     isOpen: isOpenSlide,
@@ -94,7 +100,7 @@ export function Students() {
             <button
               type="button"
               className="bg-primary-purple p-3 rounded opacity-95 text-base font-bold text-white hover:bg-secondary-purple transition-colors focus:outline-none focus:ring focus:ring-primary-purple"
-              onClick={() => handleOpenModalEdit('')}
+              onClick={() => onOpenModalRegister()}
             >
               Cadastrar Aluno
             </button>
@@ -157,8 +163,17 @@ export function Students() {
       <ModalComponent
         isOpenModal={isOpenModalEdit}
         onCloseModal={onCloseModalEdit}
+        modalTitle="Visualização do Aluno"
       >
         <StudentForm onCloseModalEdit={onCloseModalEdit} userId={userId} />
+      </ModalComponent>
+
+      <ModalComponent
+        isOpenModal={isOpenModalRegister}
+        onCloseModal={onCloseModalRegister}
+        modalTitle="Cadastrar aluno"
+      >
+        <RegisterFormStudent onCloseModalEdit={onCloseModalEdit} />
       </ModalComponent>
 
       <SlideViewStudent isOpen={isOpenSlide} onClose={onCloseSlide} />

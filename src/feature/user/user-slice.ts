@@ -31,6 +31,15 @@ interface UseGetUsersQueryResponse {
   users: User[]
 }
 
+interface CreateUserMutationRequest {
+  name: string
+  weight: number
+  cpf: string
+  age: number
+  planId: string
+  startDateForPlan: string | undefined
+}
+
 export const apiSlice = createApi({
   reducerPath: 'api-users',
   tagTypes: ['Users', 'User'],
@@ -59,7 +68,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Users'],
     }),
-    CreateUser: builder.mutation<void, Omit<UserDataMutation, 'id'>>({
+    CreateUser: builder.mutation<void, CreateUserMutationRequest>({
       query: (body) => ({
         method: 'POST',
         url: 'users',

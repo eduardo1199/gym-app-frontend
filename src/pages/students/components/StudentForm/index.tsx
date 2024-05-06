@@ -251,7 +251,7 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
           type="submit"
           className="bg-primary-yellow p-2 rounded text-base font-bold text-white hover:bg-secondary-yellow transition-colors focus:outline-none focus:ring focus:ring-yellow-300"
         >
-          Cadastrar
+          Editar
         </button>
       </div>
     </form>
