@@ -1,5 +1,5 @@
 import { BaseQueryFn } from '@reduxjs/toolkit/dist/query'
-import axios, { AxiosError, AxiosRequestConfig } from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 import Cookies from 'universal-cookie'
 interface AxiosBaseQueryParams {
   baseUrl: string
@@ -22,32 +22,23 @@ export const axiosBaseQuery =
     unknown
   > =>
   async ({ url, method, data, params, headers }) => {
-    try {
-      // TODO: verify token expired
-      const token = cookies.get('@gymapp-admin')
+    // TODO: verify token expired
+    const token = cookies.get('@gymapp-admin')
 
-      const authorizationToken = token ? `Bearer ${token}` : undefined
+    const authorizationToken = token ? `Bearer ${token}` : undefined
 
-      const result = await axios({
-        url: baseUrl + url,
-        method,
-        data,
-        params,
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept-Language': 'pt-br',
-          Authorization: authorizationToken,
-          ...headers,
-        },
-      })
-      return { data: result.data }
-    } catch (axiosError) {
-      const err = axiosError as AxiosError
-      return {
-        error: {
-          status: err.response?.status,
-          data: err.response?.data || err.message,
-        },
-      }
-    }
+    const result = await axios({
+      url: baseUrl + url,
+      method,
+      data,
+      params,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept-Language': 'pt-br',
+        Authorization: authorizationToken,
+        ...headers,
+      },
+    })
+
+    return { data: result.data }
   }

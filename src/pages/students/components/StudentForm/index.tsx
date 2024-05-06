@@ -10,8 +10,8 @@ import { z } from 'zod'
 import { useGetPlansQuery } from '../../../../feature/plan/plan-slice'
 import {
   useGetUserQuery,
-  useCreateUserMutation,
   useUpdateUserMutation,
+  UpdateUserMutation,
 } from '../../../../feature/user/user-slice'
 import { Skeleton, Stack, useToast } from '@chakra-ui/react'
 
@@ -40,7 +40,7 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
   const { data: userProfileResponse, isLoading } = useGetUserQuery(userId)
 
   const toast = useToast()
-  const [handleCreateUser] = useCreateUserMutation()
+
   const [handleUpdateUser] = useUpdateUserMutation()
 
   const { register, reset, handleSubmit } = useForm<UserDataForm>({
@@ -69,27 +69,6 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
 
   async function handleEditStudentForm(data: UserDataForm) {
     try {
-      if (!userProfileResponse?.user?.id) {
-        const userData = {
-          ...data,
-          startDateForPlan: data.startDateForPlan
-            ? new Date(data.startDateForPlan).toISOString()
-            : undefined,
-        }
-
-        await handleCreateUser(userData)
-
-        toast({
-          colorScheme: 'green',
-          title: 'Usuário cadastrado com sucesso!',
-          isClosable: true,
-        })
-
-        reset()
-        onCloseModalEdit()
-
-        return
-      }
       const userData = {
         ...data,
         startDateForPlan: data.startDateForPlan
@@ -97,12 +76,12 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
           : undefined,
       }
 
-      const params = {
-        id: user.id,
+      const paramsRequestEditStudent: UpdateUserMutation = {
+        id: userId,
         data: userData,
       }
 
-      await handleUpdateUser(params)
+      await handleUpdateUser(paramsRequestEditStudent)
 
       toast({
         colorScheme: 'green',

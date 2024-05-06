@@ -14,9 +14,18 @@ export interface UserDataMutation {
   id: string
 }
 
-interface UserDataMutationUpdate {
-  id: string | null
-  data: Omit<UserDataMutation, 'id'>
+export interface UserDataUpdate {
+  name?: string | null
+  weight?: number | null
+  cpf?: string | null
+  age?: number | null
+  planId?: string | null
+  startDateForPlan?: string | null
+}
+
+export interface UpdateUserMutation {
+  id: string
+  data: UserDataUpdate
 }
 
 interface AuthenticationUser {
@@ -76,7 +85,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Users'],
     }),
-    UpdateUser: builder.mutation<{ message: string }, UserDataMutationUpdate>({
+    UpdateUser: builder.mutation<unknown, UpdateUserMutation>({
       query: (params) => ({
         method: 'PUT',
         url: `users/${params.id}`,
