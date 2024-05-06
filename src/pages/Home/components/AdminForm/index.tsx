@@ -9,9 +9,9 @@ import { z } from 'zod'
 
 import { useAppDispatch } from '../../../../app/hooks'
 import { ButtonLoading } from '../../../../components/ButtonLoading'
-import { Input } from '../../../../components/Input/Input'
 import { setToken } from '../../../../feature/auth'
 import { api } from '../../../../services/api'
+import { Input } from '../Input'
 
 const FormLoginSchema = z.object({
   cpf: z

@@ -25,9 +25,7 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
       <input
         id={name}
         name={name}
-        className={`px-3 py-2 rounded font-bold h-11 ${
-          error![name]?.message && 'border-2 border-alert-danger'
-        } placeholder:text-sm`}
+        className={`px-3 py-2 rounded font-bold h-11 placeholder:text-sm w-full`}
         ref={ref}
         {...props}
       />

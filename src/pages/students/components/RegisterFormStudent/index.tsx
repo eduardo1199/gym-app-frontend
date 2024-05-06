@@ -1,6 +1,4 @@
 import { Select } from '@chakra-ui/select'
-import { addHours, format } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
 
 import { useForm } from 'react-hook-form'
 
@@ -8,66 +6,46 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { z } from 'zod'
 import { useGetPlansQuery } from '../../../../feature/plan/plan-slice'
-import {
-  useGetUserQuery,
-  useUpdateUserMutation,
-  UpdateUserMutation,
-} from '../../../../feature/user/user-slice'
-import { Skeleton, Stack, useToast } from '@chakra-ui/react'
+import { useCreateUserMutation } from '../../../../feature/user/user-slice'
+import { useToast } from '@chakra-ui/react'
+import { Form } from 'src/components/Form'
 
 interface StudentFormProps {
   onCloseModalEdit: () => void
-  userId: string
 }
 
 const UserDataSchema = z.object({
-  name: z.string().min(1).nullable(),
-  weight: z.number().min(0).nullable(),
+  name: z.string().min(1, 'Seu nome é obrigatório'),
+  weight: z
+    .number()
+    .min(0, 'Seu peso é obrigatório e precisa ser maior que zero.'),
   cpf: z
     .string()
     .max(14, 'Quantidade máxima é 14!')
-    .regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, 'CPF inválido!')
-    .nullable(),
-  age: z.number().min(15).nullable(),
-  planId: z.string().uuid().nullable(),
-  startDateForPlan: z.string().nullable().optional(),
+    .regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, 'CPF inválido!'),
+  age: z.number().min(15, 'Sua idade é obrigatória'),
+  planId: z.string().uuid(),
+  startDateForPlan: z.string().optional(),
 })
 
 type UserDataForm = z.infer<typeof UserDataSchema>
 
-export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
+export function RegisterFormStudent({ onCloseModalEdit }: StudentFormProps) {
   const { data: dataPlans } = useGetPlansQuery()
-  const { data: userProfileResponse, isLoading } = useGetUserQuery(userId)
 
   const toast = useToast()
+  const [handleCreateUser] = useCreateUserMutation()
 
-  const [handleUpdateUser] = useUpdateUserMutation()
-
-  const { register, reset, handleSubmit } = useForm<UserDataForm>({
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UserDataForm>({
     resolver: zodResolver(UserDataSchema),
-    values: {
-      planId: userProfileResponse?.user.planId ?? null,
-      cpf: userProfileResponse?.user?.cpf ?? null,
-      age: userProfileResponse?.user?.age ?? null,
-      name: userProfileResponse?.user?.name ?? null,
-      weight: userProfileResponse?.user?.weight ?? null,
-      startDateForPlan: format(
-        addHours(
-          new Date(
-            userProfileResponse?.user?.startDateForPlan ??
-              new Date().toISOString(),
-          ),
-          3,
-        ),
-        'yyyy-MM-dd',
-        {
-          locale: ptBR,
-        },
-      ),
-    },
   })
 
-  async function handleEditStudentForm(data: UserDataForm) {
+  async function handleCreateStudent(data: UserDataForm) {
     try {
       const userData = {
         ...data,
@@ -76,16 +54,11 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
           : undefined,
       }
 
-      const paramsRequestEditStudent: UpdateUserMutation = {
-        id: userId,
-        data: userData,
-      }
-
-      await handleUpdateUser(paramsRequestEditStudent)
+      await handleCreateUser(userData)
 
       toast({
         colorScheme: 'green',
-        title: 'Usuário editado com sucesso!',
+        title: 'Usuário cadastrado com sucesso!',
         isClosable: true,
       })
 
@@ -100,62 +73,39 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
     }
   }
 
-  if (isLoading) {
-    return (
-      <Stack gap="32px" marginBottom="15px">
-        <Skeleton height="35px" />
-        <Skeleton height="35px" />
-        <Skeleton height="35px" />
-        <Skeleton height="35px" />
-        <Skeleton height="35px" />
-        <Skeleton height="35px" />
-      </Stack>
-    )
-  }
-
   return (
     <form
-      action=""
       className="flex flex-col gap-4"
-      onSubmit={handleSubmit(handleEditStudentForm)}
+      onSubmit={handleSubmit(handleCreateStudent)}
     >
       <div className="flex flex-col gap-2">
-        <label htmlFor="name" className="font-bold text-primary-pink">
-          Nome
-        </label>
-        <input
-          placeholder="Nome do aluno"
+        <Form.InputLabel htmlFor="name">Nome</Form.InputLabel>
+        <Form.Input
           id="name"
-          className="px-2 py-3 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
+          placeholder="Nome do aluno"
           {...register('name')}
-          required
         />
+        <Form.InputError>{errors.name?.message}</Form.InputError>
       </div>
 
       <div className="flex flex-col gap-2">
-        <label htmlFor="age" className="font-bold text-primary-pink">
-          Idade
-        </label>
-        <input
-          placeholder="Idade do aluno"
-          className="px-2 py-3 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
-          {...register('age', { valueAsNumber: true })}
-          required
+        <Form.InputLabel htmlFor="age">Idade</Form.InputLabel>
+        <Form.Input
           id="age"
+          placeholder="Idade do aluno"
+          {...register('age', { valueAsNumber: true })}
         />
+        <Form.InputError>{errors.age?.message}</Form.InputError>
       </div>
 
       <div className="flex flex-col gap-2">
-        <label htmlFor="weight" className="font-bold text-primary-pink">
-          Peso
-        </label>
-        <input
-          placeholder="Peso do aluno"
-          className="px-2 py-3 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
-          {...register('weight', { valueAsNumber: true })}
-          required
+        <Form.InputLabel htmlFor="weight">Peso</Form.InputLabel>
+        <Form.Input
           id="weight"
+          placeholder="Peso do aluno"
+          {...register('weight', { valueAsNumber: true })}
         />
+        <Form.InputError>{errors.weight?.message}</Form.InputError>
       </div>
 
       <div className="flex flex-col gap-2">
@@ -169,6 +119,7 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
           {...register('cpf')}
           required
         />
+        <Form.InputError>{errors.cpf?.message}</Form.InputError>
       </div>
 
       <div className="flex flex-col gap-2">
@@ -200,19 +151,16 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
             )
           })}
         </Select>
+        <Form.InputError>{errors.planId?.message}</Form.InputError>
       </div>
 
       <div className="flex flex-col gap-2">
-        <label
-          htmlFor="startDateForPlan"
-          className="font-bold text-primary-pink"
-        >
+        <Form.InputLabel htmlFor="startDateForPlan">
           Data de Início do plano
-        </label>
-        <input
-          type="date"
+        </Form.InputLabel>
+        <Form.Input
           id="startDateForPlan"
-          className="px-2 py-3 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
+          type="date"
           {...register('startDateForPlan', { valueAsDate: false })}
         />
       </div>
@@ -230,7 +178,7 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
           type="submit"
           className="bg-primary-yellow p-2 rounded text-base font-bold text-white hover:bg-secondary-yellow transition-colors focus:outline-none focus:ring focus:ring-yellow-300"
         >
-          Editar
+          Cadastrar
         </button>
       </div>
     </form>
