@@ -5,8 +5,8 @@ export type User = {
   weight: number
   cpf: string
   registrationDate: string
-  startDateForPlan: string
-  endDateforPlan: string
+  start_plan_date: string
+  finish_plan_date: string
   planId: string
   isActive: boolean
   timeFinishPlan: string

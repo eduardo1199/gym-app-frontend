@@ -1,6 +1,5 @@
 import { Select } from '@chakra-ui/select'
-import { addHours, format } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
+import { format } from 'date-fns'
 
 import { useForm } from 'react-hook-form'
 
@@ -30,14 +29,14 @@ const UserDataSchema = z.object({
     .nullable(),
   age: z.number().min(15).nullable(),
   planId: z.string().uuid().nullable(),
-  startDateForPlan: z.string().nullable().optional(),
+  start_plan_date: z.string().nullable(),
 })
 
 type UserDataForm = z.infer<typeof UserDataSchema>
 
 export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
   const { data: dataPlans } = useGetPlansQuery()
-  const { data: userProfileResponse, isLoading } = useGetUserQuery(userId)
+  const { data, isLoading } = useGetUserQuery(userId)
 
   const toast = useToast()
 
@@ -46,24 +45,14 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
   const { register, reset, handleSubmit } = useForm<UserDataForm>({
     resolver: zodResolver(UserDataSchema),
     values: {
-      planId: userProfileResponse?.user.planId ?? null,
-      cpf: userProfileResponse?.user?.cpf ?? null,
-      age: userProfileResponse?.user?.age ?? null,
-      name: userProfileResponse?.user?.name ?? null,
-      weight: userProfileResponse?.user?.weight ?? null,
-      startDateForPlan: format(
-        addHours(
-          new Date(
-            userProfileResponse?.user?.startDateForPlan ??
-              new Date().toISOString(),
-          ),
-          3,
-        ),
-        'yyyy-MM-dd',
-        {
-          locale: ptBR,
-        },
-      ),
+      planId: data?.user.planId ?? null,
+      cpf: data?.user?.cpf ?? null,
+      age: data?.user?.age ?? null,
+      name: data?.user?.name ?? null,
+      weight: data?.user?.weight ?? null,
+      start_plan_date: data?.user?.start_plan_date
+        ? format(new Date(data?.user?.start_plan_date), "yyyy-MM-dd'T'HH':'mm")
+        : null,
     },
   })
 
@@ -71,10 +60,12 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
     try {
       const userData = {
         ...data,
-        startDateForPlan: data.startDateForPlan
-          ? new Date(data.startDateForPlan).toISOString()
-          : undefined,
+        start_plan_date: data.start_plan_date
+          ? new Date(data.start_plan_date).toISOString()
+          : null,
       }
+
+      console.log(userData)
 
       const paramsRequestEditStudent: UpdateUserMutation = {
         id: userId,
@@ -90,7 +81,7 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
       })
 
       reset()
-      onCloseModalEdit()
+      /* onCloseModalEdit() */
     } catch (error) {
       toast({
         colorScheme: 'danger',
@@ -210,10 +201,10 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
           Data de Início do plano
         </label>
         <input
-          type="date"
-          id="startDateForPlan"
+          type="datetime-local"
+          id="start_plan_date"
           className="px-2 py-3 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
-          {...register('startDateForPlan', { valueAsDate: false })}
+          {...register('start_plan_date')}
         />
       </div>
 

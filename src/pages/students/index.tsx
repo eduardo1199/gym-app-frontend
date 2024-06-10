@@ -124,12 +124,7 @@ export function Students() {
                 return (
                   <TableRow
                     key={user.id}
-                    active={user.isActive}
-                    ageUser={user.age}
-                    id={user.id}
-                    name={user.name}
-                    startDatePlan={dateFormat(user.startDateForPlan)}
-                    weight={user.weight}
+                    user={user}
                     onOpenAlertDelete={handleOpenAlertConfirm}
                     onOpenModalEdit={handleOpenModalEdit}
                     onOpenSlide={handleOpenSlide}
@@ -163,7 +158,7 @@ export function Students() {
       <ModalComponent
         isOpenModal={isOpenModalEdit}
         onCloseModal={onCloseModalEdit}
-        modalTitle="Visualização do Aluno"
+        modalTitle="Editar aluno"
       >
         <StudentForm onCloseModalEdit={onCloseModalEdit} userId={userId} />
       </ModalComponent>

@@ -9,40 +9,47 @@ import {
 
 import { DotsThreeVertical, Trash, Pencil, Files } from 'phosphor-react'
 import { Table } from '../../../../../components/Table'
+import { User } from 'src/types/user'
+import { dateFormat, isActivePlanUser } from 'src/utils'
 
 interface TableRowProps {
-  name: string
-  startDatePlan: string
-  ageUser: number
-  weight: number
-  id: string
-  active: boolean
+  user: User
   onOpenAlertDelete: (id: string) => void
   onOpenModalEdit: (id: string) => void
   onOpenSlide: (id: string) => void
 }
 
-export const TableRow = (props: TableRowProps) => {
+export const TableRow = ({
+  onOpenAlertDelete,
+  onOpenModalEdit,
+  onOpenSlide,
+  user,
+}: TableRowProps) => {
+  const isActivePlan = isActivePlanUser(
+    user.start_plan_date,
+    user.finish_plan_date,
+  )
+
   return (
     <>
       <Table.TrBody>
-        <Table.FirstCellBody>{props.name}</Table.FirstCellBody>
-        <Table.CellBody>{props.startDatePlan}</Table.CellBody>
-        <Table.CellBody>{props.ageUser} anos</Table.CellBody>
-        <Table.CellBody>{props.weight}kg</Table.CellBody>
+        <Table.FirstCellBody>{user.name}</Table.FirstCellBody>
+        <Table.CellBody>{dateFormat(user.start_plan_date)}</Table.CellBody>
+        <Table.CellBody>{user.age} anos</Table.CellBody>
+        <Table.CellBody>{user.weight}kg</Table.CellBody>
         <td>
           <Tooltip
             hasArrow
             label={`${
-              props.active
+              isActivePlan
                 ? 'Usuário está com plano em dia'
                 : 'Usuário está com plano vencido'
             }`}
-            bg={`${props.active ? 'green.600' : 'red.600'}`}
+            bg={`${isActivePlan ? 'green.600' : 'red.600'}`}
           >
             <button
               className={`w-4 h-4 ${
-                props.active ? 'bg-green-600' : 'bg-red-600'
+                isActivePlan ? 'bg-green-600' : 'bg-red-600'
               } rounded-full`}
             />
           </Tooltip>
@@ -79,7 +86,7 @@ export const TableRow = (props: TableRowProps) => {
                 _focus={{ textColor: 'purple.600', background: 'white' }}
                 display="flex"
                 justifyContent="space-between"
-                onClick={() => props.onOpenSlide(props.id)}
+                onClick={() => onOpenSlide(user.id)}
               >
                 Visualizar
                 <Files size={20} />
@@ -92,7 +99,7 @@ export const TableRow = (props: TableRowProps) => {
                 _focus={{ textColor: 'purple.600', background: 'white' }}
                 display="flex"
                 justifyContent="space-between"
-                onClick={() => props.onOpenModalEdit(props.id)}
+                onClick={() => onOpenModalEdit(user.id)}
               >
                 Editar
                 <Pencil size={20} />
@@ -105,7 +112,7 @@ export const TableRow = (props: TableRowProps) => {
                 _focus={{ textColor: 'purple.600', background: 'white' }}
                 display="flex"
                 justifyContent="space-between"
-                onClick={() => props.onOpenAlertDelete(props.id)}
+                onClick={() => onOpenAlertDelete(user.id)}
               >
                 Excluir
                 <Trash size={20} />
