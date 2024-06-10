@@ -5,24 +5,69 @@ import {
   MenuItem,
   MenuList,
   Tooltip,
+  useDisclosure,
 } from '@chakra-ui/react'
 import { DotsThreeVertical, Files, Pencil, Trash } from 'phosphor-react'
 import { Header } from 'src/components/Header'
 import { InputSearch } from 'src/components/Header/InputSearch'
+import { ModalComponent } from 'src/components/Modal'
 import { Table } from 'src/components/Table'
 import { useGetMachinesQuery } from 'src/feature/machine/machine-slice'
+import { FormRegisterMachine } from './components/FormRegisterMachine'
+import { EditFormMachine } from './components/EditFormMachine'
+import { useState } from 'react'
+import { AlertConfirm } from 'src/components/AlertConfirm'
 
 export function Machines() {
   const { data } = useGetMachinesQuery()
+  const [machineId, setMachineId] = useState('')
+
+  const {
+    isOpen: isOpenModalRegister,
+    onOpen: onOpenModalRegister,
+    onClose: onCloseModalRegister,
+  } = useDisclosure()
+
+  const {
+    isOpen: isOpenModalEdit,
+    onOpen: onOpenModalEdit,
+    onClose: onCloseModalEdit,
+  } = useDisclosure()
+
+  const {
+    isOpen: isOpenAlert,
+    onOpen: onOpenAlert,
+    onClose: onCloseAlert,
+  } = useDisclosure()
+
+  function handleOnCloseAlertDeleteStudent() {
+    onCloseAlert()
+    setMachineId('')
+  }
+
+  function handleOpenModalEdit(id: string) {
+    setMachineId(id)
+    onOpenModalEdit()
+  }
+
+  async function handleDeleteMachine() {
+    // request delete
+  }
+
+  function handleDeleteConfirm(id: string) {
+    setMachineId(id)
+    onOpenAlert()
+  }
 
   return (
     <div className="p-8">
-      <Header visibleSearchBar />
+      <Header />
       <div className="h-screen mt-10">
         <div className="mb-5 flex w-full justify-between">
           <InputSearch />
           <button
             type="button"
+            onClick={onOpenModalRegister}
             className="bg-primary-purple p-3 rounded opacity-95 text-base font-bold text-white hover:bg-secondary-purple transition-colors focus:outline-none focus:ring focus:ring-primary-purple"
           >
             Cadastrar maquinário
@@ -118,6 +163,7 @@ export function Machines() {
                               }}
                               display="flex"
                               justifyContent="space-between"
+                              onClick={() => handleOpenModalEdit(machine.id)}
                             >
                               Editar
                               <Pencil size={20} />
@@ -135,6 +181,7 @@ export function Machines() {
                               }}
                               display="flex"
                               justifyContent="space-between"
+                              onClick={() => handleDeleteConfirm(machine.id)}
                             >
                               Excluir
                               <Trash size={20} />
@@ -153,6 +200,28 @@ export function Machines() {
           </Table.TBody>
         </Table.Root>
       </div>
+
+      <ModalComponent
+        isOpenModal={isOpenModalRegister}
+        modalTitle="Cadastrar maquinário"
+        onCloseModal={onCloseModalRegister}
+      >
+        <FormRegisterMachine />
+      </ModalComponent>
+
+      <ModalComponent
+        isOpenModal={isOpenModalEdit}
+        modalTitle="Editar maquinário"
+        onCloseModal={onCloseModalEdit}
+      >
+        <EditFormMachine machineId={machineId} />
+      </ModalComponent>
+
+      <AlertConfirm
+        isOpen={isOpenAlert}
+        onCloseAlert={handleOnCloseAlertDeleteStudent}
+        onSubmit={handleDeleteMachine}
+      />
     </div>
   )
 }

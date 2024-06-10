@@ -46,7 +46,7 @@ interface CreateUserMutationRequest {
   cpf: string
   age: number
   planId: string
-  startDateForPlan: string | undefined
+  start_plan_date: string
 }
 
 export const apiSlice = createApi({

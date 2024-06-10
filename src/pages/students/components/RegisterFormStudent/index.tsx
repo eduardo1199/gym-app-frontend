@@ -25,7 +25,7 @@ const UserDataSchema = z.object({
     .regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, 'CPF inválido!'),
   age: z.number().min(15, 'Sua idade é obrigatória'),
   planId: z.string().uuid(),
-  startDateForPlan: z.string().optional(),
+  start_plan_date: z.string(),
 })
 
 type UserDataForm = z.infer<typeof UserDataSchema>
@@ -49,9 +49,7 @@ export function RegisterFormStudent({ onCloseModalEdit }: StudentFormProps) {
     try {
       const userData = {
         ...data,
-        startDateForPlan: data.startDateForPlan
-          ? new Date(data.startDateForPlan).toISOString()
-          : undefined,
+        start_plan_date: new Date(data.start_plan_date).toISOString(),
       }
 
       await handleCreateUser(userData)
@@ -160,8 +158,8 @@ export function RegisterFormStudent({ onCloseModalEdit }: StudentFormProps) {
         </Form.InputLabel>
         <Form.Input
           id="startDateForPlan"
-          type="date"
-          {...register('startDateForPlan', { valueAsDate: false })}
+          type="datetime-local"
+          {...register('start_plan_date')}
         />
       </div>
 

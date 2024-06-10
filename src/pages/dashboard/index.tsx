@@ -9,6 +9,7 @@ import { useGetPlansQuery } from '../../feature/plan/plan-slice'
 import { CardStatistics } from '../../components/Cards/CardStatistics'
 import { Header } from '../../components/Header'
 import { useMemo } from 'react'
+import { isActivePlanUser } from 'src/utils'
 
 export function Dashboard() {
   const { data: usersData } = useGetUsersQuery()
@@ -19,17 +20,22 @@ export function Dashboard() {
     () =>
       (usersData?.users ?? []).reduce(
         (sum, student) => {
-          if (student.isActive) {
-            sum.actives += 1
+          const isStudentHavePlanActive = isActivePlanUser(
+            student.start_plan_date,
+            student.finish_plan_date,
+          )
+
+          if (isStudentHavePlanActive) {
+            sum.activeAmount = sum.activeAmount + 1
           } else {
-            sum.noActive += 1
+            sum.noActiveAmount = sum.noActiveAmount + 1
           }
 
           return sum
         },
         {
-          actives: 0,
-          noActive: 0,
+          activeAmount: 0,
+          noActiveAmount: 0,
         },
       ),
     [usersData],
@@ -37,18 +43,18 @@ export function Dashboard() {
 
   return (
     <div>
-      <Header visibleSearchBar={false} />
+      <Header />
 
       <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 p-8">
         <CardStatistics
-          amount={summaryStudents.actives}
+          amount={summaryStudents.activeAmount}
           description="Alunos com matrículas regulares"
           icon={<Student size="5rem" weight="bold" />}
           title="Alunos"
           variant="default"
         />
         <CardStatistics
-          amount={summaryStudents.noActive}
+          amount={summaryStudents.noActiveAmount}
           description="A quantidade de alunos com matrículas atrasadas é"
           icon={<Student size="5rem" weight="bold" />}
           title="Alunos"
