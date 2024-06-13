@@ -64,8 +64,8 @@ export function User() {
                 </span>
               </h1>
               <p className="text-3xl text-primary-white">
-                Seu plano iniciou no dia{' '}
-                {dateFormat(data.user.startDateForPlan)}.
+                Seu plano iniciou no dia {dateFormat(data.user.start_plan_date)}
+                .
               </p>
             </div>
             <div className="flex flex-1 flex-col justify-between items-end">

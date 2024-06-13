@@ -1,5 +1,6 @@
 import { BaseQueryFn } from '@reduxjs/toolkit/dist/query'
-import axios, { AxiosRequestConfig } from 'axios'
+import axios, { AxiosError, AxiosRequestConfig } from 'axios'
+import { redirect } from 'react-router-dom'
 import Cookies from 'universal-cookie'
 interface AxiosBaseQueryParams {
   baseUrl: string
@@ -25,20 +26,34 @@ export const axiosBaseQuery =
     // TODO: verify token expired
     const token = cookies.get('@gymapp-admin')
 
+    if (!token) {
+      redirect('/')
+    }
+
     const authorizationToken = token ? `Bearer ${token}` : undefined
 
-    const result = await axios({
-      url: baseUrl + url,
-      method,
-      data,
-      params,
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept-Language': 'pt-br',
-        Authorization: authorizationToken,
-        ...headers,
-      },
-    })
+    try {
+      const result = await axios({
+        url: baseUrl + url,
+        method,
+        data,
+        params,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept-Language': 'pt-br',
+          Authorization: authorizationToken,
+          ...headers,
+        },
+      })
 
-    return { data: result.data }
+      return { data: result.data }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 406) {
+          return Promise.reject(error)
+        }
+      }
+
+      return Promise.reject(error)
+    }
   }

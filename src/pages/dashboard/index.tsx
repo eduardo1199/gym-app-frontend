@@ -11,10 +11,31 @@ import { Header } from '../../components/Header'
 import { useMemo } from 'react'
 import { isActivePlanUser } from 'src/utils'
 
+import { useAppDispatch } from 'src/app/hooks'
+import { resetAdmin } from 'src/feature/admin-authentication'
+import { resetToken } from 'src/feature/auth'
+import { useNavigate } from 'react-router-dom'
+import Cookies from 'universal-cookie'
+import { useToast } from '@chakra-ui/react'
+
 export function Dashboard() {
-  const { data: usersData } = useGetUsersQuery()
+  const { data: usersData, error } = useGetUsersQuery()
   const { data: machinesData } = useGetMachinesQuery()
   const { data: PlansData } = useGetPlansQuery()
+
+  const navigation = useNavigate()
+  const cookies = new Cookies()
+
+  const dispatch = useAppDispatch()
+
+  const toast = useToast()
+
+  function handleLogout() {
+    cookies.remove('@gymapp-admin')
+    dispatch(resetToken())
+    dispatch(resetAdmin())
+    navigation('/')
+  }
 
   const summaryStudents = useMemo(
     () =>
@@ -40,6 +61,18 @@ export function Dashboard() {
       ),
     [usersData],
   )
+
+  if (error) {
+    if ((error as any).message.includes('406')) {
+      toast({
+        title: 'Autenticação necessária.',
+        status: 'error',
+        isClosable: true,
+      })
+
+      handleLogout()
+    }
+  }
 
   return (
     <div>
