@@ -49,7 +49,9 @@ export const axiosBaseQuery =
       return { data: result.data }
     } catch (error) {
       if (error instanceof AxiosError) {
-        if (error.response?.status === 406) {
+        if (error.response?.status === 401 || error.response?.status === 406) {
+          window.location.href = 'http://localhost:5173/'
+
           return Promise.reject(error)
         }
       }
