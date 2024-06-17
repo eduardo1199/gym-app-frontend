@@ -8,8 +8,15 @@ type FetchAllMachinesResponse = {
   machines: Machine[]
 }
 
+interface CreateMachineRequest {
+  name: string
+  description: string
+  maintenance: boolean
+}
+
 export const apiMachineSlice = createApi({
   reducerPath: 'api-machines',
+  tagTypes: ['get-machines'],
   baseQuery: axiosBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
   }),
@@ -19,8 +26,17 @@ export const apiMachineSlice = createApi({
         url: 'machines',
         method: 'GET',
       }),
+      providesTags: ['get-machines'],
+    }),
+    CreateMachine: builder.mutation<void, CreateMachineRequest>({
+      query: (body) => ({
+        url: 'machines',
+        data: body,
+        method: 'POST',
+      }),
+      invalidatesTags: ['get-machines'],
     }),
   }),
 })
 
-export const { useGetMachinesQuery } = apiMachineSlice
+export const { useGetMachinesQuery, useCreateMachineMutation } = apiMachineSlice
