@@ -88,7 +88,7 @@ export function Machines() {
             {data?.machines.map((machine) => {
               return (
                 <>
-                  <Table.TrBody>
+                  <Table.TrBody key={machine.id}>
                     <Table.FirstCellBody>{machine.name}</Table.FirstCellBody>
                     <Table.CellBody>
                       <Tooltip
@@ -136,6 +136,7 @@ export function Machines() {
                             <MenuItem
                               fontWeight="bold"
                               textColor="white"
+                              backgroundColor="purple.600"
                               _hover={{
                                 textColor: 'purple.600',
                                 background: 'white',
@@ -153,6 +154,7 @@ export function Machines() {
                             <MenuItem
                               fontWeight="bold"
                               textColor="white"
+                              backgroundColor="purple.600"
                               _hover={{
                                 textColor: 'purple.600',
                                 background: 'white',
@@ -171,6 +173,7 @@ export function Machines() {
                             <MenuItem
                               fontWeight="bold"
                               textColor="white"
+                              backgroundColor="purple.600"
                               _hover={{
                                 textColor: 'purple.600',
                                 background: 'white',
@@ -206,7 +209,7 @@ export function Machines() {
         modalTitle="Cadastrar maquinário"
         onCloseModal={onCloseModalRegister}
       >
-        <FormRegisterMachine />
+        <FormRegisterMachine onCloseModalRegister={onCloseModalRegister} />
       </ModalComponent>
 
       <ModalComponent
