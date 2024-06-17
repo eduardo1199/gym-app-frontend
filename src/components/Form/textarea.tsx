@@ -1,11 +1,11 @@
-import { forwardRef, InputHTMLAttributes } from 'react'
+import { forwardRef, TextareaHTMLAttributes } from 'react'
 
-type InputProps = InputHTMLAttributes<HTMLInputElement>
+type InputProps = TextareaHTMLAttributes<HTMLTextAreaElement>
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
+const Textearea = forwardRef<HTMLTextAreaElement, InputProps>(
   (props: InputProps, ref) => {
     return (
-      <input
+      <textarea
         className="px-2 py-3 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-40 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
         ref={ref}
         {...props}
@@ -14,6 +14,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   },
 )
 
-Input.displayName = 'Input'
+Textearea.displayName = 'Textarea'
 
-export default Input
+export default Textearea
