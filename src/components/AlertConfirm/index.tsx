@@ -13,12 +13,14 @@ interface AlertConfirmProps {
   isOpen: boolean
   onCloseAlert: () => void
   onSubmit: () => Promise<void>
+  title: string
 }
 
 export const AlertConfirm = ({
   isOpen,
   onCloseAlert,
   onSubmit,
+  title,
 }: AlertConfirmProps) => {
   const cancelRef = useRef(null)
 
@@ -35,9 +37,7 @@ export const AlertConfirm = ({
           </AlertDialogHeader>
 
           <AlertDialogBody>
-            <span className="text-white font-semibold">
-              Tem certeza que deseja excluir esse alunos?
-            </span>
+            <span className="text-white font-semibold">{title}</span>
           </AlertDialogBody>
 
           <AlertDialogFooter display="flex" justifyContent="space-between">

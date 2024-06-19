@@ -65,8 +65,6 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
           : null,
       }
 
-      console.log(userData)
-
       const paramsRequestEditStudent: UpdateUserMutation = {
         id: userId,
         data: userData,
@@ -119,7 +117,6 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
           id="name"
           className="px-2 py-3 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
           {...register('name')}
-          required
         />
       </div>
 
@@ -131,7 +128,6 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
           placeholder="Idade do aluno"
           className="px-2 py-3 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
           {...register('age', { valueAsNumber: true })}
-          required
           id="age"
         />
       </div>
@@ -144,7 +140,6 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
           placeholder="Peso do aluno"
           className="px-2 py-3 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
           {...register('weight', { valueAsNumber: true })}
-          required
           id="weight"
         />
       </div>
@@ -158,7 +153,6 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
           placeholder="CPF do aluno"
           className="px-2 py-3 rounded placeholder:text-white placeholder:text-sm placeholder:text-opacity-60 bg-primary-purple brightness-125 text-white text-sm focus:outline-none focus:ring focus:ring-purple-700"
           {...register('cpf')}
-          required
         />
       </div>
 

@@ -6,13 +6,17 @@ import {
   MenuList,
   Tooltip,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react'
 import { DotsThreeVertical, Files, Pencil, Trash } from 'phosphor-react'
 import { Header } from 'src/components/Header'
 import { InputSearch } from 'src/components/Header/InputSearch'
 import { ModalComponent } from 'src/components/Modal'
 import { Table } from 'src/components/Table'
-import { useGetMachinesQuery } from 'src/feature/machine/machine-slice'
+import {
+  useDeleteMachineMutation,
+  useGetMachinesQuery,
+} from 'src/feature/machine/machine-slice'
 import { FormRegisterMachine } from './components/FormRegisterMachine'
 import { EditFormMachine } from './components/EditFormMachine'
 import { useState } from 'react'
@@ -20,7 +24,10 @@ import { AlertConfirm } from 'src/components/AlertConfirm'
 
 export function Machines() {
   const { data } = useGetMachinesQuery()
+  const [deleteMachineFn] = useDeleteMachineMutation()
   const [machineId, setMachineId] = useState('')
+
+  const toast = useToast()
 
   const {
     isOpen: isOpenModalRegister,
@@ -51,7 +58,27 @@ export function Machines() {
   }
 
   async function handleDeleteMachine() {
-    // request delete
+    try {
+      await deleteMachineFn({
+        machineId,
+      })
+
+      toast({
+        status: 'success',
+        title: 'Maquinário deletado com sucesso!',
+        duration: 9000,
+        isClosable: true,
+      })
+    } catch (error) {
+      toast({
+        status: 'error',
+        title: 'Error ao deletar maquinário!',
+        duration: 9000,
+        isClosable: true,
+      })
+    }
+
+    handleOnCloseAlertDeleteStudent()
   }
 
   function handleDeleteConfirm(id: string) {
@@ -217,13 +244,17 @@ export function Machines() {
         modalTitle="Editar maquinário"
         onCloseModal={onCloseModalEdit}
       >
-        <EditFormMachine machineId={machineId} />
+        <EditFormMachine
+          machineId={machineId}
+          onCloseModalEdit={onCloseModalEdit}
+        />
       </ModalComponent>
 
       <AlertConfirm
         isOpen={isOpenAlert}
         onCloseAlert={handleOnCloseAlertDeleteStudent}
         onSubmit={handleDeleteMachine}
+        title="Tem certeza que deseja excluir esse maquinário?"
       />
     </div>
   )
