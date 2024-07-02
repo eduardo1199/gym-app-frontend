@@ -75,7 +75,7 @@ export function Dashboard() {
   }
 
   return (
-    <div>
+    <div className="p-2">
       <Header />
 
       <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 p-8">

@@ -72,7 +72,7 @@ export function Plans() {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-4">
       <Header />
       <div className="h-screen mt-10">
         <div className="mb-5 flex w-full justify-between">
