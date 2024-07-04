@@ -46,29 +46,31 @@ export function RegisterFormStudent({ onCloseModalEdit }: StudentFormProps) {
   })
 
   async function handleCreateStudent(data: UserDataForm) {
-    try {
-      const userData = {
-        ...data,
-        start_plan_date: new Date(data.start_plan_date).toISOString(),
-      }
+    const userData = {
+      ...data,
+      start_plan_date: new Date(data.start_plan_date).toISOString(),
+    }
 
-      await handleCreateUser(userData)
+    const response = await handleCreateUser(userData)
 
-      toast({
-        colorScheme: 'green',
-        title: 'Usuário cadastrado com sucesso!',
-        isClosable: true,
-      })
-
-      reset()
-      onCloseModalEdit()
-    } catch (error) {
+    if (response.error) {
       toast({
         colorScheme: 'danger',
         title: 'Error ao cadastrar usuário!',
         isClosable: true,
       })
+
+      return
     }
+
+    toast({
+      colorScheme: 'green',
+      title: 'Usuário cadastrado com sucesso!',
+      isClosable: true,
+    })
+
+    reset()
+    onCloseModalEdit()
   }
 
   return (

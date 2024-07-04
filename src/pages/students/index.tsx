@@ -64,25 +64,26 @@ export function Students() {
   }
 
   async function handleDeleteStudent() {
-    try {
-      await handleDeleteUserMutation(userId)
+    const response = await handleDeleteUserMutation(userId)
 
-      toast({
-        title: 'Usuário deletado com sucesso!',
-        status: 'success',
-        isClosable: true,
-      })
-
-      setUserId('')
-    } catch {
+    if (response.error) {
       toast({
         title: 'Erro ao deletar usuário!',
         status: 'error',
         isClosable: true,
       })
-    } finally {
-      onCloseAlert()
+
+      return
     }
+
+    toast({
+      title: 'Usuário deletado com sucesso!',
+      status: 'success',
+      isClosable: true,
+    })
+
+    setUserId('')
+    onCloseAlert()
   }
 
   function handleOnCloseAlertDeleteStudent() {

@@ -22,7 +22,7 @@ interface CreateMachineRequest {
   maintenance: boolean
 }
 
-export const apiMachineSlice = createApi({
+export const machineSlice = createApi({
   reducerPath: 'api-machines',
   tagTypes: ['get-machines', 'get-machine'],
   baseQuery: axiosBaseQuery({
@@ -75,4 +75,4 @@ export const {
   useGetMachineQuery,
   useUpdateMachineMutation,
   useDeleteMachineMutation,
-} = apiMachineSlice
+} = machineSlice

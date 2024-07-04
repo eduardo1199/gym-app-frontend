@@ -61,25 +61,27 @@ export function Machines() {
   }
 
   async function handleDeleteMachine() {
-    try {
-      await deleteMachineFn({
-        machineId,
-      })
+    const response = await deleteMachineFn({
+      machineId,
+    })
 
-      toast({
-        status: 'success',
-        title: 'Maquinário deletado com sucesso!',
-        duration: 9000,
-        isClosable: true,
-      })
-    } catch (error) {
+    if (response.error) {
       toast({
         status: 'error',
         title: 'Error ao deletar maquinário!',
         duration: 9000,
         isClosable: true,
       })
+
+      return
     }
+
+    toast({
+      status: 'success',
+      title: 'Maquinário deletado com sucesso!',
+      duration: 9000,
+      isClosable: true,
+    })
 
     handleOnCloseAlertDeleteStudent()
   }

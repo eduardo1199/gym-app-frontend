@@ -14,7 +14,7 @@ interface EditFormMachineProps {
 }
 
 const CreateMachineSchema = z.object({
-  name: z.string().min(4, 'Precisa ter no mínimo 4 caracteres.'),
+  name: z.string().min(4, 'Precisa ter no mínimo 4 caracteres.').trim(),
   description: z.string().min(10, 'Precisa ter no mínimo 10 caracteres.'),
   maintenance: z.boolean().default(false),
 })
@@ -47,32 +47,34 @@ export function EditFormMachine({
   async function handleEditMachine(data: CreateMachineData) {
     const { name, description, maintenance } = data
 
-    try {
-      await updateMachineFn({
-        machine: {
-          description,
-          maintenance,
-          name,
-        },
-        machineId,
-      })
+    const response = await updateMachineFn({
+      machine: {
+        description,
+        maintenance,
+        name,
+      },
+      machineId,
+    })
 
-      toast({
-        status: 'success',
-        title: 'Maquinário editado com sucesso!',
-        duration: 9000,
-        isClosable: true,
-      })
-
-      onCloseModalEdit()
-    } catch (error) {
+    if (response.error) {
       toast({
         status: 'error',
         title: 'Error ao editar maquinário!',
         duration: 9000,
         isClosable: true,
       })
+
+      return
     }
+
+    toast({
+      status: 'success',
+      title: 'Maquinário editado com sucesso!',
+      duration: 9000,
+      isClosable: true,
+    })
+
+    onCloseModalEdit()
   }
 
   return (
