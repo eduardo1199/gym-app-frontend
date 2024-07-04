@@ -8,7 +8,7 @@ import { useGetPlansQuery } from '../../feature/plan/plan-slice'
 
 import { CardStatistics } from '../../components/Cards/CardStatistics'
 import { Header } from '../../components/Header'
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import { isActivePlanUser } from 'src/utils'
 
 import { useAppDispatch } from 'src/app/hooks'
@@ -17,11 +17,14 @@ import { resetToken } from 'src/feature/auth'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'universal-cookie'
 import { useToast } from '@chakra-ui/react'
+import { ViewPortContext } from 'src/context/ViewPortContext'
 
 export function Dashboard() {
   const { data: usersData, error } = useGetUsersQuery()
   const { data: machinesData } = useGetMachinesQuery()
   const { data: PlansData } = useGetPlansQuery()
+
+  const match = useContext(ViewPortContext)
 
   const navigation = useNavigate()
   const cookies = new Cookies()
@@ -75,7 +78,7 @@ export function Dashboard() {
   }
 
   return (
-    <div className="p-2">
+    <div className={`p-2 ${match ? '' : 'ml-[350px]'}`}>
       <Header />
 
       <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 p-8">

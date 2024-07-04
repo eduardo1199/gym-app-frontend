@@ -10,7 +10,7 @@ export function DefaultLayout() {
   return (
     <div className={`flex ${match ? '' : 'h-screen'} relative`}>
       <SideBar />
-      <div className={`w-full bg-primary-white ${match ? '' : 'ml-[350px]'}`}>
+      <div className={`w-full bg-primary-white`}>
         <Outlet />
       </div>
     </div>

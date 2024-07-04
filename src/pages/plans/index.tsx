@@ -8,8 +8,8 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react'
-import { DotsThreeVertical, Files, Pencil, Trash } from 'phosphor-react'
-import { useState } from 'react'
+import { DotsThreeVertical, Pencil, Trash } from 'phosphor-react'
+import { useContext, useState } from 'react'
 import { AlertConfirm } from 'src/components/AlertConfirm'
 import { Header } from 'src/components/Header'
 import { InputSearch } from 'src/components/Header/InputSearch'
@@ -20,6 +20,7 @@ import {
   useGetPlansQuery,
 } from 'src/feature/plan/plan-slice'
 import { FormRegisterPlan } from './components/FormRegister'
+import { ViewPortContext } from 'src/context/ViewPortContext'
 
 export function Plans() {
   const { data } = useGetPlansQuery()
@@ -71,8 +72,10 @@ export function Plans() {
     onCloseAlert()
   }
 
+  const match = useContext(ViewPortContext)
+
   return (
-    <div className="p-4">
+    <div className={`p-2 ${match ? '' : 'ml-[350px]'}`}>
       <Header />
       <div className="h-screen mt-10">
         <div className="mb-5 flex w-full justify-between">
