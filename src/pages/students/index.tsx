@@ -1,5 +1,5 @@
 import { useDisclosure, useToast } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { AlertConfirm } from '../../components/AlertConfirm'
 import { Header } from '../../components/Header'
 import { ModalComponent } from '../../components/Modal'
@@ -15,12 +15,15 @@ import { SlideViewStudent } from './components/SlideViewStudent'
 import { Table } from '../../components/Table'
 import { fakeArrayLoadingTable } from './utils'
 import { RegisterFormStudent } from './components/RegisterFormStudent'
+import { ViewPortContext } from 'src/context/ViewPortContext'
 
 export function Students() {
   const [userId, setUserId] = useState('')
 
   const { data, isLoading } = useGetUsersQuery()
   const [handleDeleteUserMutation] = useDeleteUserMutation()
+
+  const match = useContext(ViewPortContext)
 
   const {
     isOpen: isOpenAlert,
@@ -61,25 +64,26 @@ export function Students() {
   }
 
   async function handleDeleteStudent() {
-    try {
-      await handleDeleteUserMutation(userId)
+    const response = await handleDeleteUserMutation(userId)
 
-      toast({
-        title: 'Usuário deletado com sucesso!',
-        status: 'success',
-        isClosable: true,
-      })
-
-      setUserId('')
-    } catch {
+    if (response.error) {
       toast({
         title: 'Erro ao deletar usuário!',
         status: 'error',
         isClosable: true,
       })
-    } finally {
-      onCloseAlert()
+
+      return
     }
+
+    toast({
+      title: 'Usuário deletado com sucesso!',
+      status: 'success',
+      isClosable: true,
+    })
+
+    setUserId('')
+    onCloseAlert()
   }
 
   function handleOnCloseAlertDeleteStudent() {
@@ -91,7 +95,7 @@ export function Students() {
 
   return (
     <>
-      <div className="p-4">
+      <div className={`p-2 ${match ? '' : 'ml-[350px]'}`}>
         <Header />
         <div className="h-screen mt-10">
           <div className="mb-5 flex w-full justify-between">
@@ -152,6 +156,7 @@ export function Students() {
         isOpen={isOpenAlert}
         onCloseAlert={handleOnCloseAlertDeleteStudent}
         onSubmit={handleDeleteStudent}
+        title="Tem certeza que deseja excluir esse aluno?"
       />
 
       <ModalComponent

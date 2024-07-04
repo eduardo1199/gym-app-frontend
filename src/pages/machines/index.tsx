@@ -19,8 +19,9 @@ import {
 } from 'src/feature/machine/machine-slice'
 import { FormRegisterMachine } from './components/FormRegisterMachine'
 import { EditFormMachine } from './components/EditFormMachine'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { AlertConfirm } from 'src/components/AlertConfirm'
+import { ViewPortContext } from 'src/context/ViewPortContext'
 
 export function Machines() {
   const { data } = useGetMachinesQuery()
@@ -47,6 +48,8 @@ export function Machines() {
     onClose: onCloseAlert,
   } = useDisclosure()
 
+  const match = useContext(ViewPortContext)
+
   function handleOnCloseAlertDeleteStudent() {
     onCloseAlert()
     setMachineId('')
@@ -58,25 +61,27 @@ export function Machines() {
   }
 
   async function handleDeleteMachine() {
-    try {
-      await deleteMachineFn({
-        machineId,
-      })
+    const response = await deleteMachineFn({
+      machineId,
+    })
 
-      toast({
-        status: 'success',
-        title: 'Maquinário deletado com sucesso!',
-        duration: 9000,
-        isClosable: true,
-      })
-    } catch (error) {
+    if (response.error) {
       toast({
         status: 'error',
         title: 'Error ao deletar maquinário!',
         duration: 9000,
         isClosable: true,
       })
+
+      return
     }
+
+    toast({
+      status: 'success',
+      title: 'Maquinário deletado com sucesso!',
+      duration: 9000,
+      isClosable: true,
+    })
 
     handleOnCloseAlertDeleteStudent()
   }
@@ -87,7 +92,7 @@ export function Machines() {
   }
 
   return (
-    <div className="p-8">
+    <div className={`p-2 ${match ? '' : 'ml-[350px]'}`}>
       <Header />
       <div className="h-screen mt-10">
         <div className="mb-5 flex w-full justify-between">

@@ -57,36 +57,38 @@ export function StudentForm({ onCloseModalEdit, userId }: StudentFormProps) {
   })
 
   async function handleEditStudentForm(data: UserDataForm) {
-    try {
-      const userData = {
-        ...data,
-        start_plan_date: data.start_plan_date
-          ? new Date(data.start_plan_date).toISOString()
-          : null,
-      }
+    const userData = {
+      ...data,
+      start_plan_date: data.start_plan_date
+        ? new Date(data.start_plan_date).toISOString()
+        : null,
+    }
 
-      const paramsRequestEditStudent: UpdateUserMutation = {
-        id: userId,
-        data: userData,
-      }
+    const paramsRequestEditStudent: UpdateUserMutation = {
+      id: userId,
+      data: userData,
+    }
 
-      await handleUpdateUser(paramsRequestEditStudent)
+    const response = await handleUpdateUser(paramsRequestEditStudent)
 
-      toast({
-        colorScheme: 'green',
-        title: 'Usuário editado com sucesso!',
-        isClosable: true,
-      })
-
-      reset()
-      /* onCloseModalEdit() */
-    } catch (error) {
+    if (response.error) {
       toast({
         colorScheme: 'danger',
         title: 'Error ao cadastrar usuário!',
         isClosable: true,
       })
+
+      return
     }
+
+    toast({
+      colorScheme: 'green',
+      title: 'Usuário editado com sucesso!',
+      isClosable: true,
+    })
+
+    reset()
+    onCloseModalEdit()
   }
 
   if (isLoading) {

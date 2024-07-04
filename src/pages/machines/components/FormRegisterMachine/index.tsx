@@ -1,4 +1,4 @@
-import { FormControl, Switch, Toast } from '@chakra-ui/react'
+import { FormControl, Switch, Toast, useToast } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { Form } from 'src/components/Form'
@@ -34,30 +34,35 @@ export function FormRegisterMachine({
 
   const [createMachineFn] = useCreateMachineMutation()
 
+  const toast = useToast()
+
   async function handleCreateMachine(data: CreateMachineData) {
     const { name, description, maintenance } = data
 
-    try {
-      await createMachineFn({
-        description,
-        maintenance,
-        name,
-      })
+    const response = await createMachineFn({
+      description,
+      maintenance,
+      name,
+    })
 
-      Toast({
-        colorScheme: 'green',
-        title: 'Maquinário cadastrado com sucesso!',
+    if (response.error) {
+      toast({
+        status: 'success',
+        title: 'Maquinário editado com sucesso!',
+        duration: 9000,
         isClosable: true,
       })
 
-      onCloseModalRegister()
-    } catch (error) {
-      Toast({
-        colorScheme: 'red',
-        title: 'Error ao cadastrar maquinário!',
-        isClosable: true,
-      })
+      return
     }
+
+    Toast({
+      colorScheme: 'green',
+      title: 'Maquinário cadastrado com sucesso!',
+      isClosable: true,
+    })
+
+    onCloseModalRegister()
   }
 
   return (

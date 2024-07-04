@@ -83,7 +83,7 @@ export function SideBar() {
   }
 
   return (
-    <aside className="w-[320px] p-6 flex flex-col bg-primary-purple h-full">
+    <aside className="w-[320px] p-6 flex flex-col bg-primary-purple fixed top-0 bottom-0">
       <div className="h-[200px] border-b-2 border-tertiary-pink flex justify-center">
         <GymLogo height="52" width="164" />
       </div>

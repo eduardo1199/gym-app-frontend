@@ -8,9 +8,9 @@ export function DefaultLayout() {
   const match = useContext(ViewPortContext)
 
   return (
-    <div className={`flex ${match ? '' : 'h-screen'} `}>
+    <div className={`flex ${match ? '' : 'h-screen'} relative`}>
       <SideBar />
-      <div className="flex flex-1 flex-col bg-primary-white">
+      <div className={`w-full bg-primary-white`}>
         <Outlet />
       </div>
     </div>

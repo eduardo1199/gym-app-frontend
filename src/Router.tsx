@@ -41,6 +41,18 @@ function CheckToken(props: CheckTokenProps) {
   }
 }
 
+function ProvideRouter(props: CheckTokenProps) {
+  const cookies = new Cookies()
+
+  const token = cookies.get('@gymapp-admin')
+
+  if (token) {
+    return props.children
+  } else {
+    return <Navigate to="/" replace={true} />
+  }
+}
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -56,7 +68,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/dashboard',
-        element: <Dashboard />,
+        element: (
+          <ProvideRouter>
+            <Dashboard />
+          </ProvideRouter>
+        ),
       },
     ],
   },
@@ -66,7 +82,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/machines',
-        element: <Machines />,
+        element: (
+          <ProvideRouter>
+            <Machines />
+          </ProvideRouter>
+        ),
       },
     ],
   },
@@ -77,7 +97,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/plans',
-        element: <Plans />,
+        element: (
+          <ProvideRouter>
+            <Plans />
+          </ProvideRouter>
+        ),
       },
     ],
   },
@@ -87,7 +111,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/students',
-        element: <Students />,
+        element: (
+          <ProvideRouter>
+            <Students />
+          </ProvideRouter>
+        ),
       },
     ],
   },
