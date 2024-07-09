@@ -43,6 +43,12 @@ export function Plans() {
     onClose: onCloseAlert,
   } = useDisclosure()
 
+  function handleOpenAlertDelete(planId: string) {
+    onOpenAlert()
+    setPlanId(planId)
+  }
+
+
   async function handleDeletePlan() {
     try {
       await deletePlanFn({
@@ -108,7 +114,10 @@ export function Plans() {
                     <Table.FirstCellBody>{plan.name}</Table.FirstCellBody>
                     <Table.CellBody>{plan.plan_month_time}</Table.CellBody>
 
-                    <Table.CellBody>{plan.price}</Table.CellBody>
+                    <Table.CellBody>{new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL'
+                    }).format(plan.price / 100)}</Table.CellBody>
                     <td>
                       <Tooltip hasArrow label="Ações" bg="purple.600">
                         <Menu>
@@ -166,7 +175,7 @@ export function Plans() {
                               }}
                               display="flex"
                               justifyContent="space-between"
-                              onClick={onOpenAlert}
+                              onClick={() => handleOpenAlertDelete(plan.id)}
                             >
                               Excluir
                               <Trash size={20} />

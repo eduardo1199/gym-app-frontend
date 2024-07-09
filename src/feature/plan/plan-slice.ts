@@ -8,6 +8,12 @@ interface GetPlansResponse {
   plans: Plan[]
 }
 
+interface CreatePlanRequest {
+  name: string
+  plan_month_time: number
+  price: number
+}
+
 export const apiPlanSlice = createApi({
   reducerPath: 'api-plans',
   baseQuery: axiosBaseQuery({
@@ -29,7 +35,19 @@ export const apiPlanSlice = createApi({
       }),
       invalidatesTags: ['get-plans'],
     }),
+    CreatePlan: builder.mutation<void, CreatePlanRequest>({
+      query: (body) => ({
+        url: 'plans',
+        data: body,
+        method: 'POST',
+      }),
+      invalidatesTags: ['get-plans'],
+    }),
   }),
 })
 
-export const { useGetPlansQuery, useDeletePlanMutation } = apiPlanSlice
+export const {
+  useGetPlansQuery,
+  useDeletePlanMutation,
+  useCreatePlanMutation,
+} = apiPlanSlice
