@@ -21,6 +21,7 @@ import {
 } from 'src/feature/plan/plan-slice'
 import { FormRegisterPlan } from './components/FormRegister'
 import { ViewPortContext } from 'src/context/ViewPortContext'
+import { FormEditPlan } from './components/EditForm'
 
 export function Plans() {
   const { data } = useGetPlansQuery()
@@ -38,10 +39,31 @@ export function Plans() {
   } = useDisclosure()
 
   const {
+    isOpen: isOpenModalEdit,
+    onOpen: onOpenModalEdit,
+    onClose: onCloseModalEdit,
+  } = useDisclosure()
+
+  const {
     isOpen: isOpenAlert,
     onOpen: onOpenAlert,
     onClose: onCloseAlert,
   } = useDisclosure()
+
+  function handleOpenAlertDelete(planId: string) {
+    onOpenAlert()
+    setPlanId(planId)
+  }
+
+  function handleOpenModalEditPlan(planId: string) {
+    onOpenModalEdit()
+    setPlanId(planId)
+  }
+
+  function handleOnCloseModalEdit() {
+    setPlanId('')
+    onCloseModalEdit()
+  }
 
   async function handleDeletePlan() {
     try {
@@ -108,7 +130,10 @@ export function Plans() {
                     <Table.FirstCellBody>{plan.name}</Table.FirstCellBody>
                     <Table.CellBody>{plan.plan_month_time}</Table.CellBody>
 
-                    <Table.CellBody>{plan.price}</Table.CellBody>
+                    <Table.CellBody>{new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL'
+                    }).format(plan.price / 100)}</Table.CellBody>
                     <td>
                       <Tooltip hasArrow label="Ações" bg="purple.600">
                         <Menu>
@@ -148,6 +173,7 @@ export function Plans() {
                               }}
                               display="flex"
                               justifyContent="space-between"
+                              onClick={() => handleOpenModalEditPlan(plan.id)}
                             >
                               Editar
                               <Pencil size={20} />
@@ -166,7 +192,7 @@ export function Plans() {
                               }}
                               display="flex"
                               justifyContent="space-between"
-                              onClick={onOpenAlert}
+                              onClick={() => handleOpenAlertDelete(plan.id)}
                             >
                               Excluir
                               <Trash size={20} />
@@ -199,6 +225,17 @@ export function Plans() {
         onCloseModal={onCloseModalRegister}
       >
         <FormRegisterPlan onCloseModalRegister={onCloseModalRegister} />
+      </ModalComponent>
+
+      <ModalComponent
+        isOpenModal={isOpenModalEdit}
+        modalTitle="Editar plano"
+        onCloseModal={handleOnCloseModalEdit}
+      >
+        <FormEditPlan
+          planId={planId}
+          onCloseModalEdit={handleOnCloseModalEdit}
+        />
       </ModalComponent>
     </div>
   )

@@ -1,55 +1,67 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { Form } from 'src/components/Form'
-import { useCreatePlanMutation } from 'src/feature/plan/plan-slice'
+import { useGetPlanQuery, useUpdatePlanMutation } from 'src/feature/plan/plan-slice'
 import { z } from 'zod'
 import { CurrencyInput } from 'react-currency-mask';
 import { useToast } from '@chakra-ui/react'
 
 const FormPlanSchema = z.object({
-  name: z.string({ required_error: 'Campo obrigatório.' }),
+  name: z.string({ required_error: 'Campo obrigatório.' }).nullable(),
   plan_month_time: z.coerce
     .number({ required_error: 'Campo obrigatório' })
-    .min(0, 'O campo do tempo do plano precisa ser maior que 0.'),
+    .min(0, 'O campo do tempo do plano precisa ser maior que 0.').nullable(),
   price: z.number({
     required_error: 'Campo obrigatório.',
     invalid_type_error: 'Campo inválido',
-  }),
+  }).nullable(),
 })
 
-type FormPlanCreateData = z.infer<typeof FormPlanSchema>
+type FormPlanEditData = z.infer<typeof FormPlanSchema>
 
-interface FormRegisterPlanProps {
-  onCloseModalRegister: () => void
+interface FormEditPlanProps {
+  onCloseModalEdit: () => void
+  planId: string
 }
 
-export function FormRegisterPlan({
-  onCloseModalRegister,
-}: FormRegisterPlanProps) {
+export function FormEditPlan({
+  onCloseModalEdit,
+  planId
+}: FormEditPlanProps) {
+  const [updatePlanFn] = useUpdatePlanMutation()
+  const { data } = useGetPlanQuery(planId)
+
   const {
     handleSubmit,
     register,
     control,
     formState: { errors }
-  } = useForm<FormPlanCreateData>({
+  } = useForm<FormPlanEditData>({
     resolver: zodResolver(FormPlanSchema),
+    values: {
+      name: data?.plan.name!,
+      plan_month_time: data?.plan.plan_month_time!,
+      price: Number(data?.plan.price!) / 100
+    }
   })
 
   const toast = useToast()
-  const [createPlanFn] = useCreatePlanMutation()
 
-  async function handleCreatePlan(data: FormPlanCreateData) {
+  async function handleEditPlan(data: FormPlanEditData) {
     const { name, plan_month_time, price } = data
 
-    const response = await createPlanFn({
-      name,
-      plan_month_time,
-      price: Number(price) * 100,
+    const response = await updatePlanFn({
+      planData: {
+        name: name!,
+        plan_month_time: plan_month_time!,
+        price: Number(price) * 100,
+      },
+      planId
     })
 
     if(response.error) {
       toast({
-        title: 'Error ao cadastrar plano.',
+        title: 'Error ao editar plano.',
         status: 'error',
         isClosable: true,
       })
@@ -58,18 +70,18 @@ export function FormRegisterPlan({
     }
 
     toast({
-      title: 'Plano cadastrado com sucesso.',
+      title: 'Plano editado com sucesso.',
       status: 'success',
       isClosable: true,
     })
     
-    onCloseModalRegister()
+    onCloseModalEdit()
   }
 
   return (
     <form
       className="flex flex-col gap-4"
-      onSubmit={handleSubmit(handleCreatePlan)}
+      onSubmit={handleSubmit(handleEditPlan)}
     >
       <div className="flex flex-col gap-2">
         <Form.InputLabel htmlFor="name">Nome do plano</Form.InputLabel>
@@ -107,7 +119,7 @@ export function FormRegisterPlan({
                       placeholder="preço em R$"
                     />
                   }
-                  value={field.value}
+                  value={field.value!}
                 />
               </>
             )
@@ -119,7 +131,7 @@ export function FormRegisterPlan({
       <div className="flex justify-between my-4">
         <button
           type="button"
-          onClick={onCloseModalRegister}
+          onClick={onCloseModalEdit}
           className="bg-secondary-orange p-2 rounded text-base font-bold text-white hover:bg-orange-400 transition-colors focus:outline-none focus:ring focus:ring-orange-300"
         >
           Cancelar
@@ -129,7 +141,7 @@ export function FormRegisterPlan({
           type="submit"
           className="bg-primary-yellow p-2 rounded text-base font-bold text-white hover:bg-secondary-yellow transition-colors focus:outline-none focus:ring focus:ring-yellow-300"
         >
-          Cadastrar
+          Editar
         </button>
       </div>
     </form>
