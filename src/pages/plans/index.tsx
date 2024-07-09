@@ -21,6 +21,7 @@ import {
 } from 'src/feature/plan/plan-slice'
 import { FormRegisterPlan } from './components/FormRegister'
 import { ViewPortContext } from 'src/context/ViewPortContext'
+import { FormEditPlan } from './components/EditForm'
 
 export function Plans() {
   const { data } = useGetPlansQuery()
@@ -38,6 +39,12 @@ export function Plans() {
   } = useDisclosure()
 
   const {
+    isOpen: isOpenModalEdit,
+    onOpen: onOpenModalEdit,
+    onClose: onCloseModalEdit,
+  } = useDisclosure()
+
+  const {
     isOpen: isOpenAlert,
     onOpen: onOpenAlert,
     onClose: onCloseAlert,
@@ -48,6 +55,15 @@ export function Plans() {
     setPlanId(planId)
   }
 
+  function handleOpenModalEditPlan(planId: string) {
+    onOpenModalEdit()
+    setPlanId(planId)
+  }
+
+  function handleOnCloseModalEdit() {
+    setPlanId('')
+    onCloseModalEdit()
+  }
 
   async function handleDeletePlan() {
     try {
@@ -157,6 +173,7 @@ export function Plans() {
                               }}
                               display="flex"
                               justifyContent="space-between"
+                              onClick={() => handleOpenModalEditPlan(plan.id)}
                             >
                               Editar
                               <Pencil size={20} />
@@ -208,6 +225,17 @@ export function Plans() {
         onCloseModal={onCloseModalRegister}
       >
         <FormRegisterPlan onCloseModalRegister={onCloseModalRegister} />
+      </ModalComponent>
+
+      <ModalComponent
+        isOpenModal={isOpenModalEdit}
+        modalTitle="Editar plano"
+        onCloseModal={handleOnCloseModalEdit}
+      >
+        <FormEditPlan
+          planId={planId}
+          onCloseModalEdit={handleOnCloseModalEdit}
+        />
       </ModalComponent>
     </div>
   )

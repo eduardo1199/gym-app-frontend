@@ -8,10 +8,23 @@ interface GetPlansResponse {
   plans: Plan[]
 }
 
+interface GetPlanResponse {
+  plan: Plan
+}
+
 interface CreatePlanRequest {
   name: string
   plan_month_time: number
   price: number
+}
+
+interface UpdatePlanRequest {
+  planData: {
+    name?: string
+    plan_month_time?: number
+    price?: number
+  }
+  planId: string
 }
 
 export const apiPlanSlice = createApi({
@@ -19,7 +32,7 @@ export const apiPlanSlice = createApi({
   baseQuery: axiosBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
   }),
-  tagTypes: ['get-plans'],
+  tagTypes: ['get-plans', 'get-plan'],
   endpoints: (builder) => ({
     GetPlans: builder.query<GetPlansResponse, void>({
       query: () => ({
@@ -43,6 +56,20 @@ export const apiPlanSlice = createApi({
       }),
       invalidatesTags: ['get-plans'],
     }),
+    UpdatePlan: builder.mutation<void, UpdatePlanRequest>({
+      query: ({ planData, planId }) => ({
+        url: `plans/${planId}`,
+        method: 'PUT',
+        data: planData,
+      }),
+      invalidatesTags: ['get-plans', 'get-plan']
+    }),
+    GetPlan: builder.query<GetPlanResponse, string>({
+      query: (planId: string) => ({
+        url: `plans/${planId}`,
+        method: 'GET',
+      }),
+    }),
   }),
 })
 
@@ -50,4 +77,6 @@ export const {
   useGetPlansQuery,
   useDeletePlanMutation,
   useCreatePlanMutation,
+  useUpdatePlanMutation,
+  useGetPlanQuery
 } = apiPlanSlice
