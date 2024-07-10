@@ -2,6 +2,11 @@ import { BaseQueryFn } from '@reduxjs/toolkit/dist/query'
 import axios, { AxiosError, AxiosRequestConfig } from 'axios'
 import { redirect } from 'react-router-dom'
 import Cookies from 'universal-cookie'
+
+enum REQUEST_STATUS_CODE {
+  Unauthorized = 401,
+  NotAcceptable = 406
+}
 interface AxiosBaseQueryParams {
   baseUrl: string
 }
@@ -49,13 +54,21 @@ export const axiosBaseQuery =
       return { data: result.data }
     } catch (error) {
       if (error instanceof AxiosError) {
-        if (error.response?.status === 401 || error.response?.status === 406) {
+        if (error.response?.status === REQUEST_STATUS_CODE.Unauthorized || error.response?.status === REQUEST_STATUS_CODE.NotAcceptable) {
           window.location.href = 'http://localhost:5173/'
 
           return Promise.reject(error)
         }
+
+        return {
+          error,
+          meta: data,
+        }
       }
 
-      return Promise.reject(error)
+      return {
+        error,
+        meta: data,
+      }
     }
   }

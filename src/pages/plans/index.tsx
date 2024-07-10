@@ -128,7 +128,7 @@ export function Plans() {
                 <>
                   <Table.TrBody key={plan.id}>
                     <Table.FirstCellBody>{plan.name}</Table.FirstCellBody>
-                    <Table.CellBody>{plan.plan_month_time}</Table.CellBody>
+                    <Table.CellBody>{plan.plan_month_time} {plan.plan_month_time > 1 ? 'meses': 'mês'}</Table.CellBody>
 
                     <Table.CellBody>{new Intl.NumberFormat('pt-BR', {
                       style: 'currency',

@@ -172,7 +172,7 @@ export function Students() {
         onCloseModal={onCloseModalRegister}
         modalTitle="Cadastrar aluno"
       >
-        <RegisterFormStudent onCloseModalEdit={onCloseModalEdit} />
+        <RegisterFormStudent onCloseModalEdit={onCloseModalRegister} />
       </ModalComponent>
 
       <SlideViewStudent isOpen={isOpenSlide} onClose={onCloseSlide} />

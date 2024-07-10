@@ -27,26 +27,28 @@ interface UpdatePlanRequest {
   planId: string
 }
 
-export const apiPlanSlice = createApi({
+export const planApi = createApi({
   reducerPath: 'api-plans',
   baseQuery: axiosBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
   }),
-  tagTypes: ['get-plans', 'get-plan'],
+  tagTypes: ['Plans'],
   endpoints: (builder) => ({
     GetPlans: builder.query<GetPlansResponse, void>({
       query: () => ({
         url: 'plans',
         method: 'GET',
       }),
-      providesTags: ['get-plans'],
+      providesTags: (result) => result ? result.plans.map((plan) => ({
+        type: 'Plans' as const, id: plan.id
+      })).concat([{ type: 'Plans', id: 'LIST' }]) : [{ type: 'Plans', id: 'LIST' }],
     }),
     DeletePlan: builder.mutation<void, { planId: string }>({
       query: ({ planId }) => ({
         url: `plans/${planId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['get-plans'],
+      invalidatesTags: [{ type: 'Plans', id: 'LIST' }],
     }),
     CreatePlan: builder.mutation<void, CreatePlanRequest>({
       query: (body) => ({
@@ -54,7 +56,7 @@ export const apiPlanSlice = createApi({
         data: body,
         method: 'POST',
       }),
-      invalidatesTags: ['get-plans'],
+      invalidatesTags: [{ type: 'Plans', id: 'LIST' }],
     }),
     UpdatePlan: builder.mutation<void, UpdatePlanRequest>({
       query: ({ planData, planId }) => ({
@@ -62,13 +64,14 @@ export const apiPlanSlice = createApi({
         method: 'PUT',
         data: planData,
       }),
-      invalidatesTags: ['get-plans', 'get-plan']
+      invalidatesTags: (_, __, arg) => [{ type: 'Plans', id: arg.planId }],
     }),
     GetPlan: builder.query<GetPlanResponse, string>({
       query: (planId: string) => ({
         url: `plans/${planId}`,
         method: 'GET',
       }),
+      providesTags: (result) => result ? [{ type: 'Plans', id: result.plan.id }] : [{ type: 'Plans', id: 'LIST' }],
     }),
   }),
 })
@@ -79,4 +82,4 @@ export const {
   useCreatePlanMutation,
   useUpdatePlanMutation,
   useGetPlanQuery
-} = apiPlanSlice
+} = planApi
