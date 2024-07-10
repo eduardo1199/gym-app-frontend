@@ -18,11 +18,11 @@ Dashboard:
 
 Alunos matriculados:
 
-![lista de estudantes](images/student.png)
+![lista de estudantes](images/students.png)
 
 Maquinarios disponíveis:
 
-![maquinarios](images/student.png)
+![maquinarios](images/machines.png)
 
 Planos disponíveis:
 
