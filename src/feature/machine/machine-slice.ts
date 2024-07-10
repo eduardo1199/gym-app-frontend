@@ -22,9 +22,9 @@ interface CreateMachineRequest {
   maintenance: boolean
 }
 
-export const machineSlice = createApi({
+export const machineApi = createApi({
   reducerPath: 'api-machines',
-  tagTypes: ['get-machines', 'get-machine'],
+  tagTypes: ['Machines'],
   baseQuery: axiosBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
   }),
@@ -34,7 +34,9 @@ export const machineSlice = createApi({
         url: 'machines',
         method: 'GET',
       }),
-      providesTags: ['get-machines'],
+      providesTags: (result) => result ? result.machines.map((machine) => ({
+        type: 'Machines' as const, id: machine.id
+      })).concat([{ type: 'Machines', id: 'LIST' }]) : [{ type: 'Machines', id: 'LIST' }],
     }),
     CreateMachine: builder.mutation<void, CreateMachineRequest>({
       query: (body) => ({
@@ -42,14 +44,14 @@ export const machineSlice = createApi({
         data: body,
         method: 'POST',
       }),
-      invalidatesTags: ['get-machines'],
+      invalidatesTags: [{ type: 'Machines', id: 'LIST' }],
     }),
     GetMachine: builder.query<GetMachineResponse, string>({
       query: (id) => ({
         url: `machines/${id}`,
         method: 'GET',
       }),
-      providesTags: ['get-machine'],
+      providesTags: (result) => result ? [{ type: 'Machines', id: result.machine.id }] : [{ type: 'Machines', id: 'LIST' }],
     }),
     UpdateMachine: builder.mutation<void, UpdateMachineParams>({
       query: ({ machine, machineId }) => ({
@@ -57,14 +59,14 @@ export const machineSlice = createApi({
         method: 'PUT',
         data: machine,
       }),
-      invalidatesTags: ['get-machines', 'get-machine'],
+      invalidatesTags: (_, __, arg) => [{ type: 'Machines', id: arg.machineId }],
     }),
     DeleteMachine: builder.mutation<void, { machineId: string }>({
       query: ({ machineId }) => ({
         url: `machines/${machineId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['get-machines'],
+      invalidatesTags: [{ type: 'Machines', id: 'LIST' }],
     }),
   }),
 })
@@ -75,4 +77,4 @@ export const {
   useGetMachineQuery,
   useUpdateMachineMutation,
   useDeleteMachineMutation,
-} = machineSlice
+} = machineApi

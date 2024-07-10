@@ -12,6 +12,22 @@ Página de login:
 
 ![página de login](images/login.png)
 
+Dashboard:
+
+![dashboard](images/dashboard.png)
+
+Alunos matriculados:
+
+![lista de estudantes](images/student.png)
+
+Maquinarios disponíveis:
+
+![maquinarios](images/student.png)
+
+Planos disponíveis:
+
+![planos](images/plans.png)
+
 ## Como Executar
 
 Clonar este repositório em sua máquina local.

@@ -1,8 +1,8 @@
-import { addHours, format, isWithinInterval } from 'date-fns'
+import { format, isWithinInterval } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
 export function dateFormat(date: string): string {
-  const dateParsed = addHours(new Date(date), 3)
+  const dateParsed = new Date(date)
 
   return format(dateParsed, 'dd/MM/yyyy', {
     locale: ptBR,

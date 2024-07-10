@@ -49,9 +49,9 @@ interface CreateUserMutationRequest {
   start_plan_date: string
 }
 
-export const apiSlice = createApi({
+export const userApi = createApi({
   reducerPath: 'api-users',
-  tagTypes: ['Users', 'User'],
+  tagTypes: ['Users'],
   baseQuery: axiosBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
   }),
@@ -61,21 +61,23 @@ export const apiSlice = createApi({
         url: `users/${id}`,
         method: 'GET',
       }),
-      providesTags: ['User'],
+      providesTags: (result) => result ? [{ type: 'Users', id: result.user.id }] : [{ type: 'Users', id: 'LIST' }],
     }),
     GetUsers: builder.query<UseGetUsersQueryResponse, void>({
       query: () => ({
         url: 'users',
         method: 'GET',
       }),
-      providesTags: ['Users'],
+      providesTags: (result) => result ? result.users.map((user) => ({
+        type: 'Users' as const, id: user.id
+      })).concat([{ type: 'Users', id: 'LIST' }]) : [{ type: 'Users', id: 'LIST' }],
     }),
     DeleteUser: builder.mutation<{ id: string }, string>({
       query: (id) => ({
         url: `users/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Users'],
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }],
     }),
     CreateUser: builder.mutation<void, CreateUserMutationRequest>({
       query: (body) => ({
@@ -83,7 +85,7 @@ export const apiSlice = createApi({
         url: 'users',
         data: body,
       }),
-      invalidatesTags: ['Users'],
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }],
     }),
     UpdateUser: builder.mutation<unknown, UpdateUserMutation>({
       query: (params) => ({
@@ -91,7 +93,7 @@ export const apiSlice = createApi({
         url: `users/${params.id}`,
         data: params.data,
       }),
-      invalidatesTags: ['Users', 'User'],
+      invalidatesTags: (_, __, arg) => [{ type: 'Users', id: arg.id }],
     }),
     AuthenticationUser: builder.mutation<
       { user: UserDataMutation },
@@ -113,4 +115,4 @@ export const {
   useCreateUserMutation,
   useUpdateUserMutation,
   useAuthenticationUserMutation,
-} = apiSlice
+} = userApi

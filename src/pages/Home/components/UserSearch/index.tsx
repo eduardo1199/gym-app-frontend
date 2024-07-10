@@ -55,7 +55,7 @@ export function UserSearch() {
   }, [userResponse, navigate])
 
   return (
-    <div className="flex flex-col items-center bg-primary-yellow p-10 rounded shadow-2xl mt-7">
+    <div className="flex flex-col items-center bg-primary-yellow p-10 rounded shadow-2xl">
       <span className="text-base font-bold text-primary-purple mb-4">
         É aluno? Então vem dar uma olhada na sua matrícula
       </span>

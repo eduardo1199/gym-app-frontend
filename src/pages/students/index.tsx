@@ -113,6 +113,7 @@ export function Students() {
               <Table.Tr>
                 <Table.FirstCell>Nome</Table.FirstCell>
                 <Table.Cell>Início do plano</Table.Cell>
+                <Table.Cell>Fim do plano</Table.Cell>
                 <Table.Cell>Idade</Table.Cell>
                 <Table.Cell>Peso</Table.Cell>
                 <Table.Cell>Status</Table.Cell>
@@ -172,7 +173,7 @@ export function Students() {
         onCloseModal={onCloseModalRegister}
         modalTitle="Cadastrar aluno"
       >
-        <RegisterFormStudent onCloseModalEdit={onCloseModalEdit} />
+        <RegisterFormStudent onCloseModalEdit={onCloseModalRegister} />
       </ModalComponent>
 
       <SlideViewStudent isOpen={isOpenSlide} onClose={onCloseSlide} />
