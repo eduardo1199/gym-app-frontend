@@ -113,6 +113,7 @@ export function Students() {
               <Table.Tr>
                 <Table.FirstCell>Nome</Table.FirstCell>
                 <Table.Cell>Início do plano</Table.Cell>
+                <Table.Cell>Fim do plano</Table.Cell>
                 <Table.Cell>Idade</Table.Cell>
                 <Table.Cell>Peso</Table.Cell>
                 <Table.Cell>Status</Table.Cell>

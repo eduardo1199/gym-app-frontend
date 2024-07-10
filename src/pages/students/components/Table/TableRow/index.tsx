@@ -35,6 +35,7 @@ export const TableRow = ({
       <Table.TrBody>
         <Table.FirstCellBody>{user.name}</Table.FirstCellBody>
         <Table.CellBody>{dateFormat(user.start_plan_date)}</Table.CellBody>
+        <Table.CellBody>{dateFormat(user.finish_plan_date)}</Table.CellBody>
         <Table.CellBody>{user.age} anos</Table.CellBody>
         <Table.CellBody>{user.weight}kg</Table.CellBody>
         <td>
