@@ -1,18 +1,18 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
-import { Home } from './pages/Home'
-import { Dashboard } from './pages/Dashboard'
-import { Machines } from './pages/Machines'
-import { Plans } from './pages/Plans'
-import { Students } from './pages/Students'
-import { User } from './pages/User'
+import { Home } from '@/pages/Home'
+import { Dashboard } from '@/pages/Dashboard'
+import { Machines } from '@/pages/Machines'
+import { Plans } from '@/pages/Plans'
+import { Students } from '@/pages/Students'
+import { User } from '@/pages/User'
 
-import { DefaultLayout } from './layouts'
-import { useAppDispatch } from './app/hooks'
-import { setToken } from './feature/auth'
+import { DefaultLayout } from '@/layouts'
+import { useAppDispatch } from '@/app/hooks'
+import { setToken } from '@/feature/auth'
 import { useEffect } from 'react'
 import Cookies from 'universal-cookie'
-import { RootState } from './app/store'
+import { RootState } from '@/app/store'
 import { useSelector } from 'react-redux'
 
 interface CheckTokenProps {

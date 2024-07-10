@@ -22,7 +22,6 @@ export const adminAuthentication = createSlice({
     },
 
     resetAdmin: (state) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       state = {} as JWTPayload
     },
   },

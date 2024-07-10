@@ -3,8 +3,8 @@ import { Avatar, WrapItem } from '@chakra-ui/react'
 import { Barbell, Cake, Smiley, SmileySad } from 'phosphor-react'
 import { useParams } from 'react-router-dom'
 
-import { useGetUserQuery } from '../../feature/user/user-slice'
-import { dateFormat } from '../../utils'
+import { useGetUserQuery } from '@/feature/user/user-slice'
+import { dateFormat } from '@/utils'
 
 export function User() {
   const { id } = useParams()
